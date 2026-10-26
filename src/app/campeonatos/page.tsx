@@ -3,12 +3,15 @@
 import React from 'react';
 import Link from 'next/link';
 import CategoryCard from '@/components/CategoryCard';
-import { championships } from '@/data/categories';
+import { useStore } from '@/contexts/StoreContext';
 import { Trophy, ChevronRight } from 'lucide-react';
 
 export default function CampeonatosPage() {
+  const { categories } = useStore();
+  const championships = categories.filter((c) => c.type === 'championship');
   const southAmerica = championships.filter((c) => c.continent === 'América do Sul');
   const europe = championships.filter((c) => c.continent === 'Europa');
+  const others = championships.filter((c) => c.continent !== 'América do Sul' && c.continent !== 'Europa');
 
   return (
     <div className="bg-[#F4F5F7] py-8 sm:py-12">
@@ -29,39 +32,60 @@ export default function CampeonatosPage() {
             CAMPEONATOS PRINCIPAIS
           </h1>
           <p className="text-xs sm:text-sm text-neutral-600 mt-1 max-w-2xl font-medium">
-            Escolha sua liga favorita e confira os mantos oficiais dos maiores clubes do futebol brasileiro e internacional.
+            Escolha sua liga favorita e confira os mantos dos maiores clubes do futebol brasileiro e internacional.
           </p>
         </div>
 
         {/* América do Sul */}
-        <section className="mb-10">
-          <div className="flex items-center gap-2 mb-4 pb-2 border-b border-neutral-200">
-            <span className="w-2.5 h-5 bg-[#FFD900] rounded-sm" />
-            <h2 className="text-lg sm:text-xl font-black uppercase tracking-tight text-black">
-              FUTEBOL SUL-AMERICANO
-            </h2>
-          </div>
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
-            {southAmerica.map((category) => (
-              <CategoryCard key={category.id} category={category} basePath="/campeonatos" />
-            ))}
-          </div>
-        </section>
+        {southAmerica.length > 0 && (
+          <section className="mb-10">
+            <div className="flex items-center gap-2 mb-4 pb-2 border-b border-neutral-200">
+              <span className="w-2.5 h-5 bg-[#FFD900] rounded-sm" />
+              <h2 className="text-lg sm:text-xl font-black uppercase tracking-tight text-black">
+                FUTEBOL SUL-AMERICANO
+              </h2>
+            </div>
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
+              {southAmerica.map((category) => (
+                <CategoryCard key={category.id} category={category} basePath="/campeonatos" />
+              ))}
+            </div>
+          </section>
+        )}
 
         {/* Europa */}
-        <section>
-          <div className="flex items-center gap-2 mb-4 pb-2 border-b border-neutral-200">
-            <span className="w-2.5 h-5 bg-black rounded-sm" />
-            <h2 className="text-lg sm:text-xl font-black uppercase tracking-tight text-black">
-              FUTEBOL EUROPEU
-            </h2>
-          </div>
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
-            {europe.map((category) => (
-              <CategoryCard key={category.id} category={category} basePath="/campeonatos" />
-            ))}
-          </div>
-        </section>
+        {europe.length > 0 && (
+          <section className="mb-10">
+            <div className="flex items-center gap-2 mb-4 pb-2 border-b border-neutral-200">
+              <span className="w-2.5 h-5 bg-black rounded-sm" />
+              <h2 className="text-lg sm:text-xl font-black uppercase tracking-tight text-black">
+                FUTEBOL EUROPEU
+              </h2>
+            </div>
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
+              {europe.map((category) => (
+                <CategoryCard key={category.id} category={category} basePath="/campeonatos" />
+              ))}
+            </div>
+          </section>
+        )}
+
+        {/* Outros */}
+        {others.length > 0 && (
+          <section>
+            <div className="flex items-center gap-2 mb-4 pb-2 border-b border-neutral-200">
+              <span className="w-2.5 h-5 bg-[#FFD900] rounded-sm" />
+              <h2 className="text-lg sm:text-xl font-black uppercase tracking-tight text-black">
+                OUTRAS COMPETIÇÕES
+              </h2>
+            </div>
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
+              {others.map((category) => (
+                <CategoryCard key={category.id} category={category} basePath="/campeonatos" />
+              ))}
+            </div>
+          </section>
+        )}
       </div>
     </div>
   );

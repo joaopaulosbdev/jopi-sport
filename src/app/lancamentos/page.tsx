@@ -21,13 +21,13 @@ export default function LancamentosPage() {
 
         <div className="mb-8">
           <div className="inline-flex items-center gap-2 bg-[#FFD900] text-black px-3 py-0.5 rounded text-xs font-black uppercase mb-2">
-            <Sparkles size={13} /> Coleção Oficial 2025/2026
+            <Sparkles size={13} /> Lançamentos
           </div>
           <h1 className="text-2xl sm:text-4xl font-black uppercase tracking-tight text-black">
             ÚLTIMOS LANÇAMENTOS
           </h1>
           <p className="text-xs sm:text-sm text-neutral-600 mt-1 max-w-2xl font-medium">
-            Os mantos mais novos do futebol mundial acabaram de aterrissar na Jopi Sport Shop!
+            Confira as novidades recém-chegadas na Jopi Sport Shop!
           </p>
         </div>
 

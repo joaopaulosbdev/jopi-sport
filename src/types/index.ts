@@ -11,6 +11,8 @@ export interface Product {
   sizes: string[];
   type: 'home' | 'away' | 'third' | 'special';
   season: string;
+  version: 'torcedor' | 'jogador';
+  isReadyDelivery: boolean; // Pronta entrega (true) vs Sob encomenda (false)
   inStock: boolean;
   featured: boolean;
   isNew: boolean;
@@ -26,11 +28,11 @@ export interface Category {
   id: string;
   name: string;
   slug: string;
-  icon: string;
+  icon?: string;
+  imageUrl?: string; // Link da imagem/logo do campeonato ou bandeira do país
   type: 'championship' | 'national';
   country?: string;
   continent?: string;
-  image?: string;
   description?: string;
 }
 

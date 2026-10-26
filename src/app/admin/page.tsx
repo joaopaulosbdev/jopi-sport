@@ -2,10 +2,8 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
 import { useStore } from '@/contexts/StoreContext';
-import { Product } from '@/types';
-import { championships, nationalTeams } from '@/data/categories';
+import { Product, Category } from '@/types';
 import { 
   PlusCircle, 
   Settings, 
@@ -21,7 +19,9 @@ import {
   Download, 
   RotateCcw,
   Eye,
-  Truck
+  Trophy,
+  Globe2,
+  Image as ImageIcon
 } from 'lucide-react';
 
 const ALL_SIZES = ['P', 'M', 'G', 'GG', 'XG', '2XG', 'Infantil'];
@@ -42,15 +42,21 @@ export default function AdminDashboardPage() {
     updateProduct, 
     deleteProduct, 
     resetToDefaultProducts, 
+    categories,
+    addCategory,
+    updateCategory,
+    deleteCategory,
+    resetToDefaultCategories,
     isAdmin, 
     logout, 
     storeConfig, 
     updateStoreConfig 
   } = useStore();
 
-  const [activeTab, setActiveTab] = useState<'products' | 'new_product' | 'settings'>('products');
+  const [activeTab, setActiveTab] = useState<'products' | 'new_product' | 'categories' | 'settings'>('products');
   const [filterSearch, setFilterSearch] = useState('');
   const [editingProductId, setEditingProductId] = useState<string | null>(null);
+  const [editingCategoryId, setEditingCategoryId] = useState<string | null>(null);
   const [successMessage, setSuccessMessage] = useState('');
 
   // Form states for New / Edit Product
@@ -60,6 +66,8 @@ export default function AdminDashboardPage() {
   const [subcategory, setSubcategory] = useState('brasileirao');
   const [type, setType] = useState<'home' | 'away' | 'third' | 'special'>('home');
   const [season, setSeason] = useState('2025/26');
+  const [version, setVersion] = useState<'torcedor' | 'jogador'>('torcedor');
+  const [isReadyDelivery, setIsReadyDelivery] = useState(true);
   const [price, setPrice] = useState('159.90');
   const [originalPrice, setOriginalPrice] = useState('');
   const [description, setDescription] = useState('');
@@ -73,6 +81,14 @@ export default function AdminDashboardPage() {
   const [patchPrice, setPatchPrice] = useState('15.00');
   const [hasCustomizationOption, setHasCustomizationOption] = useState(true);
   const [customizationPrice, setCustomizationPrice] = useState('20.00');
+
+  // Form states for New / Edit Category
+  const [catName, setCatName] = useState('');
+  const [catSlug, setCatSlug] = useState('');
+  const [catType, setCatType] = useState<'championship' | 'national'>('championship');
+  const [catCountry, setCatCountry] = useState('');
+  const [catContinent, setCatContinent] = useState('América do Sul');
+  const [catImageUrl, setCatImageUrl] = useState('');
 
   // Store settings form
   const [configStoreName, setConfigStoreName] = useState(storeConfig.storeName);
@@ -139,6 +155,8 @@ export default function AdminDashboardPage() {
     setSubcategory('brasileirao');
     setType('home');
     setSeason('2025/26');
+    setVersion('torcedor');
+    setIsReadyDelivery(true);
     setPrice('159.90');
     setOriginalPrice('');
     setDescription('');
@@ -162,6 +180,8 @@ export default function AdminDashboardPage() {
     setSubcategory(prod.subcategory);
     setType(prod.type);
     setSeason(prod.season);
+    setVersion(prod.version || 'torcedor');
+    setIsReadyDelivery(prod.isReadyDelivery ?? true);
     setPrice(prod.price.toString());
     setOriginalPrice(prod.originalPrice ? prod.originalPrice.toString() : '');
     setDescription(prod.description || '');
@@ -197,11 +217,13 @@ export default function AdminDashboardPage() {
       subcategory,
       price: parsedPrice,
       originalPrice: parsedOriginalPrice,
-      description: description.trim() || `Camisa oficial ${team} temporada ${season}. Confeccionada com materiais de alta qualidade e respirabilidade.`,
+      description: description.trim() || `Camisa ${team} temporada ${season}. Confeccionada com materiais de alta qualidade e respirabilidade.`,
       images: imageList.length > 0 ? imageList : (imageUrl.trim() ? [imageUrl.trim()] : []),
       sizes: sizes.length > 0 ? sizes : ['P', 'M', 'G', 'GG'],
       type,
       season,
+      version,
+      isReadyDelivery,
       inStock,
       featured,
       isNew,
@@ -213,14 +235,62 @@ export default function AdminDashboardPage() {
 
     if (editingProductId) {
       updateProduct(editingProductId, productPayload);
-      showNotification('✅ Camisa atualizada com sucesso!');
+      showNotification('Camisa atualizada com sucesso!');
     } else {
       addProduct(productPayload);
-      showNotification('✅ Nova camisa cadastrada com sucesso!');
+      showNotification('Nova camisa cadastrada com sucesso!');
     }
 
     resetProductForm();
     setActiveTab('products');
+  };
+
+  // Category handlers
+  const resetCategoryForm = () => {
+    setEditingCategoryId(null);
+    setCatName('');
+    setCatSlug('');
+    setCatType('championship');
+    setCatCountry('');
+    setCatContinent('América do Sul');
+    setCatImageUrl('');
+  };
+
+  const startEditCategory = (cat: Category) => {
+    setEditingCategoryId(cat.id);
+    setCatName(cat.name);
+    setCatSlug(cat.slug);
+    setCatType(cat.type);
+    setCatCountry(cat.country || '');
+    setCatContinent(cat.continent || 'América do Sul');
+    setCatImageUrl(cat.imageUrl || '');
+  };
+
+  const handleSaveCategory = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!catName.trim() || !catSlug.trim()) {
+      alert('Informe o nome e o slug da categoria!');
+      return;
+    }
+
+    const catPayload = {
+      name: catName.trim(),
+      slug: catSlug.trim().toLowerCase().replace(/[^a-z0-9]/g, '-'),
+      type: catType,
+      country: catCountry.trim() || undefined,
+      continent: catContinent.trim() || undefined,
+      imageUrl: catImageUrl.trim() || undefined,
+    };
+
+    if (editingCategoryId) {
+      updateCategory(editingCategoryId, catPayload);
+      showNotification('Categoria/Campeonato atualizado!');
+    } else {
+      addCategory(catPayload);
+      showNotification('Nova categoria/campeonato cadastrado!');
+    }
+
+    resetCategoryForm();
   };
 
   const handleSaveConfig = (e: React.FormEvent) => {
@@ -232,7 +302,7 @@ export default function AdminDashboardPage() {
       bannerText: configBanner,
       pixKey: configPixKey,
     });
-    showNotification('✅ Configurações da loja salvas com sucesso!');
+    showNotification('Configurações da loja salvas com sucesso!');
   };
 
   const handleExportJSON = () => {
@@ -322,6 +392,18 @@ export default function AdminDashboardPage() {
           </button>
 
           <button
+            onClick={() => setActiveTab('categories')}
+            className={`pb-3 px-4 text-xs font-black uppercase tracking-wider flex items-center gap-2 border-b-2 transition whitespace-nowrap ${
+              activeTab === 'categories'
+                ? 'border-black text-black'
+                : 'border-transparent text-neutral-500 hover:text-black'
+            }`}
+          >
+            <Trophy size={16} />
+            <span>Categorias &amp; Bandeiras ({categories.length})</span>
+          </button>
+
+          <button
             onClick={() => setActiveTab('settings')}
             className={`pb-3 px-4 text-xs font-black uppercase tracking-wider flex items-center gap-2 border-b-2 transition whitespace-nowrap ${
               activeTab === 'settings'
@@ -334,7 +416,7 @@ export default function AdminDashboardPage() {
           </button>
         </div>
 
-        {/* Tab 1: Product List */}
+        {/* TAB 1: PRODUCT LIST */}
         {activeTab === 'products' && (
           <div className="mt-6 space-y-5">
             {/* Stats */}
@@ -344,15 +426,15 @@ export default function AdminDashboardPage() {
                 <div className="text-2xl font-black text-black mt-1">{products.length}</div>
               </div>
               <div className="bg-white p-4 rounded-xl border border-neutral-200 shadow-sm">
-                <span className="text-[10px] text-neutral-500 font-black uppercase">Em Estoque</span>
+                <span className="text-[10px] text-neutral-500 font-black uppercase">Pronta Entrega</span>
                 <div className="text-2xl font-black text-[#008A3E] mt-1">
-                  {products.filter((p) => p.inStock).length}
+                  {products.filter((p) => p.isReadyDelivery).length}
                 </div>
               </div>
               <div className="bg-white p-4 rounded-xl border border-neutral-200 shadow-sm">
-                <span className="text-[10px] text-neutral-500 font-black uppercase">Destaques</span>
+                <span className="text-[10px] text-neutral-500 font-black uppercase">Versão Jogador</span>
                 <div className="text-2xl font-black text-black mt-1">
-                  {products.filter((p) => p.featured).length}
+                  {products.filter((p) => p.version === 'jogador').length}
                 </div>
               </div>
               <div className="bg-white p-4 rounded-xl border border-neutral-200 shadow-sm">
@@ -371,7 +453,7 @@ export default function AdminDashboardPage() {
                   placeholder="Buscar camisa por nome, time ou liga..."
                   value={filterSearch}
                   onChange={(e) => setFilterSearch(e.target.value)}
-                  className="w-full bg-[#F8F9FA] border border-neutral-300 rounded-lg px-4 py-2 pl-10 text-xs text-black focus:outline-none focus:border-black"
+                  className="w-full bg-[#F8F9FA] border border-neutral-300 rounded-lg px-4 py-2 pl-10 text-xs text-black focus:outline-none focus:border-black font-medium"
                 />
                 <Search size={15} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-neutral-400" />
               </div>
@@ -395,7 +477,8 @@ export default function AdminDashboardPage() {
                   <thead>
                     <tr className="bg-neutral-100 border-b border-neutral-200 text-neutral-700 uppercase font-black text-[11px]">
                       <th className="p-3.5">Camisa</th>
-                      <th className="p-3.5">Categoria</th>
+                      <th className="p-3.5">Versão</th>
+                      <th className="p-3.5">Disponibilidade</th>
                       <th className="p-3.5">Preço</th>
                       <th className="p-3.5">Estoque</th>
                       <th className="p-3.5">Destaque</th>
@@ -412,7 +495,7 @@ export default function AdminDashboardPage() {
                                 // eslint-disable-next-line @next/next/no-img-element
                                 <img src={prod.images[0]} alt={prod.name} className="w-full h-full object-cover" />
                               ) : (
-                                <span className="text-lg">👕</span>
+                                <span className="text-[10px] font-bold text-neutral-400 uppercase">Manto</span>
                               )}
                             </div>
                             <div>
@@ -425,9 +508,26 @@ export default function AdminDashboardPage() {
                         </td>
 
                         <td className="p-3.5">
-                          <span className="capitalize bg-neutral-100 text-neutral-800 px-2 py-0.5 rounded font-bold text-[11px] border border-neutral-200">
-                            {prod.subcategory}
+                          <span className={`text-[10px] font-black uppercase px-2 py-0.5 rounded border ${
+                            prod.version === 'jogador'
+                              ? 'bg-black text-[#FFD900] border-black'
+                              : 'bg-neutral-100 text-neutral-800 border-neutral-300'
+                          }`}>
+                            {prod.version === 'jogador' ? 'Jogador' : 'Torcedor'}
                           </span>
+                        </td>
+
+                        <td className="p-3.5">
+                          <button
+                            onClick={() => updateProduct(prod.id, { isReadyDelivery: !prod.isReadyDelivery })}
+                            className={`text-[10px] font-black uppercase px-2 py-0.5 rounded transition ${
+                              prod.isReadyDelivery
+                                ? 'bg-[#E8F8EE] text-[#008A3E]'
+                                : 'bg-neutral-100 text-neutral-700'
+                            }`}
+                          >
+                            {prod.isReadyDelivery ? 'Pronta Entrega' : 'Sob Encomenda'}
+                          </button>
                         </td>
 
                         <td className="p-3.5 font-black text-black">
@@ -444,7 +544,7 @@ export default function AdminDashboardPage() {
                             onClick={() => updateProduct(prod.id, { inStock: !prod.inStock })}
                             className={`text-[10px] font-black uppercase px-2 py-0.5 rounded transition ${
                               prod.inStock
-                                ? 'bg-[#E8F8EE] text-[#008A3E]'
+                                ? 'bg-black text-white'
                                 : 'bg-neutral-200 text-neutral-600'
                             }`}
                           >
@@ -457,11 +557,11 @@ export default function AdminDashboardPage() {
                             onClick={() => updateProduct(prod.id, { featured: !prod.featured })}
                             className={`text-[10px] font-black uppercase px-2 py-0.5 rounded transition ${
                               prod.featured
-                                ? 'bg-[#FFD900] text-black'
+                                ? 'bg-[#FFD900] text-black font-black'
                                 : 'bg-neutral-100 text-neutral-400'
                             }`}
                           >
-                            {prod.featured ? '★ Destaque' : 'Normal'}
+                            {prod.featured ? 'Destaque' : 'Normal'}
                           </button>
                         </td>
 
@@ -485,7 +585,7 @@ export default function AdminDashboardPage() {
                               onClick={() => {
                                 if (confirm(`Deseja excluir "${prod.name}"?`)) {
                                   deleteProduct(prod.id);
-                                  showNotification('🗑️ Camisa excluída!');
+                                  showNotification('Camisa excluída com sucesso!');
                                 }
                               }}
                               className="p-1.5 rounded text-red-600 hover:bg-red-50 transition"
@@ -504,13 +604,13 @@ export default function AdminDashboardPage() {
           </div>
         )}
 
-        {/* Tab 2: New / Edit Form */}
+        {/* TAB 2: REGISTER / EDIT FORM */}
         {activeTab === 'new_product' && (
           <div className="mt-6">
             <form onSubmit={handleSaveProduct} className="bg-white rounded-2xl border border-neutral-200 p-6 sm:p-8 shadow-sm space-y-6">
               <div className="flex items-center justify-between pb-3 border-b border-neutral-100">
                 <h2 className="text-base font-black uppercase text-black">
-                  {editingProductId ? '✏️ Editar Manto' : '✨ Cadastrar Novo Manto'}
+                  {editingProductId ? 'Editar Manto' : 'Cadastrar Novo Manto'}
                 </h2>
                 {editingProductId && (
                   <button
@@ -552,6 +652,36 @@ export default function AdminDashboardPage() {
                   />
                 </div>
 
+                {/* Versão: Torcedor ou Jogador */}
+                <div>
+                  <label className="text-[11px] font-black uppercase text-neutral-700 block mb-1">
+                    Versão da Camisa:*
+                  </label>
+                  <select
+                    value={version}
+                    onChange={(e) => setVersion(e.target.value as any)}
+                    className="w-full bg-[#F8F9FA] border border-neutral-300 rounded-lg px-3.5 py-2 text-xs font-black text-black focus:outline-none focus:border-black"
+                  >
+                    <option value="torcedor">Versão Torcedor (Padrão)</option>
+                    <option value="jogador">Versão Jogador (Slim Fit / Termocolada)</option>
+                  </select>
+                </div>
+
+                {/* Disponibilidade: Pronta Entrega vs Sob Encomenda */}
+                <div>
+                  <label className="text-[11px] font-black uppercase text-neutral-700 block mb-1">
+                    Disponibilidade:*
+                  </label>
+                  <select
+                    value={isReadyDelivery ? 'ready' : 'order'}
+                    onChange={(e) => setIsReadyDelivery(e.target.value === 'ready')}
+                    className="w-full bg-[#F8F9FA] border border-neutral-300 rounded-lg px-3.5 py-2 text-xs font-black text-black focus:outline-none focus:border-black"
+                  >
+                    <option value="ready">Pronta Entrega Imediata</option>
+                    <option value="order">Sob Encomenda</option>
+                  </select>
+                </div>
+
                 <div>
                   <label className="text-[11px] font-black uppercase text-neutral-700 block mb-1">
                     Categoria:
@@ -561,12 +691,13 @@ export default function AdminDashboardPage() {
                     onChange={(e) => {
                       const cat = e.target.value as any;
                       setCategory(cat);
-                      setSubcategory(cat === 'championship' ? 'brasileirao' : 'brasil');
+                      const matching = categories.find((c) => c.type === cat);
+                      if (matching) setSubcategory(matching.slug);
                     }}
-                    className="w-full bg-[#F8F9FA] border border-neutral-300 rounded-lg px-3.5 py-2 text-xs text-black focus:outline-none focus:border-black"
+                    className="w-full bg-[#F8F9FA] border border-neutral-300 rounded-lg px-3.5 py-2 text-xs text-black focus:outline-none focus:border-black font-bold"
                   >
-                    <option value="championship">🏆 Campeonatos / Clubes</option>
-                    <option value="national">🌍 Seleções Mundiais</option>
+                    <option value="championship">Campeonatos / Clubes</option>
+                    <option value="national">Seleções Mundiais</option>
                   </select>
                 </div>
 
@@ -577,17 +708,13 @@ export default function AdminDashboardPage() {
                   <select
                     value={subcategory}
                     onChange={(e) => setSubcategory(e.target.value)}
-                    className="w-full bg-[#F8F9FA] border border-neutral-300 rounded-lg px-3.5 py-2 text-xs text-black focus:outline-none focus:border-black"
+                    className="w-full bg-[#F8F9FA] border border-neutral-300 rounded-lg px-3.5 py-2 text-xs text-black focus:outline-none focus:border-black font-bold"
                   >
-                    {category === 'championship' ? (
-                      championships.map((c) => (
+                    {categories
+                      .filter((c) => c.type === category)
+                      .map((c) => (
                         <option key={c.slug} value={c.slug}>{c.name}</option>
-                      ))
-                    ) : (
-                      nationalTeams.map((n) => (
-                        <option key={n.slug} value={n.slug}>{n.name}</option>
-                      ))
-                    )}
+                      ))}
                   </select>
                 </div>
 
@@ -605,6 +732,19 @@ export default function AdminDashboardPage() {
                     <option value="third">3º Uniforme (III)</option>
                     <option value="special">Edição Especial / Retrô</option>
                   </select>
+                </div>
+
+                <div>
+                  <label className="text-[11px] font-black uppercase text-neutral-700 block mb-1">
+                    Temporada / Ano:*
+                  </label>
+                  <input
+                    type="text"
+                    placeholder="Ex: 2025/26"
+                    value={season}
+                    onChange={(e) => setSeason(e.target.value)}
+                    className="w-full bg-[#F8F9FA] border border-neutral-300 rounded-lg px-3.5 py-2 text-xs text-black focus:outline-none focus:border-black font-bold"
+                  />
                 </div>
 
                 <div>
@@ -629,18 +769,6 @@ export default function AdminDashboardPage() {
                     placeholder="Ex: 219.90 (opcional)"
                     value={originalPrice}
                     onChange={(e) => setOriginalPrice(e.target.value)}
-                    className="w-full bg-[#F8F9FA] border border-neutral-300 rounded-lg px-3.5 py-2 text-xs text-black focus:outline-none focus:border-black"
-                  />
-                </div>
-
-                <div>
-                  <label className="text-[11px] font-black uppercase text-neutral-700 block mb-1">
-                    Temporada:
-                  </label>
-                  <input
-                    type="text"
-                    value={season}
-                    onChange={(e) => setSeason(e.target.value)}
                     className="w-full bg-[#F8F9FA] border border-neutral-300 rounded-lg px-3.5 py-2 text-xs text-black focus:outline-none focus:border-black"
                   />
                 </div>
@@ -672,7 +800,7 @@ export default function AdminDashboardPage() {
               {/* Images */}
               <div className="space-y-3 pt-3 border-t border-neutral-100">
                 <label className="text-[11px] font-black uppercase text-neutral-700 block">
-                  Foto da Camisa (URL):
+                  Foto da Camisa (URL da imagem):
                 </label>
                 <div className="flex gap-2">
                   <input
@@ -755,7 +883,7 @@ export default function AdminDashboardPage() {
                     onChange={(e) => setIsNew(e.target.checked)}
                     className="rounded text-black"
                   />
-                  <span className="text-xs font-bold text-black">Lançamento</span>
+                  <span className="text-xs font-bold text-black">Selo Lançamento</span>
                 </label>
 
                 <label className="flex items-center gap-2 p-2.5 bg-[#F8F9FA] rounded-lg border border-neutral-200 cursor-pointer">
@@ -791,13 +919,236 @@ export default function AdminDashboardPage() {
           </div>
         )}
 
-        {/* Tab 3: Settings */}
+        {/* TAB 3: CATEGORIES & LOGOS/FLAGS MANAGEMENT */}
+        {activeTab === 'categories' && (
+          <div className="mt-6 space-y-6">
+            
+            {/* Category Form */}
+            <form onSubmit={handleSaveCategory} className="bg-white rounded-2xl border border-neutral-200 p-6 shadow-sm space-y-4">
+              <div className="flex items-center justify-between pb-3 border-b border-neutral-100">
+                <h2 className="text-base font-black uppercase text-black">
+                  {editingCategoryId ? 'Editar Categoria / Campeonato' : 'Cadastrar Nova Categoria / Campeonato'}
+                </h2>
+                {editingCategoryId && (
+                  <button
+                    type="button"
+                    onClick={resetCategoryForm}
+                    className="text-xs font-bold text-neutral-500 hover:text-black flex items-center gap-1"
+                  >
+                    <X size={13} /> Cancelar
+                  </button>
+                )}
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+                <div>
+                  <label className="text-[11px] font-black uppercase text-neutral-700 block mb-1">
+                    Nome da Categoria:*
+                  </label>
+                  <input
+                    type="text"
+                    placeholder="Ex: Premier League ou Brasil"
+                    value={catName}
+                    onChange={(e) => {
+                      setCatName(e.target.value);
+                      if (!editingCategoryId) {
+                        setCatSlug(e.target.value.toLowerCase().replace(/[^a-z0-9]/g, '-'));
+                      }
+                    }}
+                    className="w-full bg-[#F8F9FA] border border-neutral-300 rounded-lg px-3 py-2 text-xs font-bold text-black focus:outline-none focus:border-black"
+                    required
+                  />
+                </div>
+
+                <div>
+                  <label className="text-[11px] font-black uppercase text-neutral-700 block mb-1">
+                    Slug (Identificador na URL):*
+                  </label>
+                  <input
+                    type="text"
+                    placeholder="Ex: premier-league"
+                    value={catSlug}
+                    onChange={(e) => setCatSlug(e.target.value.toLowerCase().replace(/[^a-z0-9]/g, '-'))}
+                    className="w-full bg-[#F8F9FA] border border-neutral-300 rounded-lg px-3 py-2 text-xs font-bold text-black focus:outline-none focus:border-black"
+                    required
+                  />
+                </div>
+
+                <div>
+                  <label className="text-[11px] font-black uppercase text-neutral-700 block mb-1">
+                    Tipo:*
+                  </label>
+                  <select
+                    value={catType}
+                    onChange={(e) => setCatType(e.target.value as any)}
+                    className="w-full bg-[#F8F9FA] border border-neutral-300 rounded-lg px-3 py-2 text-xs font-bold text-black focus:outline-none focus:border-black"
+                  >
+                    <option value="championship">Campeonato / Liga de Clubes</option>
+                    <option value="national">Seleção Mundial</option>
+                  </select>
+                </div>
+
+                <div>
+                  <label className="text-[11px] font-black uppercase text-neutral-700 block mb-1">
+                    País (opcional):
+                  </label>
+                  <input
+                    type="text"
+                    placeholder="Ex: Inglaterra, Brasil, Espanha..."
+                    value={catCountry}
+                    onChange={(e) => setCatCountry(e.target.value)}
+                    className="w-full bg-[#F8F9FA] border border-neutral-300 rounded-lg px-3 py-2 text-xs text-black focus:outline-none focus:border-black"
+                  />
+                </div>
+
+                <div>
+                  <label className="text-[11px] font-black uppercase text-neutral-700 block mb-1">
+                    Continente:
+                  </label>
+                  <select
+                    value={catContinent}
+                    onChange={(e) => setCatContinent(e.target.value)}
+                    className="w-full bg-[#F8F9FA] border border-neutral-300 rounded-lg px-3 py-2 text-xs text-black focus:outline-none focus:border-black font-bold"
+                  >
+                    <option value="América do Sul">América do Sul</option>
+                    <option value="Europa">Europa</option>
+                    <option value="Ásia">Ásia</option>
+                    <option value="África">África</option>
+                    <option value="América do Norte">América do Norte</option>
+                  </select>
+                </div>
+
+                <div>
+                  <label className="text-[11px] font-black uppercase text-neutral-700 block mb-1">
+                    Link da Imagem (Logo ou Bandeira):
+                  </label>
+                  <input
+                    type="url"
+                    placeholder="Link URL da imagem (https://...)"
+                    value={catImageUrl}
+                    onChange={(e) => setCatImageUrl(e.target.value)}
+                    className="w-full bg-[#F8F9FA] border border-neutral-300 rounded-lg px-3 py-2 text-xs text-black focus:outline-none focus:border-black"
+                  />
+                </div>
+              </div>
+
+              {/* Image Preview */}
+              {catImageUrl && (
+                <div className="flex items-center gap-3 p-3 bg-neutral-50 rounded-xl border border-neutral-200">
+                  <div className="w-12 h-12 rounded-lg overflow-hidden bg-white border border-neutral-300 flex items-center justify-center p-1">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img src={catImageUrl} alt="Preview" className="w-full h-full object-cover rounded" />
+                  </div>
+                  <span className="text-xs text-neutral-600 font-medium">Prévia do logo ou bandeira cadastrado</span>
+                </div>
+              )}
+
+              <div className="flex justify-end gap-2 pt-2">
+                <button
+                  type="submit"
+                  className="px-6 py-2.5 rounded-lg bg-[#FFD900] hover:bg-[#E6C300] text-black text-xs font-black uppercase shadow"
+                >
+                  {editingCategoryId ? 'Salvar Categoria' : 'Cadastrar Categoria'}
+                </button>
+              </div>
+            </form>
+
+            {/* Categories List Table */}
+            <div className="bg-white rounded-xl border border-neutral-200 shadow-sm overflow-hidden">
+              <div className="p-4 bg-neutral-100 border-b border-neutral-200 flex items-center justify-between">
+                <h3 className="text-xs font-black uppercase text-black">
+                  Todas as Categorias Cadastradas ({categories.length})
+                </h3>
+                <button
+                  onClick={() => {
+                    if (confirm('Restaurar as categorias originais?')) {
+                      resetToDefaultCategories();
+                      showNotification('Categorias restauradas!');
+                    }
+                  }}
+                  className="text-[11px] text-neutral-600 hover:text-black font-bold uppercase underline"
+                >
+                  Restaurar Padrão
+                </button>
+              </div>
+
+              <div className="overflow-x-auto">
+                <table className="w-full text-left text-xs">
+                  <thead>
+                    <tr className="bg-neutral-50 border-b border-neutral-200 text-neutral-600 uppercase font-bold text-[10px]">
+                      <th className="p-3">Logo / Bandeira</th>
+                      <th className="p-3">Nome</th>
+                      <th className="p-3">Slug (URL)</th>
+                      <th className="p-3">Tipo</th>
+                      <th className="p-3">País / Continente</th>
+                      <th className="p-3 text-right">Ações</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-neutral-100">
+                    {categories.map((c) => (
+                      <tr key={c.id} className="hover:bg-neutral-50">
+                        <td className="p-3">
+                          <div className="w-10 h-10 rounded-lg overflow-hidden border border-neutral-200 bg-neutral-100 flex items-center justify-center p-0.5">
+                            {c.imageUrl ? (
+                              // eslint-disable-next-line @next/next/no-img-element
+                              <img src={c.imageUrl} alt={c.name} className="w-full h-full object-cover rounded" />
+                            ) : (
+                              <span className="text-[9px] font-bold text-neutral-500 uppercase">Sem foto</span>
+                            )}
+                          </div>
+                        </td>
+
+                        <td className="p-3 font-black text-black uppercase">{c.name}</td>
+                        <td className="p-3 font-mono text-neutral-500 text-[11px]">{c.slug}</td>
+                        <td className="p-3">
+                          <span className={`text-[10px] font-black uppercase px-2 py-0.5 rounded ${
+                            c.type === 'championship' ? 'bg-[#FFFBE6] text-black' : 'bg-neutral-200 text-neutral-800'
+                          }`}>
+                            {c.type === 'championship' ? 'Campeonato' : 'Seleção'}
+                          </span>
+                        </td>
+                        <td className="p-3 text-neutral-600">{c.country || c.continent}</td>
+
+                        <td className="p-3 text-right">
+                          <div className="flex items-center justify-end gap-1.5">
+                            <button
+                              onClick={() => startEditCategory(c)}
+                              className="p-1.5 rounded text-black hover:bg-neutral-100 transition"
+                              title="Editar Categoria"
+                            >
+                              <Edit3 size={15} />
+                            </button>
+                            <button
+                              onClick={() => {
+                                if (confirm(`Deseja excluir a categoria "${c.name}"?`)) {
+                                  deleteCategory(c.id);
+                                  showNotification('Categoria excluída!');
+                                }
+                              }}
+                              className="p-1.5 rounded text-red-600 hover:bg-red-50 transition"
+                              title="Excluir Categoria"
+                            >
+                              <Trash2 size={15} />
+                            </button>
+                          </div>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+          </div>
+        )}
+
+        {/* TAB 4: STORE SETTINGS */}
         {activeTab === 'settings' && (
           <div className="mt-6 grid grid-cols-1 lg:grid-cols-12 gap-6">
             <div className="lg:col-span-8">
               <form onSubmit={handleSaveConfig} className="bg-white rounded-2xl border border-neutral-200 p-6 sm:p-8 shadow-sm space-y-4">
                 <h2 className="text-base font-black uppercase text-black pb-3 border-b border-neutral-100">
-                  ⚙️ Configurações da Loja
+                  Configurações Gerais &amp; WhatsApp
                 </h2>
 
                 <div>
@@ -893,12 +1244,12 @@ export default function AdminDashboardPage() {
                   onClick={() => {
                     if (confirm('Restaurar o catálogo padrão de demonstração?')) {
                       resetToDefaultProducts();
-                      showNotification('🔄 Catálogo restaurado com sucesso!');
+                      showNotification('Catálogo restaurado com sucesso!');
                     }
                   }}
                   className="w-full py-2 px-3 rounded-lg bg-neutral-100 hover:bg-neutral-200 text-black text-xs font-bold uppercase transition"
                 >
-                  Restaurar Padrão
+                  Restaurar Camisas Padrão
                 </button>
               </div>
             </div>

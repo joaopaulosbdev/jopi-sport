@@ -23,7 +23,7 @@ export default function PromocoesPage() {
 
         <div className="mb-8">
           <div className="inline-flex items-center gap-2 bg-[#FFD900] text-black px-3 py-0.5 rounded text-xs font-black uppercase mb-2">
-            <Flame size={13} className="fill-black" /> Ofertas e Liquida Futebol
+            <Flame size={13} className="fill-black" /> Ofertas Especiais
           </div>
           <h1 className="text-2xl sm:text-4xl font-black uppercase tracking-tight text-black">
             OFERTAS &amp; PROMOÇÕES

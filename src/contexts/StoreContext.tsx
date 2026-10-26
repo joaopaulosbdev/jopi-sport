@@ -1,8 +1,9 @@
 'use client';
 
 import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
-import { Product, CartItem, StoreConfig } from '@/types';
+import { Product, CartItem, StoreConfig, Category } from '@/types';
 import { sampleProducts } from '@/data/sample-products';
+import { initialCategories } from '@/data/categories';
 
 interface AddToCartParams {
   product: Product;
@@ -16,6 +17,8 @@ interface AddToCartParams {
 interface StoreContextType {
   products: Product[];
   setProducts: React.Dispatch<React.SetStateAction<Product[]>>;
+  categories: Category[];
+  setCategories: React.Dispatch<React.SetStateAction<Category[]>>;
   cart: CartItem[];
   addToCart: (params: AddToCartParams) => void;
   removeFromCart: (cartItemId: string) => void;
@@ -34,6 +37,10 @@ interface StoreContextType {
   updateProduct: (id: string, product: Partial<Product>) => void;
   deleteProduct: (id: string) => void;
   resetToDefaultProducts: () => void;
+  addCategory: (cat: Omit<Category, 'id'>) => Category;
+  updateCategory: (id: string, cat: Partial<Category>) => void;
+  deleteCategory: (id: string) => void;
+  resetToDefaultCategories: () => void;
 }
 
 const StoreContext = createContext<StoreContextType | undefined>(undefined);
@@ -42,15 +49,16 @@ const DEFAULT_CONFIG: StoreConfig = {
   storeName: 'Jopi Sport Shop',
   whatsappNumber: '5511999999999',
   instagram: '@jopisportshop',
-  bannerText: '⚡ FRETE GRÁTIS A PARTIR DE 2 CAMISAS • COMPRE DIRETO NO WHATSAPP • PARCELE NO PIX OU CARTÃO',
+  bannerText: 'FRETE GRÁTIS A PARTIR DE 2 CAMISAS • COMPRE DIRETO NO WHATSAPP • PARCELE NO PIX OU CARTÃO',
   pixKey: 'pix@jopisportshop.com.br',
   addressNotice: 'Enviamos para todo o Brasil com código de rastreamento Correios',
 };
 
-const ADMIN_PASSWORD = 'admin'; // Easy default password for admin access
+const ADMIN_PASSWORD = 'admin';
 
 export function StoreProvider({ children }: { children: React.ReactNode }) {
-  const [products, setProducts] = useState<Product[]>([]);
+  const [products, setProducts] = useState<Product[]>(sampleProducts);
+  const [categories, setCategories] = useState<Category[]>(initialCategories);
   const [cart, setCart] = useState<CartItem[]>([]);
   const [storeConfig, setStoreConfig] = useState<StoreConfig>(DEFAULT_CONFIG);
   const [isAdmin, setIsAdmin] = useState(false);
@@ -61,6 +69,7 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     try {
       const savedProducts = localStorage.getItem('jopi_products');
+      const savedCategories = localStorage.getItem('jopi_categories');
       const savedConfig = localStorage.getItem('jopi_config');
       const savedCart = localStorage.getItem('jopi_cart');
       const savedAdmin = localStorage.getItem('jopi_admin_logged');
@@ -77,6 +86,18 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
         localStorage.setItem('jopi_products', JSON.stringify(sampleProducts));
       }
 
+      if (savedCategories) {
+        const parsedCats = JSON.parse(savedCategories);
+        if (Array.isArray(parsedCats) && parsedCats.length > 0) {
+          setCategories(parsedCats);
+        } else {
+          setCategories(initialCategories);
+        }
+      } else {
+        setCategories(initialCategories);
+        localStorage.setItem('jopi_categories', JSON.stringify(initialCategories));
+      }
+
       if (savedConfig) {
         setStoreConfig({ ...DEFAULT_CONFIG, ...JSON.parse(savedConfig) });
       }
@@ -91,6 +112,7 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
     } catch (err) {
       console.error('Error loading data from localStorage', err);
       setProducts(sampleProducts);
+      setCategories(initialCategories);
     } finally {
       setIsLoaded(true);
     }
@@ -105,6 +127,16 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
       console.error('Error saving products', err);
     }
   }, [products, isLoaded]);
+
+  // Sync categories changes to localStorage
+  useEffect(() => {
+    if (!isLoaded) return;
+    try {
+      localStorage.setItem('jopi_categories', JSON.stringify(categories));
+    } catch (err) {
+      console.error('Error saving categories', err);
+    }
+  }, [categories, isLoaded]);
 
   // Sync config
   useEffect(() => {
@@ -241,11 +273,37 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
     localStorage.setItem('jopi_products', JSON.stringify(sampleProducts));
   }, []);
 
+  const addCategory = useCallback((catData: Omit<Category, 'id'>) => {
+    const newCat: Category = {
+      ...catData,
+      id: catData.slug.toLowerCase().replace(/[^a-z0-9]/g, '-'),
+    };
+    setCategories(prev => [...prev, newCat]);
+    return newCat;
+  }, []);
+
+  const updateCategory = useCallback((id: string, updatedFields: Partial<Category>) => {
+    setCategories(prev =>
+      prev.map(c => (c.id === id ? { ...c, ...updatedFields } : c))
+    );
+  }, []);
+
+  const deleteCategory = useCallback((id: string) => {
+    setCategories(prev => prev.filter(c => c.id !== id));
+  }, []);
+
+  const resetToDefaultCategories = useCallback(() => {
+    setCategories(initialCategories);
+    localStorage.setItem('jopi_categories', JSON.stringify(initialCategories));
+  }, []);
+
   return (
     <StoreContext.Provider
       value={{
         products,
         setProducts,
+        categories,
+        setCategories,
         cart,
         addToCart,
         removeFromCart,
@@ -264,6 +322,10 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
         updateProduct,
         deleteProduct,
         resetToDefaultProducts,
+        addCategory,
+        updateCategory,
+        deleteCategory,
+        resetToDefaultCategories,
       }}
     >
       {children}

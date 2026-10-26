@@ -3,7 +3,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { Category } from '@/types';
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, Trophy, Globe2 } from 'lucide-react';
 
 interface CategoryCardProps {
   category: Category;
@@ -17,9 +17,21 @@ export default function CategoryCard({ category, basePath }: CategoryCardProps) 
       className="group relative bg-white border border-neutral-200 hover:border-black rounded-xl p-4 sm:p-5 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between overflow-hidden"
     >
       <div className="flex items-center justify-between mb-3">
-        <span className="text-3xl sm:text-4xl filter drop-shadow-sm group-hover:scale-110 transition-transform duration-300">
-          {category.icon}
-        </span>
+        {category.imageUrl ? (
+          <div className="w-12 h-12 rounded-lg overflow-hidden border border-neutral-200 bg-neutral-100 flex items-center justify-center p-1 group-hover:scale-105 transition-transform duration-300">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={category.imageUrl}
+              alt={category.name}
+              className="w-full h-full object-cover rounded"
+            />
+          </div>
+        ) : (
+          <div className="w-12 h-12 rounded-lg bg-black text-[#FFD900] flex items-center justify-center font-black text-sm uppercase group-hover:scale-105 transition-transform duration-300">
+            {category.type === 'championship' ? <Trophy size={22} /> : <Globe2 size={22} />}
+          </div>
+        )}
+
         <span className="w-8 h-8 rounded-full bg-neutral-100 group-hover:bg-[#FFD900] text-black flex items-center justify-center transition-colors">
           <ArrowRight size={15} className="group-hover:translate-x-0.5 transition-transform" />
         </span>

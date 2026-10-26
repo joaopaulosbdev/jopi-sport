@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import { Product } from '@/types';
 import { useStore } from '@/contexts/StoreContext';
-import { MessageCircle, ShoppingBag, Check, Star, ArrowRight } from 'lucide-react';
+import { MessageCircle, ShoppingBag, Check } from 'lucide-react';
 
 interface ProductCardProps {
   product: Product;
@@ -35,7 +35,9 @@ export default function ProductCard({ product }: ProductCardProps) {
   const handleWhatsAppBuy = (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
-    const text = `Olá Jopi Sport Shop! Gostaria de comprar o seguinte manto:\n\n👕 *${product.name}*\n🏷️ Time: ${product.team}\n📏 Tamanho: *${selectedSize}*\n💰 Valor: *R$ ${product.price.toFixed(2)}*\n\nComo faço para finalizar o pedido?`;
+    const versionLabel = product.version === 'jogador' ? 'Versão Jogador' : 'Versão Torcedor';
+    const deliveryLabel = product.isReadyDelivery ? 'Pronta Entrega' : 'Sob Encomenda';
+    const text = `Olá Jopi Sport Shop! Gostaria de comprar o seguinte manto:\n\n*${product.name}*\nTime: ${product.team}\nVersão: ${versionLabel}\nDisponibilidade: ${deliveryLabel}\nTamanho: ${selectedSize}\nValor: R$ ${product.price.toFixed(2)}\n\nComo faço para finalizar o pedido?`;
     const cleanNumber = storeConfig.whatsappNumber.replace(/\D/g, '');
     window.open(`https://wa.me/${cleanNumber}?text=${encodeURIComponent(text)}`, '_blank');
   };
@@ -54,7 +56,7 @@ export default function ProductCard({ product }: ProductCardProps) {
       <div>
         <Link href={`/produto/${product.id}`} className="relative block aspect-square bg-[#F8F9FA] overflow-hidden p-4">
           
-          {/* Badge overlays (Netshoes style high-contrast pills) */}
+          {/* Badges based on product data */}
           <div className="absolute top-2.5 left-2.5 flex flex-col gap-1 z-10">
             {discount > 0 && (
               <span className="bg-black text-[#FFD900] text-[10px] font-black uppercase px-2 py-0.5 rounded shadow">
@@ -66,11 +68,25 @@ export default function ProductCard({ product }: ProductCardProps) {
                 LANÇAMENTO
               </span>
             )}
+            <span className={`text-[10px] font-black uppercase px-2 py-0.5 rounded shadow ${
+              product.isReadyDelivery 
+                ? 'bg-[#E8F8EE] text-[#008A3E] border border-[#008A3E]/30' 
+                : 'bg-neutral-100 text-neutral-700 border border-neutral-300'
+            }`}>
+              {product.isReadyDelivery ? 'PRONTA ENTREGA' : 'SOB ENCOMENDA'}
+            </span>
           </div>
 
-          <div className="absolute top-2.5 right-2.5 z-10">
+          <div className="absolute top-2.5 right-2.5 z-10 flex flex-col items-end gap-1">
             <span className="bg-neutral-100 text-neutral-800 text-[10px] font-bold px-2 py-0.5 rounded border border-neutral-300">
               {typeLabels[product.type] || product.type}
+            </span>
+            <span className={`text-[9px] font-black uppercase px-1.5 py-0.5 rounded border ${
+              product.version === 'jogador'
+                ? 'bg-black text-[#FFD900] border-black'
+                : 'bg-neutral-200 text-neutral-800 border-neutral-300'
+            }`}>
+              {product.version === 'jogador' ? 'JOGADOR' : 'TORCEDOR'}
             </span>
           </div>
 
@@ -86,18 +102,17 @@ export default function ProductCard({ product }: ProductCardProps) {
             />
           ) : (
             <div className="w-full h-full flex flex-col items-center justify-center bg-black text-white p-4 rounded-lg">
-              <span className="text-5xl mb-2">👕</span>
               <span className="text-xs font-black tracking-wider uppercase text-[#FFD900] text-center">
                 {product.team}
               </span>
-              <span className="text-[10px] text-neutral-400">Coleção {product.season}</span>
+              <span className="text-[10px] text-neutral-400">Temporada {product.season}</span>
             </div>
           )}
 
           {!product.inStock && (
             <div className="absolute inset-0 bg-black/75 backdrop-blur-[2px] flex items-center justify-center z-20">
               <span className="bg-[#FFD900] text-black font-black text-xs uppercase px-3.5 py-1 rounded shadow">
-                ESGOTADO NO MOMENTO
+                ESGOTADO
               </span>
             </div>
           )}
@@ -106,25 +121,24 @@ export default function ProductCard({ product }: ProductCardProps) {
         {/* Content Section */}
         <div className="p-4">
           
-          {/* Subtitle & Rating */}
+          {/* Subtitle with Team and Season from registration (NO fake reviews!) */}
           <div className="flex items-center justify-between text-[11px] text-neutral-500 mb-1">
             <span className="font-bold uppercase tracking-wider text-neutral-700">
               {product.team}
             </span>
-            <div className="flex items-center gap-1 text-[#FFD900]">
-              <Star size={11} className="fill-[#FFD900]" />
-              <span className="text-[10px] font-bold text-neutral-700">4.9 (42)</span>
-            </div>
+            <span className="text-[10px] font-bold text-neutral-500">
+              {product.season}
+            </span>
           </div>
 
           {/* Title */}
           <Link href={`/produto/${product.id}`} className="block">
-            <h3 className="font-bold text-neutral-900 text-xs sm:text-sm leading-snug line-clamp-2 hover:text-[#E6C300] transition h-10">
+            <h3 className="font-bold text-neutral-900 text-xs sm:text-sm leading-snug line-clamp-2 hover:text-[#B29200] transition h-10">
               {product.name}
             </h3>
           </Link>
 
-          {/* Pricing (Netshoes signature style) */}
+          {/* Pricing */}
           <div className="mt-2 pt-2 border-t border-neutral-100">
             {product.originalPrice ? (
               <div className="text-[11px] text-neutral-400 line-through">
@@ -179,7 +193,7 @@ export default function ProductCard({ product }: ProductCardProps) {
         </div>
       </div>
 
-      {/* Action Buttons (Netshoes Style High Contrast Yellow Button) */}
+      {/* Action Buttons */}
       <div className="p-4 pt-0 flex items-center gap-2">
         <button
           type="button"

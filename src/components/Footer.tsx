@@ -3,20 +3,18 @@
 import React from 'react';
 import Link from 'next/link';
 import { useStore } from '@/contexts/StoreContext';
-import { championships, nationalTeams } from '@/data/categories';
 import { 
   MessageCircle, 
-  CreditCard, 
-  Truck, 
-  ShieldCheck, 
-  RotateCcw,
   Phone,
-  Zap,
-  ArrowRight
+  ShieldCheck,
+  Lock
 } from 'lucide-react';
 
 export default function Footer() {
-  const { storeConfig } = useStore();
+  const { storeConfig, categories, isAdmin } = useStore();
+
+  const championships = categories.filter((c) => c.type === 'championship');
+  const nationalTeams = categories.filter((c) => c.type === 'national');
 
   const handleWhatsAppContact = () => {
     const text = 'Olá Jopi Sport Shop! Vim pelo site e gostaria de saber mais informações.';
@@ -26,7 +24,7 @@ export default function Footer() {
 
   return (
     <footer className="bg-black text-white border-t-4 border-[#FFD900]">
-      {/* Floating WhatsApp Action Button in Yellow & Black */}
+      {/* Floating WhatsApp Action Button */}
       <button
         onClick={handleWhatsAppContact}
         className="fixed bottom-5 right-5 z-50 bg-[#FFD900] hover:bg-[#E6C300] text-black px-4 py-3 rounded-full shadow-2xl shadow-black/50 flex items-center gap-2.5 font-black text-xs uppercase tracking-wider transition-all transform hover:scale-105 active:scale-95 group border-2 border-black"
@@ -35,28 +33,6 @@ export default function Footer() {
         <MessageCircle size={22} className="fill-black text-black group-hover:rotate-12 transition-transform" />
         <span className="hidden sm:inline">Compre pelo WhatsApp</span>
       </button>
-
-      {/* Netshoes-Style Newsletter / WhatsApp Vip Club Strip */}
-      <div className="bg-neutral-900 border-b border-neutral-800 py-6">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 flex flex-col md:flex-row items-center justify-between gap-4">
-          <div className="text-center md:text-left">
-            <h3 className="text-base font-black text-white uppercase italic">
-              RECEBA NOVIDADES E <span className="text-[#FFD900]">PROMOÇÕES EXCLUSIVAS</span>
-            </h3>
-            <p className="text-xs text-neutral-400 mt-0.5">
-              Entre em contato direto no WhatsApp e receba em primeira mão lançamentos de mantos
-            </p>
-          </div>
-
-          <button
-            onClick={handleWhatsAppContact}
-            className="px-6 py-2.5 bg-[#FFD900] hover:bg-[#E6C300] text-black text-xs font-black uppercase rounded-lg flex items-center gap-2 transition shadow"
-          >
-            <MessageCircle size={15} className="fill-black" />
-            <span>ENTRAR NO GRUPO VIP DE OFERTAS</span>
-          </button>
-        </div>
-      </div>
 
       {/* Main Footer Links */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 py-12">
@@ -74,12 +50,12 @@ export default function Footer() {
                 </span>
               </div>
               <span className="text-[10px] font-black uppercase tracking-[0.25em] text-[#FFD900] block mt-1">
-                CAMISAS DE TIME &amp; MANTOS OFICIAIS
+                CAMISAS DE TIME &amp; CLUBES
               </span>
             </Link>
 
-            <p className="text-neutral-400 text-xs sm:text-sm leading-relaxed max-w-sm">
-              Inspirada nas maiores varejistas esportivas do Brasil. Camisas de clubes do Brasileirão, ligas européias e seleções mundiais com personalização de nome e número e atendimento humano no WhatsApp.
+            <p className="text-neutral-400 text-xs sm:text-sm leading-relaxed max-w-sm font-medium">
+              Camisas dos maiores clubes do futebol brasileiro, ligas européias e seleções mundiais. Opções de personalização de nome e número com atendimento humano no WhatsApp.
             </p>
 
             <div className="pt-2 flex items-center gap-3">
@@ -102,7 +78,6 @@ export default function Footer() {
               {championships.slice(0, 6).map((c) => (
                 <li key={c.id}>
                   <Link href={`/campeonatos/${c.slug}`} className="hover:text-[#FFD900] transition flex items-center gap-1.5 font-medium">
-                    <span>{c.icon}</span>
                     <span>{c.name}</span>
                   </Link>
                 </li>
@@ -124,7 +99,6 @@ export default function Footer() {
               {nationalTeams.slice(0, 6).map((s) => (
                 <li key={s.id}>
                   <Link href={`/selecoes/${s.slug}`} className="hover:text-[#FFD900] transition flex items-center gap-1.5 font-medium">
-                    <span>{s.icon}</span>
                     <span>{s.name}</span>
                   </Link>
                 </li>
@@ -137,10 +111,10 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* Atendimento & Segurança */}
+          {/* Atendimento & Painel Admin Exclusivo no Rodapé */}
           <div>
             <h4 className="font-black text-xs uppercase tracking-wider text-[#FFD900] mb-4 pb-1 border-b border-neutral-800 inline-block">
-              AJUDA &amp; SUPORTE
+              ATENDIMENTO
             </h4>
             <ul className="space-y-2 text-xs text-neutral-400">
               <li>
@@ -155,7 +129,7 @@ export default function Footer() {
               </li>
               <li>
                 <Link href="/lancamentos" className="hover:text-[#FFD900] transition font-medium">
-                  Coleção 2025/2026
+                  Lançamentos
                 </Link>
               </li>
               <li>
@@ -163,9 +137,15 @@ export default function Footer() {
                   Tirar dúvidas no WhatsApp
                 </button>
               </li>
-              <li className="pt-2">
-                <Link href="/admin/login" className="text-[11px] text-neutral-600 hover:text-neutral-400">
-                  🔒 Painel Admin Jopi Sport Shop
+              
+              {/* Botão Admin no rodapé apenas */}
+              <li className="pt-4 border-t border-neutral-800 mt-3">
+                <Link
+                  href={isAdmin ? "/admin" : "/admin/login"}
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-neutral-900 hover:bg-neutral-800 text-[#FFD900] text-[11px] font-black uppercase tracking-wider border border-neutral-800 transition"
+                >
+                  <Lock size={12} />
+                  <span>{isAdmin ? "Painel do Administrador" : "Acesso Admin"}</span>
                 </Link>
               </li>
             </ul>

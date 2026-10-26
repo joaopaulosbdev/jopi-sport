@@ -11,10 +11,9 @@ import {
   MessageCircle, 
   ArrowLeft, 
   Truck, 
-  ShieldCheck, 
   Copy, 
   Check,
-  CreditCard
+  ClipboardList
 } from 'lucide-react';
 
 export default function CartPage() {
@@ -28,47 +27,51 @@ export default function CartPage() {
   const [copied, setCopied] = useState(false);
 
   const generateWhatsAppMessage = () => {
-    let msg = `⚡ *NOVO PEDIDO - ${storeConfig.storeName.toUpperCase()}*\n`;
-    msg += `━━━━━━━━━━━━━━━━━━━━━\n\n`;
+    let msg = `*NOVO PEDIDO - ${storeConfig.storeName.toUpperCase()}*\n`;
+    msg += `-------------------------------------\n\n`;
 
     if (customerName.trim()) {
-      msg += `👤 *Cliente:* ${customerName.trim()}\n`;
+      msg += `Cliente: ${customerName.trim()}\n`;
     }
     if (customerCity.trim()) {
-      msg += `📍 *Cidade/UF:* ${customerCity.trim()}\n`;
+      msg += `Cidade/UF: ${customerCity.trim()}\n`;
     }
     if (customerAddress.trim()) {
-      msg += `🏠 *Endereço:* ${customerAddress.trim()}\n`;
+      msg += `Endereço: ${customerAddress.trim()}\n`;
     }
-    msg += `💳 *Forma de Pagamento:* ${paymentMethod}\n\n`;
+    msg += `Forma de Pagamento: ${paymentMethod}\n\n`;
 
-    msg += `📦 *ITENS DO PEDIDO:*\n`;
+    msg += `ITENS DO PEDIDO:\n`;
     cart.forEach((item, index) => {
+      const versionLabel = item.product.version === 'jogador' ? 'Versão Jogador' : 'Versão Torcedor';
+      const deliveryLabel = item.product.isReadyDelivery ? 'Pronta Entrega' : 'Sob Encomenda';
+
       msg += `\n${index + 1}. *${item.product.name}*\n`;
-      msg += `   • Tamanho: *${item.size}*\n`;
-      msg += `   • Quantidade: ${item.quantity}x\n`;
+      msg += `   - Tamanho: ${item.size}\n`;
+      msg += `   - Quantidade: ${item.quantity}x\n`;
+      msg += `   - Tipo: ${versionLabel} | ${deliveryLabel}\n`;
       if (item.customName || item.customNumber) {
-        msg += `   • Personalização: ${item.customName || '-'} Nº ${item.customNumber || '-'}\n`;
+        msg += `   - Personalização: ${item.customName || '-'} Nº ${item.customNumber || '-'}\n`;
       }
       if (item.includePatch) {
-        msg += `   • Patch Oficial de Manga: Sim\n`;
+        msg += `   - Patch Oficial de Manga: Sim\n`;
       }
-      msg += `   • Subtotal: R$ ${(item.unitPrice * item.quantity).toFixed(2)}\n`;
+      msg += `   - Subtotal: R$ ${(item.unitPrice * item.quantity).toFixed(2)}\n`;
     });
 
-    msg += `\n━━━━━━━━━━━━━━━━━━━━━\n`;
-    msg += `💰 *TOTAL DO PEDIDO: R$ ${cartTotal.toFixed(2)}*\n`;
+    msg += `\n-------------------------------------\n`;
+    msg += `*TOTAL DO PEDIDO: R$ ${cartTotal.toFixed(2)}*\n`;
     if (cart.length >= 2) {
-      msg += `🎁 *FRETE:* Grátis (Promocional 2+ camisas)\n`;
+      msg += `Frete: Grátis (Promocional 2+ camisas)\n`;
     } else {
-      msg += `🚚 *FRETE:* A calcular para minha região\n`;
+      msg += `Frete: A calcular para minha região\n`;
     }
 
     if (notes.trim()) {
-      msg += `\n📝 *Observações:* ${notes.trim()}\n`;
+      msg += `\nObservações: ${notes.trim()}\n`;
     }
 
-    msg += `\nOlá! Gostaria de confirmar meu pedido e obter a chave Pix para pagamento!`;
+    msg += `\nOlá! Gostaria de confirmar meu pedido e obter a chave Pix para pagamento.`;
     return msg;
   };
 
@@ -93,7 +96,7 @@ export default function CartPage() {
           </div>
           <h1 className="text-xl sm:text-2xl font-black uppercase text-black mb-1">Seu carrinho está vazio</h1>
           <p className="text-xs sm:text-sm text-neutral-500 mb-6 font-medium">
-            Aproveite a nova coleção de mantos e monte seu pedido com frete grátis a partir de 2 camisas!
+            Aproveite nossa coleção e monte seu pedido com frete grátis a partir de 2 camisas!
           </p>
           <div className="flex flex-col gap-2">
             <Link
@@ -118,7 +121,7 @@ export default function CartPage() {
     <div className="bg-[#F4F5F7] py-8 sm:py-12">
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
         
-        {/* Title & Free Shipping Indicator */}
+        {/* Title */}
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-6 pb-4 border-b border-neutral-200">
           <div>
             <div className="flex items-center gap-2">
@@ -127,7 +130,7 @@ export default function CartPage() {
                 MEU CARRINHO DE COMPRAS
               </h1>
             </div>
-            <p className="text-xs text-neutral-500 mt-0.5 pl-4">
+            <p className="text-xs text-neutral-500 mt-0.5 pl-4 font-medium">
               {cart.reduce((total, i) => total + i.quantity, 0)} camisa(s) selecionada(s)
             </p>
           </div>
@@ -140,13 +143,13 @@ export default function CartPage() {
           </button>
         </div>
 
-        {/* Free Shipping Progress Strip */}
+        {/* Free Shipping Strip */}
         <div className="bg-[#FFFBE6] border border-[#FFD900] rounded-xl p-3.5 mb-6 flex items-center justify-between text-xs font-bold text-black">
           <div className="flex items-center gap-2">
             <Truck size={18} className="text-black" />
             <span>
               {cart.length >= 2 ? (
-                <strong className="text-black uppercase">🎉 VOCÊ GANHOU FRETE GRÁTIS NESTE PEDIDO!</strong>
+                <strong className="text-black uppercase">VOCÊ GANHOU FRETE GRÁTIS NESTE PEDIDO!</strong>
               ) : (
                 <span>Adicione mais 1 camisa ao carrinho e <strong>GANHE FRETE GRÁTIS</strong>!</span>
               )}
@@ -159,7 +162,7 @@ export default function CartPage() {
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
           
-          {/* Left Column: Items List */}
+          {/* Items List */}
           <div className="lg:col-span-7 space-y-3">
             {cart.map((item) => (
               <div
@@ -176,7 +179,7 @@ export default function CartPage() {
                         className="w-full h-full object-cover"
                       />
                     ) : (
-                      <span className="text-3xl">👕</span>
+                      <span className="text-xs font-bold uppercase text-black">Manto</span>
                     )}
                   </div>
 
@@ -184,22 +187,30 @@ export default function CartPage() {
                     <h3 className="font-black text-sm text-black leading-snug uppercase">
                       {item.product.name}
                     </h3>
-                    <div className="flex items-center gap-2 mt-1 text-xs text-neutral-600">
+                    <div className="flex flex-wrap items-center gap-2 mt-1 text-xs text-neutral-600">
                       <span className="font-extrabold text-black bg-neutral-100 px-2 py-0.5 rounded border border-neutral-200">
                         Tam: {item.size}
                       </span>
                       <span>•</span>
                       <span>{item.product.team}</span>
+                      <span>•</span>
+                      <span className="font-bold text-neutral-700">
+                        {item.product.version === 'jogador' ? 'Versão Jogador' : 'Versão Torcedor'}
+                      </span>
+                      <span>•</span>
+                      <span className={item.product.isReadyDelivery ? 'text-[#008A3E] font-bold' : 'text-neutral-600'}>
+                        {item.product.isReadyDelivery ? 'Pronta Entrega' : 'Sob Encomenda'}
+                      </span>
                     </div>
 
                     {(item.customName || item.customNumber) && (
                       <div className="text-[11px] text-black bg-[#FFFBE6] border border-[#FFD900]/40 px-2 py-0.5 rounded mt-1.5 inline-block font-bold">
-                        ✍️ {item.customName} Nº {item.customNumber}
+                        Personalização: {item.customName} Nº {item.customNumber}
                       </div>
                     )}
                     {item.includePatch && (
                       <div className="text-[11px] text-black bg-neutral-100 border border-neutral-200 px-2 py-0.5 rounded mt-1.5 inline-block ml-1 font-bold">
-                        🏆 Patch Oficial
+                        Patch Oficial
                       </div>
                     )}
 
@@ -256,7 +267,8 @@ export default function CartPage() {
           <div className="lg:col-span-5 space-y-4">
             <div className="bg-white rounded-2xl border border-neutral-200 p-6 shadow-sm space-y-4">
               <h2 className="text-base font-black uppercase text-black pb-3 border-b border-neutral-100 flex items-center gap-2">
-                <span>📋</span> Resumo do Pedido
+                <ClipboardList size={18} />
+                <span>Resumo do Pedido</span>
               </h2>
 
               <div className="space-y-3">
@@ -269,7 +281,7 @@ export default function CartPage() {
                     placeholder="Seu nome para o envio..."
                     value={customerName}
                     onChange={(e) => setCustomerName(e.target.value)}
-                    className="w-full bg-[#F8F9FA] border border-neutral-300 rounded-lg px-3.5 py-2 text-xs text-black focus:outline-none focus:border-black"
+                    className="w-full bg-[#F8F9FA] border border-neutral-300 rounded-lg px-3.5 py-2 text-xs text-black focus:outline-none focus:border-black font-medium"
                   />
                 </div>
 
@@ -283,7 +295,7 @@ export default function CartPage() {
                       placeholder="Ex: São Paulo / SP"
                       value={customerCity}
                       onChange={(e) => setCustomerCity(e.target.value)}
-                      className="w-full bg-[#F8F9FA] border border-neutral-300 rounded-lg px-3.5 py-2 text-xs text-black focus:outline-none focus:border-black"
+                      className="w-full bg-[#F8F9FA] border border-neutral-300 rounded-lg px-3.5 py-2 text-xs text-black focus:outline-none focus:border-black font-medium"
                     />
                   </div>
                   <div>
@@ -293,7 +305,7 @@ export default function CartPage() {
                     <select
                       value={paymentMethod}
                       onChange={(e) => setPaymentMethod(e.target.value as any)}
-                      className="w-full bg-[#F8F9FA] border border-neutral-300 rounded-lg px-3.5 py-2 text-xs text-black focus:outline-none focus:border-black"
+                      className="w-full bg-[#F8F9FA] border border-neutral-300 rounded-lg px-3.5 py-2 text-xs text-black focus:outline-none focus:border-black font-bold"
                     >
                       <option value="Pix">Pix (Aprovação rápida)</option>
                       <option value="Cartao">Cartão de Crédito</option>
@@ -310,7 +322,7 @@ export default function CartPage() {
                     placeholder="Rua, Número, Bairro e CEP..."
                     value={customerAddress}
                     onChange={(e) => setCustomerAddress(e.target.value)}
-                    className="w-full bg-[#F8F9FA] border border-neutral-300 rounded-lg px-3.5 py-2 text-xs text-black focus:outline-none focus:border-black"
+                    className="w-full bg-[#F8F9FA] border border-neutral-300 rounded-lg px-3.5 py-2 text-xs text-black focus:outline-none focus:border-black font-medium"
                   />
                 </div>
 
@@ -323,7 +335,7 @@ export default function CartPage() {
                     placeholder="Ex: Embalagem para presente, etc..."
                     value={notes}
                     onChange={(e) => setNotes(e.target.value)}
-                    className="w-full bg-[#F8F9FA] border border-neutral-300 rounded-lg px-3.5 py-2 text-xs text-black focus:outline-none focus:border-black"
+                    className="w-full bg-[#F8F9FA] border border-neutral-300 rounded-lg px-3.5 py-2 text-xs text-black focus:outline-none focus:border-black font-medium"
                   />
                 </div>
               </div>
@@ -348,7 +360,7 @@ export default function CartPage() {
                 </div>
               </div>
 
-              {/* Netshoes-Style High Contrast Yellow Checkout CTA */}
+              {/* WhatsApp Checkout Button */}
               <button
                 onClick={handleCheckoutWhatsApp}
                 className="w-full py-4 px-6 rounded-lg bg-[#FFD900] hover:bg-[#E6C300] active:bg-[#CCAC00] text-black font-black text-sm uppercase tracking-wider flex items-center justify-center gap-2 shadow-xl transition transform hover:-translate-y-0.5"

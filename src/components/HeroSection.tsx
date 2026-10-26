@@ -11,9 +11,9 @@ import {
   CreditCard, 
   ShieldCheck, 
   RotateCcw,
-  Zap,
   ArrowRight,
-  Flame
+  Flame,
+  CheckCircle2
 } from 'lucide-react';
 
 export default function HeroSection() {
@@ -27,9 +27,8 @@ export default function HeroSection() {
 
   return (
     <div>
-      {/* Main Netshoes-Style Promotional Hero Banner */}
+      {/* Promotional Hero Banner */}
       <section className="relative bg-black text-white overflow-hidden border-b border-neutral-800">
-        {/* Angled background pattern */}
         <div 
           className="absolute inset-0 opacity-15 pointer-events-none"
           style={{
@@ -56,8 +55,8 @@ export default function HeroSection() {
               </h1>
 
               <p className="text-neutral-300 text-sm sm:text-base md:text-lg max-w-xl mx-auto lg:mx-0 font-medium leading-relaxed">
-                As melhores camisas de time do Brasileirão, ligas européias e seleções com padrão oficial 1:1. 
-                Personalize com seu nome e número e compre direto pelo WhatsApp!
+                As melhores camisas de time do Brasileirão, ligas européias e seleções mundiais. 
+                Versão Torcedor e Versão Jogador, com pronta entrega ou encomenda e personalização direto no WhatsApp.
               </p>
 
               {/* CTAs */}
@@ -88,19 +87,19 @@ export default function HeroSection() {
               </div>
 
               <div className="pt-2 flex flex-wrap items-center justify-center lg:justify-start gap-4 text-xs font-bold text-neutral-400">
-                <span className="flex items-center gap-1">
-                  <span className="w-2 h-2 rounded-full bg-[#FFD900]" /> Escudo Bordado
+                <span className="flex items-center gap-1.5">
+                  <CheckCircle2 size={14} className="text-[#FFD900]" /> Escudo Bordado ou Termocolado
                 </span>
-                <span className="flex items-center gap-1">
-                  <span className="w-2 h-2 rounded-full bg-[#FFD900]" /> Tecido DryFit Respirável
+                <span className="flex items-center gap-1.5">
+                  <CheckCircle2 size={14} className="text-[#FFD900]" /> Tecido DryFit Respirável
                 </span>
-                <span className="flex items-center gap-1">
-                  <span className="w-2 h-2 rounded-full bg-[#FFD900]" /> Envio com Rastreamento
+                <span className="flex items-center gap-1.5">
+                  <CheckCircle2 size={14} className="text-[#FFD900]" /> Opção Pronta Entrega
                 </span>
               </div>
             </div>
 
-            {/* Right Promo Box (Netshoes Style Promo Callout) */}
+            {/* Right Promo Box */}
             <div className="lg:col-span-5">
               <div className="bg-gradient-to-b from-neutral-900 to-black border-2 border-[#FFD900] rounded-2xl p-6 sm:p-8 shadow-2xl relative">
                 
@@ -122,15 +121,15 @@ export default function HeroSection() {
 
                 <div className="py-5 space-y-3">
                   <div className="flex items-center justify-between text-xs font-bold text-neutral-300 bg-neutral-950 p-2.5 rounded-lg border border-neutral-800">
-                    <span>⚽ Clubes Nacionais (Brasileirão)</span>
+                    <span>Clubes Nacionais (Brasileirão)</span>
                     <span className="text-[#FFD900]">A partir de R$ 139,90</span>
                   </div>
                   <div className="flex items-center justify-between text-xs font-bold text-neutral-300 bg-neutral-950 p-2.5 rounded-lg border border-neutral-800">
-                    <span>🏴󠁧󠁢󠁥󠁮󠁧󠁿 Premier League &amp; Europa</span>
+                    <span>Premier League &amp; Europa</span>
                     <span className="text-[#FFD900]">A partir de R$ 179,90</span>
                   </div>
                   <div className="flex items-center justify-between text-xs font-bold text-neutral-300 bg-neutral-950 p-2.5 rounded-lg border border-neutral-800">
-                    <span>🌍 Seleções Mundiais</span>
+                    <span>Seleções Mundiais</span>
                     <span className="text-[#FFD900]">A partir de R$ 169,90</span>
                   </div>
                 </div>
@@ -149,7 +148,7 @@ export default function HeroSection() {
         </div>
       </section>
 
-      {/* Netshoes-Style 4 Benefits Bar (High Contrast Clean Strip) */}
+      {/* 4 Benefits Bar */}
       <section className="bg-white border-b border-neutral-200 py-4 shadow-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 divide-y sm:divide-y-0 sm:divide-x divide-neutral-200">
@@ -179,8 +178,8 @@ export default function HeroSection() {
                 <ShieldCheck size={20} className="stroke-[2.5]" />
               </div>
               <div>
-                <h4 className="text-xs font-black uppercase text-black">Padrão Oficial 1:1</h4>
-                <p className="text-[11px] text-neutral-500 font-medium">Bordados e acabamentos originais</p>
+                <h4 className="text-xs font-black uppercase text-black">Qualidade 1:1</h4>
+                <p className="text-[11px] text-neutral-500 font-medium">Bordados e acabamentos premium</p>
               </div>
             </div>
 

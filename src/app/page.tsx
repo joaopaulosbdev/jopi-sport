@@ -6,21 +6,21 @@ import HeroSection from '@/components/HeroSection';
 import ProductCard from '@/components/ProductCard';
 import CategoryCard from '@/components/CategoryCard';
 import { useStore } from '@/contexts/StoreContext';
-import { championships, nationalTeams } from '@/data/categories';
 import { 
   Trophy, 
   Globe2, 
-  Sparkles, 
   Flame, 
   MessageCircle, 
   ArrowRight,
   FilterX,
-  Zap,
-  TrendingUp
+  Search
 } from 'lucide-react';
 
 export default function Home() {
-  const { products, searchQuery, setSearchQuery, storeConfig } = useStore();
+  const { products, searchQuery, setSearchQuery, storeConfig, categories } = useStore();
+
+  const championships = categories.filter((c) => c.type === 'championship');
+  const nationalTeams = categories.filter((c) => c.type === 'national');
 
   const filteredProducts = searchQuery.trim()
     ? products.filter((p) => {
@@ -76,7 +76,9 @@ export default function Home() {
           </div>
         ) : (
           <div className="bg-white rounded-2xl border border-neutral-200 p-12 text-center max-w-lg mx-auto shadow-sm">
-            <span className="text-5xl block mb-4">🔍</span>
+            <div className="w-12 h-12 bg-neutral-100 rounded-full flex items-center justify-center mx-auto mb-3 text-neutral-400">
+              <Search size={24} />
+            </div>
             <h2 className="text-lg font-black uppercase text-neutral-900 mb-1">Nenhum resultado encontrado</h2>
             <p className="text-xs text-neutral-500 mb-6">
               Não encontramos nenhuma camisa com o termo &ldquo;{searchQuery}&rdquo;. Peça sob encomenda no WhatsApp!
@@ -106,7 +108,7 @@ export default function Home() {
       {/* Hero Section */}
       <HeroSection />
 
-      {/* Destaques da Rodada (Netshoes Section Shelf) */}
+      {/* Destaques da Rodada */}
       <section className="py-10 sm:py-14 max-w-7xl mx-auto px-4 sm:px-6">
         <div className="flex items-end justify-between mb-6 pb-3 border-b border-neutral-200">
           <div>
@@ -115,12 +117,12 @@ export default function Home() {
               <h2 className="text-xl sm:text-2xl font-black uppercase tracking-tight text-neutral-900 flex items-center gap-2">
                 <span>MAIS VENDIDOS DA SEMANA</span>
                 <span className="hidden sm:inline bg-black text-[#FFD900] text-[10px] font-black uppercase px-2 py-0.5 rounded">
-                  TOP PICKS
+                  DESTAQUES
                 </span>
               </h2>
             </div>
-            <p className="text-xs text-neutral-500 mt-1 pl-4">
-              Os mantos oficiais mais procurados pelos torcedores em todo o Brasil
+            <p className="text-xs text-neutral-500 mt-1 pl-4 font-medium">
+              Os mantos mais procurados pelos torcedores em todo o Brasil
             </p>
           </div>
           
@@ -140,19 +142,19 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Netshoes-Style Promotional Banner Grid */}
+      {/* Promotional Banner Grid */}
       <section className="py-4 max-w-7xl mx-auto px-4 sm:px-6">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           
           <div className="bg-black text-white rounded-2xl p-6 sm:p-8 flex items-center justify-between border-2 border-[#FFD900] relative overflow-hidden">
             <div className="space-y-2 z-10">
               <span className="bg-[#FFD900] text-black text-[10px] font-black uppercase px-2.5 py-0.5 rounded inline-block">
-                BRASILEIRÃO 2025/26
+                BRASILEIRÃO
               </span>
               <h3 className="text-2xl font-black italic uppercase tracking-tight text-white">
                 MANTOS NACIONAIS
               </h3>
-              <p className="text-xs text-neutral-300 max-w-xs">
+              <p className="text-xs text-neutral-300 max-w-xs font-medium">
                 Flamengo, Palmeiras, Corinthians, São Paulo, Vasco e muito mais com personalização.
               </p>
               <Link
@@ -162,9 +164,6 @@ export default function Home() {
                 <span>CONFERIR CLUBES</span>
                 <ArrowRight size={14} />
               </Link>
-            </div>
-            <div className="text-7xl opacity-20 pointer-events-none select-none">
-              🇧🇷
             </div>
           </div>
 
@@ -176,7 +175,7 @@ export default function Home() {
               <h3 className="text-2xl font-black italic uppercase tracking-tight text-white">
                 GIGANTES DO MUNDO
               </h3>
-              <p className="text-xs text-neutral-300 max-w-xs">
+              <p className="text-xs text-neutral-300 max-w-xs font-medium">
                 Real Madrid, Barcelona, Manchester City, Liverpool, Bayern e Champions League.
               </p>
               <Link
@@ -186,9 +185,6 @@ export default function Home() {
                 <span>VER CAMISAS EUROPÉIAS</span>
                 <ArrowRight size={14} />
               </Link>
-            </div>
-            <div className="text-7xl opacity-20 pointer-events-none select-none">
-              ⭐
             </div>
           </div>
 
@@ -205,7 +201,7 @@ export default function Home() {
                 CAMPEONATOS &amp; LIGAS
               </h2>
             </div>
-            <p className="text-xs text-neutral-500 mt-1 pl-4">
+            <p className="text-xs text-neutral-500 mt-1 pl-4 font-medium">
               Navegue pelas principais competições do futebol mundial
             </p>
           </div>
@@ -236,12 +232,12 @@ export default function Home() {
                 <h2 className="text-xl sm:text-2xl font-black uppercase tracking-tight text-neutral-900 flex items-center gap-2">
                   <span>SELEÇÕES DO MUNDO</span>
                   <span className="bg-[#FFD900] text-black text-[10px] font-black uppercase px-2 py-0.5 rounded">
-                    COPAS DO MUNDO
+                    MUNDIAIS
                   </span>
                 </h2>
               </div>
-              <p className="text-xs text-neutral-500 mt-1 pl-4">
-                Vista o manto do seu país com qualidade e orgulho de torcedor
+              <p className="text-xs text-neutral-500 mt-1 pl-4 font-medium">
+                Vista o manto do seu país com orgulho e qualidade
               </p>
             </div>
             
@@ -274,8 +270,8 @@ export default function Home() {
                   <Flame size={20} className="text-[#FFD900] fill-[#FFD900]" />
                 </h2>
               </div>
-              <p className="text-xs text-neutral-500 mt-1 pl-4">
-                Mantos oficiais com descontos por tempo limitado
+              <p className="text-xs text-neutral-500 mt-1 pl-4 font-medium">
+                Mantos com descontos especiais por tempo limitado
               </p>
             </div>
             
@@ -296,7 +292,7 @@ export default function Home() {
         </section>
       )}
 
-      {/* Lançamentos 2025/2026 Shelf */}
+      {/* Lançamentos Shelf */}
       {newProducts.length > 0 && (
         <section className="py-10 sm:py-14 max-w-7xl mx-auto px-4 sm:px-6 border-t border-neutral-200">
           <div className="flex items-end justify-between mb-6 pb-3 border-b border-neutral-200">
@@ -304,10 +300,10 @@ export default function Home() {
               <div className="flex items-center gap-2">
                 <span className="w-2.5 h-6 bg-black rounded-sm" />
                 <h2 className="text-xl sm:text-2xl font-black uppercase tracking-tight text-neutral-900">
-                  COLEÇÃO 2025/2026
+                  LANÇAMENTOS RECENTES
                 </h2>
               </div>
-              <p className="text-xs text-neutral-500 mt-1 pl-4">
+              <p className="text-xs text-neutral-500 mt-1 pl-4 font-medium">
                 Recém-chegados na Jopi Sport Shop com acabamento premium
               </p>
             </div>
@@ -329,7 +325,7 @@ export default function Home() {
         </section>
       )}
 
-      {/* Netshoes-Style Big High-Impact WhatsApp Banner */}
+      {/* WhatsApp Banner */}
       <section className="bg-black text-white py-14 border-t-2 border-[#FFD900]">
         <div className="max-w-4xl mx-auto px-4 text-center space-y-5">
           <div className="inline-flex items-center gap-2 bg-[#FFD900] text-black px-4 py-1 rounded font-black text-xs uppercase tracking-wider">
@@ -342,7 +338,7 @@ export default function Home() {
           </h2>
 
           <p className="text-neutral-400 text-xs sm:text-sm max-w-xl mx-auto leading-relaxed font-medium">
-            Temos acesso a mais de 600 modelos de camisas: edições retrô clássicas, manga longa, kits infantis, jaquetas corta-vento e tamanhos até 3XG.
+            Temos acesso a centenas de modelos de camisas: edições retrô clássicas, manga longa, kits infantis e tamanhos especiais.
           </p>
 
           <div className="pt-2">
