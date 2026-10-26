@@ -39,12 +39,12 @@ interface StoreContextType {
 const StoreContext = createContext<StoreContextType | undefined>(undefined);
 
 const DEFAULT_CONFIG: StoreConfig = {
-  storeName: 'Jopi Sport',
+  storeName: 'Jopi Sport Shop',
   whatsappNumber: '5511999999999',
-  instagram: '@jopisport',
-  bannerText: '⚽ FRETE GRÁTIS nas compras a partir de 2 camisas! Pedidos direto no WhatsApp 📲',
-  pixKey: 'pix@jopisport.com.br',
-  addressNotice: 'Enviamos para todo o Brasil via Sedex e PAC com código de rastreio',
+  instagram: '@jopisportshop',
+  bannerText: '⚡ FRETE GRÁTIS A PARTIR DE 2 CAMISAS • COMPRE DIRETO NO WHATSAPP • PARCELE NO PIX OU CARTÃO',
+  pixKey: 'pix@jopisportshop.com.br',
+  addressNotice: 'Enviamos para todo o Brasil com código de rastreamento Correios',
 };
 
 const ADMIN_PASSWORD = 'admin'; // Easy default password for admin access

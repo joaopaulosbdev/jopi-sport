@@ -30,27 +30,35 @@ export default function AdminLoginPage() {
   };
 
   return (
-    <div className="min-h-[80vh] flex items-center justify-center px-4 py-12">
-      <div className="max-w-md w-full bg-white rounded-3xl border border-slate-200 p-8 shadow-xl">
+    <div className="bg-[#F4F5F7] min-h-[80vh] flex items-center justify-center px-4 py-12">
+      <div className="max-w-md w-full bg-white rounded-2xl border-2 border-black p-8 shadow-2xl">
         <div className="text-center mb-8">
-          <div className="w-16 h-16 bg-slate-900 text-emerald-400 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg">
+          <div className="w-16 h-16 bg-black text-[#FFD900] rounded-xl flex items-center justify-center mx-auto mb-3 shadow-lg">
             <ShieldCheck size={32} />
           </div>
-          <h1 className="text-2xl font-black text-slate-900">Painel do Administrador</h1>
-          <p className="text-xs sm:text-sm text-slate-500 mt-1">
-            Cadastre novas camisas, fotos, valores e gerencie sua loja
+          <div className="flex items-center justify-center leading-none mb-1">
+            <span className="text-xl font-black italic tracking-tighter text-black">
+              JOPI
+            </span>
+            <span className="text-xl font-black italic tracking-tighter text-[#B29200] ml-1">
+              SPORT SHOP
+            </span>
+          </div>
+          <h1 className="text-lg font-black uppercase text-black">Painel Administrativo</h1>
+          <p className="text-xs text-neutral-500 mt-0.5">
+            Cadastre nomes, fotos, valores e gerencie sua loja
           </p>
         </div>
 
         {error && (
-          <div className="mb-6 p-3 bg-rose-50 border border-rose-200 text-rose-700 text-xs font-semibold rounded-xl text-center">
+          <div className="mb-5 p-3 bg-red-50 border border-red-300 text-red-800 text-xs font-bold rounded-lg text-center">
             {error}
           </div>
         )}
 
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <label className="text-xs font-bold text-slate-700 block mb-1">
+            <label className="text-xs font-black uppercase text-black block mb-1">
               Senha de Acesso:
             </label>
             <div className="relative">
@@ -62,29 +70,28 @@ export default function AdminLoginPage() {
                   setPassword(e.target.value);
                   setError('');
                 }}
-                className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 pl-10 text-sm text-slate-800 focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500"
+                className="w-full bg-[#F8F9FA] border border-neutral-300 rounded-lg px-4 py-3 pl-10 text-sm text-black focus:outline-none focus:border-black"
                 autoFocus
               />
-              <Lock size={18} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400" />
+              <Lock size={18} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-neutral-400" />
             </div>
           </div>
 
           <button
             type="submit"
-            className="w-full py-3.5 px-4 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-extrabold text-sm flex items-center justify-center gap-2 transition shadow-lg"
+            className="w-full py-3.5 px-4 rounded-lg bg-black text-[#FFD900] hover:bg-neutral-800 font-black text-xs uppercase tracking-wider flex items-center justify-center gap-2 transition shadow-lg"
           >
-            <span>Entrar no Painel</span>
+            <span>ENTRAR NO PAINEL</span>
             <ArrowRight size={16} />
           </button>
         </form>
 
-        {/* Demo Quick Button */}
-        <div className="mt-6 pt-6 border-t border-slate-100 text-center">
-          <p className="text-xs text-slate-500 mb-2">Acesso rápido para demonstração:</p>
+        <div className="mt-6 pt-6 border-t border-neutral-100 text-center">
+          <p className="text-xs text-neutral-500 mb-2 font-medium">Acesso rápido para demonstração:</p>
           <button
             onClick={handleQuickDemoLogin}
             type="button"
-            className="inline-flex items-center gap-1.5 text-xs font-bold text-emerald-600 hover:text-emerald-700 bg-emerald-50 px-3.5 py-2 rounded-xl transition"
+            className="inline-flex items-center gap-1.5 text-xs font-black uppercase text-black bg-[#FFD900] hover:bg-[#E6C300] px-4 py-2 rounded-lg transition"
           >
             <Sparkles size={14} /> Entrar com senha padrão (&ldquo;admin&rdquo;)
           </button>

@@ -13,30 +13,31 @@ export default function PromocoesPage() {
   );
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 py-10 sm:py-14">
-      {/* Breadcrumb */}
-      <nav className="flex items-center gap-2 text-xs font-semibold text-slate-500 mb-6">
-        <Link href="/" className="hover:text-emerald-600 transition">Início</Link>
-        <ChevronRight size={14} />
-        <span className="text-slate-800">Promoções</span>
-      </nav>
+    <div className="bg-[#F4F5F7] py-8 sm:py-12">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6">
+        <nav className="flex items-center gap-2 text-xs font-bold text-neutral-500 mb-6">
+          <Link href="/" className="hover:text-black transition">Início</Link>
+          <ChevronRight size={13} />
+          <span className="text-black uppercase">Promoções</span>
+        </nav>
 
-      <div className="mb-10">
-        <div className="inline-flex items-center gap-2 bg-yellow-500/10 text-yellow-600 px-3 py-1 rounded-full text-xs font-bold mb-3">
-          <Flame size={14} /> Ofertas e Queima de Estoque
+        <div className="mb-8">
+          <div className="inline-flex items-center gap-2 bg-[#FFD900] text-black px-3 py-0.5 rounded text-xs font-black uppercase mb-2">
+            <Flame size={13} className="fill-black" /> Ofertas e Liquida Futebol
+          </div>
+          <h1 className="text-2xl sm:text-4xl font-black uppercase tracking-tight text-black">
+            OFERTAS &amp; PROMOÇÕES
+          </h1>
+          <p className="text-xs sm:text-sm text-neutral-600 mt-1 max-w-2xl font-medium">
+            Garanta seu manto de time com preços promocionais exclusivos na Jopi Sport Shop!
+          </p>
         </div>
-        <h1 className="text-3xl sm:text-4xl font-black text-slate-900 tracking-tight">
-          Promoções Especiais
-        </h1>
-        <p className="text-sm sm:text-base text-slate-500 mt-2 max-w-2xl">
-          Camisas com preços promocionais para você torcer com estilo sem pesar no bolso!
-        </p>
-      </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-        {(promoProducts.length > 0 ? promoProducts : products.slice(0, 8)).map((product) => (
-          <ProductCard key={product.id} product={product} />
-        ))}
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
+          {(promoProducts.length > 0 ? promoProducts : products.slice(0, 8)).map((product) => (
+            <ProductCard key={product.id} product={product} />
+          ))}
+        </div>
       </div>
     </div>
   );

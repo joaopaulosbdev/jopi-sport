@@ -14,7 +14,9 @@ import {
   Flame, 
   MessageCircle, 
   ArrowRight,
-  FilterX
+  FilterX,
+  Zap,
+  TrendingUp
 } from 'lucide-react';
 
 export default function Home() {
@@ -37,57 +39,60 @@ export default function Home() {
   const promoProducts = products.filter((p) => p.originalPrice && p.originalPrice > p.price);
 
   const handleWhatsAppContact = () => {
-    const text = 'Olá Jopi Sport! Vim pelo site e gostaria de saber as novidades e catálogo completo das camisas!';
+    const text = 'Olá Jopi Sport Shop! Vim pelo site e gostaria de saber as novidades e catálogo completo das camisas!';
     const cleanNumber = storeConfig.whatsappNumber.replace(/\D/g, '');
     window.open(`https://wa.me/${cleanNumber}?text=${encodeURIComponent(text)}`, '_blank');
   };
 
-  // If user is searching
+  // If user searched for something
   if (searchQuery.trim()) {
     return (
       <div className="max-w-7xl mx-auto px-4 sm:px-6 py-10">
-        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-8 pb-4 border-b border-slate-200">
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-8 pb-4 border-b border-neutral-200">
           <div>
-            <h1 className="text-2xl sm:text-3xl font-black text-slate-900">
-              Resultados para &ldquo;<span className="text-emerald-600">{searchQuery}</span>&rdquo;
-            </h1>
-            <p className="text-sm text-slate-500 mt-1">
-              Encontramos {filteredProducts.length} camisa(s) disponível(is)
+            <div className="flex items-center gap-2">
+              <span className="w-2.5 h-6 bg-[#FFD900] rounded-sm" />
+              <h1 className="text-xl sm:text-2xl font-black uppercase tracking-tight text-neutral-900">
+                RESULTADOS PARA &ldquo;<span className="text-[#B29200]">{searchQuery}</span>&rdquo;
+              </h1>
+            </div>
+            <p className="text-xs sm:text-sm text-neutral-500 mt-1 pl-4">
+              Encontramos {filteredProducts.length} modelo(s) disponível(is)
             </p>
           </div>
           <button
             onClick={() => setSearchQuery('')}
-            className="flex items-center gap-1.5 text-xs font-bold text-slate-600 bg-slate-200 hover:bg-slate-300 px-3 py-2 rounded-xl transition"
+            className="flex items-center gap-1.5 text-xs font-black uppercase text-neutral-700 bg-neutral-200 hover:bg-neutral-300 px-3.5 py-2 rounded-lg transition"
           >
-            <FilterX size={16} /> Limpar busca
+            <FilterX size={15} /> Limpar filtro
           </button>
         </div>
 
         {filteredProducts.length > 0 ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
             {filteredProducts.map((product) => (
               <ProductCard key={product.id} product={product} />
             ))}
           </div>
         ) : (
-          <div className="bg-white rounded-3xl border border-slate-200 p-12 text-center max-w-lg mx-auto">
+          <div className="bg-white rounded-2xl border border-neutral-200 p-12 text-center max-w-lg mx-auto shadow-sm">
             <span className="text-5xl block mb-4">🔍</span>
-            <h2 className="text-xl font-bold text-slate-900 mb-2">Nenhuma camisa encontrada</h2>
-            <p className="text-sm text-slate-500 mb-6">
+            <h2 className="text-lg font-black uppercase text-neutral-900 mb-1">Nenhum resultado encontrado</h2>
+            <p className="text-xs text-neutral-500 mb-6">
               Não encontramos nenhuma camisa com o termo &ldquo;{searchQuery}&rdquo;. Peça sob encomenda no WhatsApp!
             </p>
-            <div className="flex flex-col sm:flex-row gap-3 justify-center">
+            <div className="flex flex-col sm:flex-row gap-2 justify-center">
               <button
                 onClick={() => setSearchQuery('')}
-                className="px-5 py-2.5 rounded-xl bg-slate-900 text-white text-xs font-bold hover:bg-slate-800 transition"
+                className="px-5 py-2.5 rounded-lg bg-black text-white text-xs font-black uppercase hover:bg-neutral-800 transition"
               >
                 Ver Todas as Camisas
               </button>
               <button
                 onClick={handleWhatsAppContact}
-                className="px-5 py-2.5 rounded-xl bg-emerald-500 text-white text-xs font-bold hover:bg-emerald-600 transition flex items-center justify-center gap-1.5"
+                className="px-5 py-2.5 rounded-lg bg-[#FFD900] text-black text-xs font-black uppercase hover:bg-[#E6C300] transition flex items-center justify-center gap-1.5"
               >
-                <MessageCircle size={15} /> Pedir no WhatsApp
+                <MessageCircle size={15} className="fill-black" /> Pedir no WhatsApp
               </button>
             </div>
           </div>
@@ -97,146 +102,226 @@ export default function Home() {
   }
 
   return (
-    <div>
+    <div className="bg-[#F4F5F7]">
       {/* Hero Section */}
       <HeroSection />
 
-      {/* Featured / Destaques Section */}
-      <section className="py-12 sm:py-16 max-w-7xl mx-auto px-4 sm:px-6">
-        <div className="flex items-end justify-between mb-8">
+      {/* Destaques da Rodada (Netshoes Section Shelf) */}
+      <section className="py-10 sm:py-14 max-w-7xl mx-auto px-4 sm:px-6">
+        <div className="flex items-end justify-between mb-6 pb-3 border-b border-neutral-200">
           <div>
-            <div className="flex items-center gap-2 text-xs font-extrabold uppercase tracking-widest text-emerald-600 mb-1">
-              <Sparkles size={14} /> Seleção Especial
+            <div className="flex items-center gap-2">
+              <span className="w-2.5 h-6 bg-[#FFD900] rounded-sm" />
+              <h2 className="text-xl sm:text-2xl font-black uppercase tracking-tight text-neutral-900 flex items-center gap-2">
+                <span>MAIS VENDIDOS DA SEMANA</span>
+                <span className="hidden sm:inline bg-black text-[#FFD900] text-[10px] font-black uppercase px-2 py-0.5 rounded">
+                  TOP PICKS
+                </span>
+              </h2>
             </div>
-            <h2 className="text-2xl sm:text-3xl font-black text-slate-900">
-              Mantos em Destaque
-            </h2>
+            <p className="text-xs text-neutral-500 mt-1 pl-4">
+              Os mantos oficiais mais procurados pelos torcedores em todo o Brasil
+            </p>
           </div>
+          
           <Link
             href="/lancamentos"
-            className="text-xs sm:text-sm font-bold text-emerald-600 hover:text-emerald-700 flex items-center gap-1 group"
+            className="text-xs font-black uppercase text-black hover:text-[#B29200] flex items-center gap-1 transition"
           >
-            <span>Ver lançamentos</span>
-            <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
+            <span>Ver todos</span>
+            <ArrowRight size={14} />
           </Link>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
           {featuredProducts.slice(0, 8).map((product) => (
             <ProductCard key={product.id} product={product} />
           ))}
         </div>
       </section>
 
-      {/* Main Championships Section */}
-      <section className="py-12 sm:py-16 bg-white border-y border-slate-200">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6">
-          <div className="flex items-end justify-between mb-8">
-            <div>
-              <div className="flex items-center gap-2 text-xs font-extrabold uppercase tracking-widest text-yellow-600 mb-1">
-                <Trophy size={14} /> Ligas Nacionais &amp; Internacionais
-              </div>
-              <h2 className="text-2xl sm:text-3xl font-black text-slate-900">
-                Principais Campeonatos
+      {/* Netshoes-Style Promotional Banner Grid */}
+      <section className="py-4 max-w-7xl mx-auto px-4 sm:px-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          
+          <div className="bg-black text-white rounded-2xl p-6 sm:p-8 flex items-center justify-between border-2 border-[#FFD900] relative overflow-hidden">
+            <div className="space-y-2 z-10">
+              <span className="bg-[#FFD900] text-black text-[10px] font-black uppercase px-2.5 py-0.5 rounded inline-block">
+                BRASILEIRÃO 2025/26
+              </span>
+              <h3 className="text-2xl font-black italic uppercase tracking-tight text-white">
+                MANTOS NACIONAIS
+              </h3>
+              <p className="text-xs text-neutral-300 max-w-xs">
+                Flamengo, Palmeiras, Corinthians, São Paulo, Vasco e muito mais com personalização.
+              </p>
+              <Link
+                href="/campeonatos/brasileirao"
+                className="inline-flex items-center gap-2 text-xs font-black uppercase text-black bg-[#FFD900] hover:bg-[#E6C300] px-4 py-2 rounded-lg transition"
+              >
+                <span>CONFERIR CLUBES</span>
+                <ArrowRight size={14} />
+              </Link>
+            </div>
+            <div className="text-7xl opacity-20 pointer-events-none select-none">
+              🇧🇷
+            </div>
+          </div>
+
+          <div className="bg-neutral-900 text-white rounded-2xl p-6 sm:p-8 flex items-center justify-between border border-neutral-800 relative overflow-hidden">
+            <div className="space-y-2 z-10">
+              <span className="bg-[#FFD900] text-black text-[10px] font-black uppercase px-2.5 py-0.5 rounded inline-block">
+                FUTEBOL EUROPEU
+              </span>
+              <h3 className="text-2xl font-black italic uppercase tracking-tight text-white">
+                GIGANTES DO MUNDO
+              </h3>
+              <p className="text-xs text-neutral-300 max-w-xs">
+                Real Madrid, Barcelona, Manchester City, Liverpool, Bayern e Champions League.
+              </p>
+              <Link
+                href="/campeonatos/premier-league"
+                className="inline-flex items-center gap-2 text-xs font-black uppercase text-[#FFD900] border border-[#FFD900] hover:bg-[#FFD900] hover:text-black px-4 py-2 rounded-lg transition"
+              >
+                <span>VER CAMISAS EUROPÉIAS</span>
+                <ArrowRight size={14} />
+              </Link>
+            </div>
+            <div className="text-7xl opacity-20 pointer-events-none select-none">
+              ⭐
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      {/* Principais Campeonatos Shelf */}
+      <section className="py-10 sm:py-14 max-w-7xl mx-auto px-4 sm:px-6">
+        <div className="flex items-end justify-between mb-6 pb-3 border-b border-neutral-200">
+          <div>
+            <div className="flex items-center gap-2">
+              <span className="w-2.5 h-6 bg-[#FFD900] rounded-sm" />
+              <h2 className="text-xl sm:text-2xl font-black uppercase tracking-tight text-neutral-900">
+                CAMPEONATOS &amp; LIGAS
               </h2>
             </div>
+            <p className="text-xs text-neutral-500 mt-1 pl-4">
+              Navegue pelas principais competições do futebol mundial
+            </p>
+          </div>
+          
+          <Link
+            href="/campeonatos"
+            className="text-xs font-black uppercase text-black hover:text-[#B29200] flex items-center gap-1 transition"
+          >
+            <span>Ver todos</span>
+            <ArrowRight size={14} />
+          </Link>
+        </div>
+
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
+          {championships.map((category) => (
+            <CategoryCard key={category.id} category={category} basePath="/campeonatos" />
+          ))}
+        </div>
+      </section>
+
+      {/* Seleções Mundiais Shelf */}
+      <section className="py-10 sm:py-14 bg-white border-y border-neutral-200">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6">
+          <div className="flex items-end justify-between mb-6 pb-3 border-b border-neutral-200">
+            <div>
+              <div className="flex items-center gap-2">
+                <span className="w-2.5 h-6 bg-black rounded-sm" />
+                <h2 className="text-xl sm:text-2xl font-black uppercase tracking-tight text-neutral-900 flex items-center gap-2">
+                  <span>SELEÇÕES DO MUNDO</span>
+                  <span className="bg-[#FFD900] text-black text-[10px] font-black uppercase px-2 py-0.5 rounded">
+                    COPAS DO MUNDO
+                  </span>
+                </h2>
+              </div>
+              <p className="text-xs text-neutral-500 mt-1 pl-4">
+                Vista o manto do seu país com qualidade e orgulho de torcedor
+              </p>
+            </div>
+            
             <Link
-              href="/campeonatos"
-              className="text-xs sm:text-sm font-bold text-emerald-600 hover:text-emerald-700 flex items-center gap-1 group"
+              href="/selecoes"
+              className="text-xs font-black uppercase text-black hover:text-[#B29200] flex items-center gap-1 transition"
             >
-              <span>Ver todos</span>
-              <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
+              <span>Ver todas</span>
+              <ArrowRight size={14} />
             </Link>
           </div>
 
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6">
-            {championships.map((category) => (
-              <CategoryCard key={category.id} category={category} basePath="/campeonatos" />
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
+            {nationalTeams.slice(0, 8).map((category) => (
+              <CategoryCard key={category.id} category={category} basePath="/selecoes" />
             ))}
           </div>
         </div>
       </section>
 
-      {/* National Teams Section */}
-      <section className="py-12 sm:py-16 max-w-7xl mx-auto px-4 sm:px-6">
-        <div className="flex items-end justify-between mb-8">
-          <div>
-            <div className="flex items-center gap-2 text-xs font-extrabold uppercase tracking-widest text-blue-600 mb-1">
-              <Globe2 size={14} /> Futebol Internacional
-            </div>
-            <h2 className="text-2xl sm:text-3xl font-black text-slate-900">
-              Seleções Mundiais
-            </h2>
-          </div>
-          <Link
-            href="/selecoes"
-            className="text-xs sm:text-sm font-bold text-emerald-600 hover:text-emerald-700 flex items-center gap-1 group"
-          >
-            <span>Ver todas as seleções</span>
-            <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
-          </Link>
-        </div>
-
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6">
-          {nationalTeams.slice(0, 8).map((category) => (
-            <CategoryCard key={category.id} category={category} basePath="/selecoes" />
-          ))}
-        </div>
-      </section>
-
-      {/* Promotions / Ofertas Section */}
+      {/* Ofertas Imperdíveis Shelf */}
       {promoProducts.length > 0 && (
-        <section className="py-12 sm:py-16 bg-gradient-to-br from-amber-500/10 via-orange-500/5 to-transparent border-t border-slate-200">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6">
-            <div className="flex items-end justify-between mb-8">
-              <div>
-                <div className="flex items-center gap-2 text-xs font-extrabold uppercase tracking-widest text-amber-600 mb-1">
-                  <Flame size={14} /> Descontos Exclusivos
-                </div>
-                <h2 className="text-2xl sm:text-3xl font-black text-slate-900">
-                  Ofertas Imperdíveis
+        <section className="py-10 sm:py-14 max-w-7xl mx-auto px-4 sm:px-6">
+          <div className="flex items-end justify-between mb-6 pb-3 border-b border-neutral-200">
+            <div>
+              <div className="flex items-center gap-2">
+                <span className="w-2.5 h-6 bg-[#FFD900] rounded-sm" />
+                <h2 className="text-xl sm:text-2xl font-black uppercase tracking-tight text-neutral-900 flex items-center gap-2">
+                  <span>LIQUIDA &amp; OFERTAS DA SEMANA</span>
+                  <Flame size={20} className="text-[#FFD900] fill-[#FFD900]" />
                 </h2>
               </div>
-              <Link
-                href="/promocoes"
-                className="text-xs sm:text-sm font-bold text-amber-700 hover:text-amber-800 flex items-center gap-1 group"
-              >
-                <span>Ver todas as promoções</span>
-                <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
-              </Link>
+              <p className="text-xs text-neutral-500 mt-1 pl-4">
+                Mantos oficiais com descontos por tempo limitado
+              </p>
             </div>
+            
+            <Link
+              href="/promocoes"
+              className="text-xs font-black uppercase text-black hover:text-[#B29200] flex items-center gap-1 transition"
+            >
+              <span>Ver todas as ofertas</span>
+              <ArrowRight size={14} />
+            </Link>
+          </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-              {promoProducts.slice(0, 4).map((product) => (
-                <ProductCard key={product.id} product={product} />
-              ))}
-            </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
+            {promoProducts.slice(0, 4).map((product) => (
+              <ProductCard key={product.id} product={product} />
+            ))}
           </div>
         </section>
       )}
 
-      {/* New Drops Section */}
+      {/* Lançamentos 2025/2026 Shelf */}
       {newProducts.length > 0 && (
-        <section className="py-12 sm:py-16 max-w-7xl mx-auto px-4 sm:px-6 border-t border-slate-200">
-          <div className="flex items-end justify-between mb-8">
+        <section className="py-10 sm:py-14 max-w-7xl mx-auto px-4 sm:px-6 border-t border-neutral-200">
+          <div className="flex items-end justify-between mb-6 pb-3 border-b border-neutral-200">
             <div>
-              <div className="flex items-center gap-2 text-xs font-extrabold uppercase tracking-widest text-emerald-600 mb-1">
-                <Sparkles size={14} /> Coleções 2025/2026
+              <div className="flex items-center gap-2">
+                <span className="w-2.5 h-6 bg-black rounded-sm" />
+                <h2 className="text-xl sm:text-2xl font-black uppercase tracking-tight text-neutral-900">
+                  COLEÇÃO 2025/2026
+                </h2>
               </div>
-              <h2 className="text-2xl sm:text-3xl font-black text-slate-900">
-                Últimos Lançamentos
-              </h2>
+              <p className="text-xs text-neutral-500 mt-1 pl-4">
+                Recém-chegados na Jopi Sport Shop com acabamento premium
+              </p>
             </div>
+            
             <Link
               href="/lancamentos"
-              className="text-xs sm:text-sm font-bold text-emerald-600 hover:text-emerald-700 flex items-center gap-1 group"
+              className="text-xs font-black uppercase text-black hover:text-[#B29200] flex items-center gap-1 transition"
             >
-              <span>Ver mais</span>
-              <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
+              <span>Ver lançamentos</span>
+              <ArrowRight size={14} />
             </Link>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
             {newProducts.slice(0, 4).map((product) => (
               <ProductCard key={product.id} product={product} />
             ))}
@@ -244,28 +329,29 @@ export default function Home() {
         </section>
       )}
 
-      {/* WhatsApp Conversion Section */}
-      <section className="bg-gradient-to-r from-emerald-600 to-teal-700 text-white py-14 sm:py-18">
-        <div className="max-w-4xl mx-auto px-4 text-center space-y-6">
-          <div className="inline-flex items-center gap-2 bg-white/20 px-4 py-1.5 rounded-full text-xs font-extrabold tracking-wide">
-            💬 Atendimento Exclusivo no WhatsApp
+      {/* Netshoes-Style Big High-Impact WhatsApp Banner */}
+      <section className="bg-black text-white py-14 border-t-2 border-[#FFD900]">
+        <div className="max-w-4xl mx-auto px-4 text-center space-y-5">
+          <div className="inline-flex items-center gap-2 bg-[#FFD900] text-black px-4 py-1 rounded font-black text-xs uppercase tracking-wider">
+            ATENDIMENTO PERSONALIZADO VIA WHATSAPP
           </div>
 
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-black leading-tight">
-            Não encontrou a camisa que procura? Nós conseguimos para você!
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-black uppercase italic tracking-tight leading-tight">
+            NÃO ENCONTROU O SEU TIME? <br />
+            <span className="text-[#FFD900]">PEÇA SOB ENCOMENDA NO ZAP</span>
           </h2>
 
-          <p className="text-emerald-100 text-sm sm:text-base max-w-xl mx-auto leading-relaxed">
-            Trabalhamos com mais de 500 modelos sob encomenda: camisas retrô históricas, infantis, manga longa, kits completos e edições de goleiro.
+          <p className="text-neutral-400 text-xs sm:text-sm max-w-xl mx-auto leading-relaxed font-medium">
+            Temos acesso a mais de 600 modelos de camisas: edições retrô clássicas, manga longa, kits infantis, jaquetas corta-vento e tamanhos até 3XG.
           </p>
 
           <div className="pt-2">
             <button
               onClick={handleWhatsAppContact}
-              className="inline-flex items-center gap-3 px-8 py-4 bg-white text-emerald-700 hover:bg-slate-100 font-black rounded-2xl shadow-xl transition transform hover:scale-105 active:scale-95 text-base sm:text-lg"
+              className="inline-flex items-center gap-3 px-8 py-4 bg-[#FFD900] hover:bg-[#E6C300] text-black font-black uppercase tracking-wider rounded-lg shadow-xl text-sm sm:text-base transition transform hover:scale-105 active:scale-95"
             >
-              <MessageCircle size={22} className="text-emerald-600 fill-emerald-600" />
-              <span>Chamar Vendedor no WhatsApp</span>
+              <MessageCircle size={22} className="fill-black" />
+              <span>CONSULTAR MODELO NO WHATSAPP</span>
             </button>
           </div>
         </div>

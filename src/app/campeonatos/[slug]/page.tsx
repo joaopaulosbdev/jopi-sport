@@ -22,95 +22,97 @@ export default function ChampionshipSlugPage({ params }: Props) {
 
   const handleWhatsAppCustom = () => {
     const champName = category ? category.name : slug;
-    const text = `Olá! Gostaria de consultar modelos e encomendas de camisas do campeonato *${champName}*.`;
+    const text = `Olá Jopi Sport Shop! Gostaria de encomendar ou consultar modelos de camisas do campeonato *${champName}*.`;
     const cleanNumber = storeConfig.whatsappNumber.replace(/\D/g, '');
     window.open(`https://wa.me/${cleanNumber}?text=${encodeURIComponent(text)}`, '_blank');
   };
 
   if (!category) {
     return (
-      <div className="max-w-4xl mx-auto px-4 py-16 text-center">
-        <span className="text-6xl block mb-4">🏆</span>
-        <h1 className="text-2xl font-bold text-slate-900 mb-2">Campeonato não encontrado</h1>
-        <p className="text-sm text-slate-500 mb-6">
-          Não localizamos o campeonato solicitado.
-        </p>
-        <Link
-          href="/campeonatos"
-          className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-slate-900 text-white text-xs font-bold"
-        >
-          <ArrowLeft size={16} /> Voltar para Campeonatos
-        </Link>
+      <div className="bg-[#F4F5F7] min-h-[60vh] flex items-center justify-center p-4">
+        <div className="bg-white rounded-2xl border border-neutral-200 p-8 text-center max-w-md w-full">
+          <span className="text-5xl block mb-3">🏆</span>
+          <h1 className="text-xl font-black uppercase text-black mb-1">Campeonato não encontrado</h1>
+          <p className="text-xs text-neutral-500 mb-6">Não localizamos a liga solicitada.</p>
+          <Link
+            href="/campeonatos"
+            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-black text-[#FFD900] text-xs font-black uppercase"
+          >
+            <ArrowLeft size={15} /> Voltar para Campeonatos
+          </Link>
+        </div>
       </div>
     );
   }
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 py-10 sm:py-14">
-      {/* Breadcrumbs */}
-      <nav className="flex items-center gap-2 text-xs font-semibold text-slate-500 mb-6">
-        <Link href="/" className="hover:text-emerald-600 transition">Início</Link>
-        <ChevronRight size={14} />
-        <Link href="/campeonatos" className="hover:text-emerald-600 transition">Campeonatos</Link>
-        <ChevronRight size={14} />
-        <span className="text-slate-800">{category.name}</span>
-      </nav>
+    <div className="bg-[#F4F5F7] py-8 sm:py-12">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6">
+        {/* Breadcrumb */}
+        <nav className="flex items-center gap-2 text-xs font-bold text-neutral-500 mb-6">
+          <Link href="/" className="hover:text-black transition">Início</Link>
+          <ChevronRight size={13} />
+          <Link href="/campeonatos" className="hover:text-black transition uppercase">Campeonatos</Link>
+          <ChevronRight size={13} />
+          <span className="text-black uppercase font-black">{category.name}</span>
+        </nav>
 
-      {/* Header Banner */}
-      <div className="bg-gradient-to-r from-slate-900 to-slate-800 rounded-3xl p-6 sm:p-10 text-white mb-10 shadow-xl flex flex-col md:flex-row md:items-center justify-between gap-6 border border-slate-700">
-        <div className="flex items-center gap-4 sm:gap-6">
-          <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl bg-white/10 backdrop-blur-md flex items-center justify-center text-4xl sm:text-5xl border border-white/20 shrink-0">
-            {category.icon}
-          </div>
-          <div>
-            <div className="text-xs uppercase tracking-wider font-bold text-emerald-400 mb-1">
-              {category.country || category.continent}
+        {/* Header Banner */}
+        <div className="bg-black rounded-2xl p-6 sm:p-8 text-white mb-8 border-2 border-[#FFD900] flex flex-col md:flex-row md:items-center justify-between gap-6 shadow-xl">
+          <div className="flex items-center gap-4 sm:gap-6">
+            <div className="w-16 h-16 rounded-xl bg-neutral-900 border border-neutral-800 flex items-center justify-center text-4xl shrink-0">
+              {category.icon}
             </div>
-            <h1 className="text-2xl sm:text-4xl font-black">{category.name}</h1>
-            <p className="text-slate-300 text-xs sm:text-sm mt-1">
-              Camisas oficiais, titulares, reservas e especiais dos clubes participantes
-            </p>
+            <div>
+              <div className="text-[10px] uppercase font-black text-[#FFD900] tracking-widest mb-0.5">
+                {category.country || category.continent}
+              </div>
+              <h1 className="text-2xl sm:text-3xl font-black uppercase tracking-tight text-white">{category.name}</h1>
+              <p className="text-neutral-400 text-xs mt-0.5 font-medium">
+                Mantos oficiais titulares, reservas e third kit dos maiores clubes
+              </p>
+            </div>
           </div>
-        </div>
 
-        <button
-          onClick={handleWhatsAppCustom}
-          className="self-start md:self-auto px-5 py-3 rounded-xl bg-emerald-500 hover:bg-emerald-600 text-white text-xs font-bold flex items-center gap-2 shadow-lg transition"
-        >
-          <MessageCircle size={16} />
-          <span>Consultar outro time</span>
-        </button>
-      </div>
-
-      {/* Products list */}
-      {categoryProducts.length > 0 ? (
-        <div>
-          <div className="flex items-center justify-between mb-6">
-            <h2 className="text-xl font-bold text-slate-900">
-              Camisas Disponíveis ({categoryProducts.length})
-            </h2>
-          </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-            {categoryProducts.map((product) => (
-              <ProductCard key={product.id} product={product} />
-            ))}
-          </div>
-        </div>
-      ) : (
-        <div className="bg-white rounded-3xl border border-slate-200 p-12 text-center max-w-lg mx-auto">
-          <span className="text-5xl block mb-4">👕</span>
-          <h2 className="text-xl font-bold text-slate-900 mb-2">Novas camisas chegando!</h2>
-          <p className="text-sm text-slate-500 mb-6">
-            Ainda não cadastramos camisas para {category.name} nesta lista, mas você pode pedir diretamente no WhatsApp!
-          </p>
           <button
             onClick={handleWhatsAppCustom}
-            className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-emerald-500 text-white text-xs font-bold hover:bg-emerald-600 transition"
+            className="self-start md:self-auto px-5 py-3 rounded-lg bg-[#FFD900] hover:bg-[#E6C300] text-black text-xs font-black uppercase flex items-center gap-2 shadow transition"
           >
-            <MessageCircle size={16} /> Pedir Camisa no WhatsApp
+            <MessageCircle size={15} className="fill-black" />
+            <span>Consultar Outro Time no Zap</span>
           </button>
         </div>
-      )}
+
+        {/* Products */}
+        {categoryProducts.length > 0 ? (
+          <div>
+            <div className="flex items-center justify-between mb-4 pb-2 border-b border-neutral-200">
+              <span className="text-xs font-black uppercase text-black">
+                {categoryProducts.length} Camisa(s) Disponível(is)
+              </span>
+            </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
+              {categoryProducts.map((product) => (
+                <ProductCard key={product.id} product={product} />
+              ))}
+            </div>
+          </div>
+        ) : (
+          <div className="bg-white rounded-2xl border border-neutral-200 p-12 text-center max-w-lg mx-auto shadow-sm">
+            <span className="text-5xl block mb-3">👕</span>
+            <h2 className="text-base font-black uppercase text-black mb-1">Novas camisas chegando!</h2>
+            <p className="text-xs text-neutral-500 mb-6 font-medium">
+              Ainda não cadastramos camisas para {category.name} nesta lista, mas você pode pedir diretamente no WhatsApp!
+            </p>
+            <button
+              onClick={handleWhatsAppCustom}
+              className="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-[#FFD900] text-black text-xs font-black uppercase hover:bg-[#E6C300] transition"
+            >
+              <MessageCircle size={15} className="fill-black" /> Pedir Camisa no WhatsApp
+            </button>
+          </div>
+        )}
+      </div>
     </div>
   );
 }

@@ -11,139 +11,104 @@ import {
   ShieldCheck, 
   RotateCcw,
   Phone,
-  Sparkles
+  Zap,
+  ArrowRight
 } from 'lucide-react';
 
 export default function Footer() {
   const { storeConfig } = useStore();
 
   const handleWhatsAppContact = () => {
-    const text = 'Olá Jopi Sport! Vim pelo site e gostaria de saber mais informações.';
+    const text = 'Olá Jopi Sport Shop! Vim pelo site e gostaria de saber mais informações.';
     const cleanNumber = storeConfig.whatsappNumber.replace(/\D/g, '');
     window.open(`https://wa.me/${cleanNumber}?text=${encodeURIComponent(text)}`, '_blank');
   };
 
   return (
-    <footer className="bg-slate-950 text-white border-t border-slate-800">
-      {/* Floating WhatsApp Action Button */}
+    <footer className="bg-black text-white border-t-4 border-[#FFD900]">
+      {/* Floating WhatsApp Action Button in Yellow & Black */}
       <button
         onClick={handleWhatsAppContact}
-        className="fixed bottom-5 right-5 z-50 bg-emerald-500 hover:bg-emerald-600 text-white p-3.5 sm:px-5 sm:py-3.5 rounded-full shadow-2xl shadow-emerald-500/50 flex items-center gap-2 font-black transition-all transform hover:scale-110 active:scale-95 group"
-        aria-label="Falar pelo WhatsApp"
+        className="fixed bottom-5 right-5 z-50 bg-[#FFD900] hover:bg-[#E6C300] text-black px-4 py-3 rounded-full shadow-2xl shadow-black/50 flex items-center gap-2.5 font-black text-xs uppercase tracking-wider transition-all transform hover:scale-105 active:scale-95 group border-2 border-black"
+        aria-label="Fale conosco no WhatsApp"
       >
-        <MessageCircle size={24} className="fill-white group-hover:rotate-12 transition-transform" />
-        <span className="hidden sm:inline text-sm font-extrabold">Fale no WhatsApp</span>
+        <MessageCircle size={22} className="fill-black text-black group-hover:rotate-12 transition-transform" />
+        <span className="hidden sm:inline">Compre pelo WhatsApp</span>
       </button>
 
-      {/* Trust Info strip */}
-      <div className="border-b border-slate-900 bg-slate-900/60 py-8">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            <div className="flex items-start gap-3">
-              <div className="p-2.5 bg-emerald-500/10 text-emerald-400 rounded-xl">
-                <Truck size={22} />
-              </div>
-              <div>
-                <h4 className="font-bold text-sm text-slate-100">Envio para Todo Brasil</h4>
-                <p className="text-xs text-slate-400 mt-0.5">Frete seguro com código de rastreamento Correios</p>
-              </div>
-            </div>
-
-            <div className="flex items-start gap-3">
-              <div className="p-2.5 bg-yellow-500/10 text-yellow-400 rounded-xl">
-                <CreditCard size={22} />
-              </div>
-              <div>
-                <h4 className="font-bold text-sm text-slate-100">Pagamento Facilitado</h4>
-                <p className="text-xs text-slate-400 mt-0.5">Pix com aprovação imediata ou cartão</p>
-              </div>
-            </div>
-
-            <div className="flex items-start gap-3">
-              <div className="p-2.5 bg-blue-500/10 text-blue-400 rounded-xl">
-                <ShieldCheck size={22} />
-              </div>
-              <div>
-                <h4 className="font-bold text-sm text-slate-100">Qualidade Garantida</h4>
-                <p className="text-xs text-slate-400 mt-0.5">Camisas com bordados e tecidos oficiais 1:1</p>
-              </div>
-            </div>
-
-            <div className="flex items-start gap-3">
-              <div className="p-2.5 bg-purple-500/10 text-purple-400 rounded-xl">
-                <RotateCcw size={22} />
-              </div>
-              <div>
-                <h4 className="font-bold text-sm text-slate-100">Garantia e Suporte</h4>
-                <p className="text-xs text-slate-400 mt-0.5">Atendimento rápido e direto no WhatsApp</p>
-              </div>
-            </div>
+      {/* Netshoes-Style Newsletter / WhatsApp Vip Club Strip */}
+      <div className="bg-neutral-900 border-b border-neutral-800 py-6">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 flex flex-col md:flex-row items-center justify-between gap-4">
+          <div className="text-center md:text-left">
+            <h3 className="text-base font-black text-white uppercase italic">
+              RECEBA NOVIDADES E <span className="text-[#FFD900]">PROMOÇÕES EXCLUSIVAS</span>
+            </h3>
+            <p className="text-xs text-neutral-400 mt-0.5">
+              Entre em contato direto no WhatsApp e receba em primeira mão lançamentos de mantos
+            </p>
           </div>
+
+          <button
+            onClick={handleWhatsAppContact}
+            className="px-6 py-2.5 bg-[#FFD900] hover:bg-[#E6C300] text-black text-xs font-black uppercase rounded-lg flex items-center gap-2 transition shadow"
+          >
+            <MessageCircle size={15} className="fill-black" />
+            <span>ENTRAR NO GRUPO VIP DE OFERTAS</span>
+          </button>
         </div>
       </div>
 
       {/* Main Footer Links */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-12 lg:py-16">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 lg:gap-10">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8">
           
           {/* Brand Info */}
           <div className="lg:col-span-2 space-y-4">
-            <Link href="/" className="flex items-center gap-2.5">
-              <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-emerald-500 to-yellow-400 p-0.5">
-                <div className="w-full h-full bg-slate-950 rounded-[10px] flex items-center justify-center font-black text-lg">
-                  ⚽
-                </div>
+            <Link href="/" className="inline-block">
+              <div className="flex items-center leading-none">
+                <span className="text-2xl sm:text-3xl font-black italic tracking-tighter text-[#FFD900]">
+                  JOPI
+                </span>
+                <span className="text-2xl sm:text-3xl font-black italic tracking-tighter text-white ml-1.5">
+                  SPORT SHOP
+                </span>
               </div>
-              <span className="text-2xl font-black tracking-tight">
-                JOPI<span className="text-emerald-400">SPORT</span>
+              <span className="text-[10px] font-black uppercase tracking-[0.25em] text-[#FFD900] block mt-1">
+                CAMISAS DE TIME &amp; MANTOS OFICIAIS
               </span>
             </Link>
 
-            <p className="text-slate-400 text-sm leading-relaxed max-w-sm">
-              Sua loja especializada em mantos de futebol. Camisas clássicas, titulares, reservas e edições especiais das maiores ligas do planeta.
+            <p className="text-neutral-400 text-xs sm:text-sm leading-relaxed max-w-sm">
+              Inspirada nas maiores varejistas esportivas do Brasil. Camisas de clubes do Brasileirão, ligas européias e seleções mundiais com personalização de nome e número e atendimento humano no WhatsApp.
             </p>
 
             <div className="pt-2 flex items-center gap-3">
               <button
                 onClick={handleWhatsAppContact}
-                className="flex items-center gap-2 bg-emerald-600/20 hover:bg-emerald-600/30 text-emerald-400 border border-emerald-500/30 px-3 py-2 rounded-xl text-xs font-bold transition"
+                className="flex items-center gap-2 bg-neutral-900 border border-[#FFD900]/40 text-[#FFD900] px-3.5 py-2 rounded-lg text-xs font-black uppercase hover:bg-neutral-800 transition"
               >
-                <Phone size={14} />
+                <Phone size={13} />
                 <span>{storeConfig.whatsappNumber}</span>
               </button>
-
-              {storeConfig.instagram && (
-                <a
-                  href={`https://instagram.com/${storeConfig.instagram.replace('@', '')}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="p-2 bg-slate-900 border border-slate-800 rounded-xl text-slate-300 hover:text-white hover:bg-slate-800 transition flex items-center justify-center"
-                  aria-label="Instagram"
-                >
-                  <svg className="w-[18px] h-[18px] fill-current" viewBox="0 0 24 24">
-                    <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
-                  </svg>
-                </a>
-              )}
             </div>
           </div>
 
           {/* Campeonatos */}
           <div>
-            <h4 className="font-extrabold text-sm uppercase tracking-wider text-slate-200 mb-4">
-              Campeonatos
+            <h4 className="font-black text-xs uppercase tracking-wider text-[#FFD900] mb-4 pb-1 border-b border-neutral-800 inline-block">
+              CAMPEONATOS
             </h4>
-            <ul className="space-y-2 text-sm text-slate-400">
+            <ul className="space-y-2 text-xs text-neutral-400">
               {championships.slice(0, 6).map((c) => (
                 <li key={c.id}>
-                  <Link href={`/campeonatos/${c.slug}`} className="hover:text-emerald-400 transition flex items-center gap-1.5">
+                  <Link href={`/campeonatos/${c.slug}`} className="hover:text-[#FFD900] transition flex items-center gap-1.5 font-medium">
                     <span>{c.icon}</span>
                     <span>{c.name}</span>
                   </Link>
                 </li>
               ))}
-              <li>
-                <Link href="/campeonatos" className="text-emerald-400 text-xs font-bold hover:underline block pt-1">
+              <li className="pt-1">
+                <Link href="/campeonatos" className="text-[#FFD900] font-black uppercase hover:underline text-[11px]">
                   Ver todos os campeonatos →
                 </Link>
               </li>
@@ -152,55 +117,55 @@ export default function Footer() {
 
           {/* Seleções */}
           <div>
-            <h4 className="font-extrabold text-sm uppercase tracking-wider text-slate-200 mb-4">
-              Seleções
+            <h4 className="font-black text-xs uppercase tracking-wider text-[#FFD900] mb-4 pb-1 border-b border-neutral-800 inline-block">
+              SELEÇÕES
             </h4>
-            <ul className="space-y-2 text-sm text-slate-400">
+            <ul className="space-y-2 text-xs text-neutral-400">
               {nationalTeams.slice(0, 6).map((s) => (
                 <li key={s.id}>
-                  <Link href={`/selecoes/${s.slug}`} className="hover:text-emerald-400 transition flex items-center gap-1.5">
+                  <Link href={`/selecoes/${s.slug}`} className="hover:text-[#FFD900] transition flex items-center gap-1.5 font-medium">
                     <span>{s.icon}</span>
                     <span>{s.name}</span>
                   </Link>
                 </li>
               ))}
-              <li>
-                <Link href="/selecoes" className="text-emerald-400 text-xs font-bold hover:underline block pt-1">
+              <li className="pt-1">
+                <Link href="/selecoes" className="text-[#FFD900] font-black uppercase hover:underline text-[11px]">
                   Ver todas as seleções →
                 </Link>
               </li>
             </ul>
           </div>
 
-          {/* Links Rápidos / Ajuda */}
+          {/* Atendimento & Segurança */}
           <div>
-            <h4 className="font-extrabold text-sm uppercase tracking-wider text-slate-200 mb-4">
-              Atendimento
+            <h4 className="font-black text-xs uppercase tracking-wider text-[#FFD900] mb-4 pb-1 border-b border-neutral-800 inline-block">
+              AJUDA &amp; SUPORTE
             </h4>
-            <ul className="space-y-2 text-sm text-slate-400">
+            <ul className="space-y-2 text-xs text-neutral-400">
               <li>
-                <Link href="/carrinho" className="hover:text-emerald-400 transition">
-                  Carrinho de Compras
+                <Link href="/carrinho" className="hover:text-[#FFD900] transition font-medium">
+                  Meu Carrinho de Compras
                 </Link>
               </li>
               <li>
-                <Link href="/promocoes" className="hover:text-yellow-400 transition">
+                <Link href="/promocoes" className="hover:text-[#FFD900] transition font-medium">
                   Ofertas da Semana
                 </Link>
               </li>
               <li>
-                <Link href="/lancamentos" className="hover:text-emerald-400 transition">
-                  Lançamentos 2025/26
+                <Link href="/lancamentos" className="hover:text-[#FFD900] transition font-medium">
+                  Coleção 2025/2026
                 </Link>
               </li>
               <li>
-                <button onClick={handleWhatsAppContact} className="hover:text-emerald-400 transition text-left">
+                <button onClick={handleWhatsAppContact} className="hover:text-[#FFD900] transition font-medium text-left">
                   Tirar dúvidas no WhatsApp
                 </button>
               </li>
               <li className="pt-2">
-                <Link href="/admin/login" className="text-xs text-slate-400 hover:text-slate-300 font-medium">
-                  🔒 Acesso Restrito Admin
+                <Link href="/admin/login" className="text-[11px] text-neutral-600 hover:text-neutral-400">
+                  🔒 Painel Admin Jopi Sport Shop
                 </Link>
               </li>
             </ul>
@@ -208,12 +173,17 @@ export default function Footer() {
 
         </div>
 
-        {/* Bottom copyright */}
-        <div className="mt-12 pt-6 border-t border-slate-900 text-xs text-slate-400 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <p>© {new Date().getFullYear()} {storeConfig.storeName} - Todos os direitos reservados.</p>
-          <p className="flex items-center gap-1">
-            Feito para os apaixonados por futebol ⚽
-          </p>
+        {/* Bottom Strip */}
+        <div className="mt-12 pt-6 border-t border-neutral-900 text-xs text-neutral-500 flex flex-col sm:flex-row items-center justify-between gap-4">
+          <p>© {new Date().getFullYear()} Jopi Sport Shop - Todos os direitos reservados.</p>
+          <div className="flex items-center gap-4 text-[11px]">
+            <span className="text-[#FFD900] font-bold">PAGAMENTO:</span>
+            <span>Pix</span>
+            <span>•</span>
+            <span>Cartão de Crédito</span>
+            <span>•</span>
+            <span>Boleto Bancário</span>
+          </div>
         </div>
       </div>
     </footer>

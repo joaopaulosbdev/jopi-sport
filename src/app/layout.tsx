@@ -5,9 +5,9 @@ import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 
 export const metadata: Metadata = {
-  title: 'Jopi Sport | Camisas de Time - Venda Direta no WhatsApp',
-  description: 'Loja online de camisas de times do Brasileirão, Premier League, La Liga e Seleções Mundiais com personalização de nome e número. Peça pelo WhatsApp com facilidade!',
-  keywords: 'camisas de time, futebol, brasileirão, seleções, premier league, la liga, comprar camisa de time whatsapp',
+  title: 'Jopi Sport Shop | Camisas de Time Oficiais - Compre via WhatsApp',
+  description: 'A maior variedade de camisas de time do Brasil e do mundo. Brasileirão, Premier League, La Liga e Seleções. Compre no WhatsApp na Jopi Sport Shop!',
+  keywords: 'camisas de time, jopi sport shop, futebol, brasileirão, seleções, premier league, la liga, comprar camisa whatsapp',
 };
 
 export default function RootLayout({

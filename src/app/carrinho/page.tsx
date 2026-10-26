@@ -12,9 +12,9 @@ import {
   ArrowLeft, 
   Truck, 
   ShieldCheck, 
-  Sparkles,
-  Copy,
-  Check
+  Copy, 
+  Check,
+  CreditCard
 } from 'lucide-react';
 
 export default function CartPage() {
@@ -27,9 +27,8 @@ export default function CartPage() {
   const [notes, setNotes] = useState('');
   const [copied, setCopied] = useState(false);
 
-  // Generate WhatsApp message formatted cleanly
   const generateWhatsAppMessage = () => {
-    let msg = `⚽ *NOVO PEDIDO - ${storeConfig.storeName}*\n`;
+    let msg = `⚡ *NOVO PEDIDO - ${storeConfig.storeName.toUpperCase()}*\n`;
     msg += `━━━━━━━━━━━━━━━━━━━━━\n\n`;
 
     if (customerName.trim()) {
@@ -69,7 +68,7 @@ export default function CartPage() {
       msg += `\n📝 *Observações:* ${notes.trim()}\n`;
     }
 
-    msg += `\nOlá! Gostaria de confirmar meu pedido e obter os dados para pagamento!`;
+    msg += `\nOlá! Gostaria de confirmar meu pedido e obter a chave Pix para pagamento!`;
     return msg;
   };
 
@@ -87,275 +86,284 @@ export default function CartPage() {
 
   if (cart.length === 0) {
     return (
-      <div className="max-w-4xl mx-auto px-4 py-20 text-center">
-        <div className="w-24 h-24 bg-slate-100 rounded-full flex items-center justify-center mx-auto mb-6 text-slate-400">
-          <ShoppingBag size={42} />
-        </div>
-        <h1 className="text-3xl font-black text-slate-900 mb-2">Seu carrinho está vazio</h1>
-        <p className="text-sm sm:text-base text-slate-500 mb-8 max-w-md mx-auto">
-          Explore as camisas dos maiores clubes e seleções do mundo e monte seu pedido!
-        </p>
-        <div className="flex flex-col sm:flex-row gap-3 justify-center">
-          <Link
-            href="/campeonatos"
-            className="px-6 py-3 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs sm:text-sm transition shadow-lg"
-          >
-            Ver Campeonatos
-          </Link>
-          <Link
-            href="/selecoes"
-            className="px-6 py-3 rounded-xl bg-emerald-500 hover:bg-emerald-600 text-white font-bold text-xs sm:text-sm transition shadow-lg"
-          >
-            Ver Seleções
-          </Link>
+      <div className="bg-[#F4F5F7] min-h-[70vh] flex items-center justify-center py-16 px-4">
+        <div className="bg-white rounded-2xl border border-neutral-200 p-8 sm:p-12 text-center max-w-md w-full shadow-sm">
+          <div className="w-20 h-20 bg-neutral-100 rounded-full flex items-center justify-center mx-auto mb-5 text-black">
+            <ShoppingBag size={36} />
+          </div>
+          <h1 className="text-xl sm:text-2xl font-black uppercase text-black mb-1">Seu carrinho está vazio</h1>
+          <p className="text-xs sm:text-sm text-neutral-500 mb-6 font-medium">
+            Aproveite a nova coleção de mantos e monte seu pedido com frete grátis a partir de 2 camisas!
+          </p>
+          <div className="flex flex-col gap-2">
+            <Link
+              href="/campeonatos"
+              className="py-3 px-6 rounded-lg bg-black text-[#FFD900] font-black text-xs uppercase tracking-wider hover:bg-neutral-800 transition"
+            >
+              VER CAMPEONATOS
+            </Link>
+            <Link
+              href="/selecoes"
+              className="py-3 px-6 rounded-lg bg-[#FFD900] text-black font-black text-xs uppercase tracking-wider hover:bg-[#E6C300] transition"
+            >
+              VER SELEÇÕES
+            </Link>
+          </div>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 py-10 sm:py-14">
-      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-8 pb-4 border-b border-slate-200">
-        <div>
-          <h1 className="text-2xl sm:text-3xl font-black text-slate-900">
-            Meu Carrinho de Compras
-          </h1>
-          <p className="text-xs sm:text-sm text-slate-500 mt-1">
-            {cart.reduce((total, i) => total + i.quantity, 0)} camisa(s) adicionada(s)
-          </p>
-        </div>
-
-        <button
-          onClick={clearCart}
-          className="text-xs font-semibold text-rose-600 hover:text-rose-700 flex items-center gap-1.5 transition"
-        >
-          <Trash2 size={15} /> Limpar todo o carrinho
-        </button>
-      </div>
-
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12">
+    <div className="bg-[#F4F5F7] py-8 sm:py-12">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6">
         
-        {/* Left Column: Cart Items List */}
-        <div className="lg:col-span-7 space-y-4">
-          {cart.map((item) => (
-            <div
-              key={item.id}
-              className="bg-white rounded-2xl border border-slate-200 p-4 sm:p-5 shadow-sm flex flex-col sm:flex-row gap-4 justify-between"
-            >
-              {/* Product Info */}
-              <div className="flex gap-4">
-                <div className="w-20 h-20 bg-slate-100 rounded-xl overflow-hidden shrink-0 flex items-center justify-center border border-slate-200">
-                  {item.product.images && item.product.images.length > 0 ? (
-                    // eslint-disable-next-line @next/next/no-img-element
-                    <img
-                      src={item.product.images[0]}
-                      alt={item.product.name}
-                      className="w-full h-full object-cover"
-                    />
-                  ) : (
-                    <span className="text-3xl">👕</span>
-                  )}
-                </div>
-
-                <div>
-                  <h3 className="font-extrabold text-sm sm:text-base text-slate-900 leading-snug">
-                    {item.product.name}
-                  </h3>
-                  <div className="flex items-center gap-2 mt-1 text-xs text-slate-500">
-                    <span className="font-bold text-slate-800 bg-slate-100 px-2 py-0.5 rounded">
-                      Tamanho: {item.size}
-                    </span>
-                    <span>•</span>
-                    <span>{item.product.team}</span>
-                  </div>
-
-                  {/* Personalization notes */}
-                  {(item.customName || item.customNumber) && (
-                    <div className="text-xs text-emerald-700 bg-emerald-50 px-2.5 py-1 rounded-lg mt-2 inline-block font-semibold">
-                      ✍️ {item.customName} Nº {item.customNumber}
-                    </div>
-                  )}
-                  {item.includePatch && (
-                    <div className="text-xs text-yellow-800 bg-yellow-50 px-2.5 py-1 rounded-lg mt-1 inline-block ml-1 font-semibold">
-                      🏆 Patch de Manga
-                    </div>
-                  )}
-
-                  <div className="mt-2 text-sm font-black text-slate-900">
-                    R$ {item.unitPrice.toFixed(2)} cada
-                  </div>
-                </div>
-              </div>
-
-              {/* Quantity Controls & Remove */}
-              <div className="flex sm:flex-col items-center sm:items-end justify-between sm:justify-between pt-3 sm:pt-0 border-t sm:border-t-0 border-slate-100">
-                <button
-                  onClick={() => removeFromCart(item.id)}
-                  className="text-slate-400 hover:text-rose-600 transition p-1"
-                  title="Remover item"
-                >
-                  <Trash2 size={16} />
-                </button>
-
-                <div className="flex items-center gap-2 bg-slate-100 rounded-xl p-1">
-                  <button
-                    onClick={() => updateQuantity(item.id, item.quantity - 1)}
-                    className="w-7 h-7 bg-white rounded-lg flex items-center justify-center text-slate-700 hover:bg-slate-200 transition font-bold"
-                  >
-                    <Minus size={14} />
-                  </button>
-                  <span className="w-6 text-center text-xs font-black text-slate-900">
-                    {item.quantity}
-                  </span>
-                  <button
-                    onClick={() => updateQuantity(item.id, item.quantity + 1)}
-                    className="w-7 h-7 bg-white rounded-lg flex items-center justify-center text-slate-700 hover:bg-slate-200 transition font-bold"
-                  >
-                    <Plus size={14} />
-                  </button>
-                </div>
-
-                <div className="text-right font-black text-sm text-slate-900 sm:mt-2">
-                  R$ {(item.unitPrice * item.quantity).toFixed(2)}
-                </div>
-              </div>
+        {/* Title & Free Shipping Indicator */}
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-6 pb-4 border-b border-neutral-200">
+          <div>
+            <div className="flex items-center gap-2">
+              <span className="w-2.5 h-6 bg-[#FFD900] rounded-sm" />
+              <h1 className="text-xl sm:text-2xl font-black uppercase tracking-tight text-black">
+                MEU CARRINHO DE COMPRAS
+              </h1>
             </div>
-          ))}
+            <p className="text-xs text-neutral-500 mt-0.5 pl-4">
+              {cart.reduce((total, i) => total + i.quantity, 0)} camisa(s) selecionada(s)
+            </p>
+          </div>
 
-          {/* Add more shirts prompt */}
-          <Link
-            href="/campeonatos"
-            className="inline-flex items-center gap-2 text-xs font-bold text-emerald-600 hover:text-emerald-700 transition pt-2"
+          <button
+            onClick={clearCart}
+            className="text-xs font-bold text-neutral-500 hover:text-black flex items-center gap-1.5 transition"
           >
-            <ArrowLeft size={14} /> Adicionar mais mantos ao carrinho
-          </Link>
+            <Trash2 size={14} /> Esvaziar carrinho
+          </button>
         </div>
 
-        {/* Right Column: Checkout Info & Direct WhatsApp Trigger */}
-        <div className="lg:col-span-5 space-y-6">
+        {/* Free Shipping Progress Strip */}
+        <div className="bg-[#FFFBE6] border border-[#FFD900] rounded-xl p-3.5 mb-6 flex items-center justify-between text-xs font-bold text-black">
+          <div className="flex items-center gap-2">
+            <Truck size={18} className="text-black" />
+            <span>
+              {cart.length >= 2 ? (
+                <strong className="text-black uppercase">🎉 VOCÊ GANHOU FRETE GRÁTIS NESTE PEDIDO!</strong>
+              ) : (
+                <span>Adicione mais 1 camisa ao carrinho e <strong>GANHE FRETE GRÁTIS</strong>!</span>
+              )}
+            </span>
+          </div>
+          <span className="bg-black text-[#FFD900] text-[10px] font-black px-2 py-0.5 rounded">
+            {cart.length >= 2 ? 'QUALIFICADO' : 'FALTA 1'}
+          </span>
+        </div>
+
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
           
-          <div className="bg-white rounded-3xl border border-slate-200 p-6 shadow-sm space-y-5">
-            <h2 className="text-lg font-black text-slate-900 pb-3 border-b border-slate-100 flex items-center gap-2">
-              <span>📋</span> Dados do Pedido
-            </h2>
+          {/* Left Column: Items List */}
+          <div className="lg:col-span-7 space-y-3">
+            {cart.map((item) => (
+              <div
+                key={item.id}
+                className="bg-white rounded-xl border border-neutral-200 p-4 sm:p-5 shadow-sm flex flex-col sm:flex-row gap-4 justify-between"
+              >
+                <div className="flex gap-4">
+                  <div className="w-20 h-20 bg-[#F8F9FA] rounded-lg overflow-hidden shrink-0 flex items-center justify-center border border-neutral-200">
+                    {item.product.images && item.product.images.length > 0 ? (
+                      // eslint-disable-next-line @next/next/no-img-element
+                      <img
+                        src={item.product.images[0]}
+                        alt={item.product.name}
+                        className="w-full h-full object-cover"
+                      />
+                    ) : (
+                      <span className="text-3xl">👕</span>
+                    )}
+                  </div>
 
-            {/* Customer Inputs */}
-            <div className="space-y-3">
-              <div>
-                <label className="text-xs font-bold text-slate-700 block mb-1">
-                  Seu Nome Completo:
-                </label>
-                <input
-                  type="text"
-                  placeholder="Ex: Carlos Eduardo da Silva"
-                  value={customerName}
-                  onChange={(e) => setCustomerName(e.target.value)}
-                  className="w-full bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-2.5 text-xs sm:text-sm text-slate-800 focus:outline-none focus:border-emerald-500"
-                />
+                  <div>
+                    <h3 className="font-black text-sm text-black leading-snug uppercase">
+                      {item.product.name}
+                    </h3>
+                    <div className="flex items-center gap-2 mt-1 text-xs text-neutral-600">
+                      <span className="font-extrabold text-black bg-neutral-100 px-2 py-0.5 rounded border border-neutral-200">
+                        Tam: {item.size}
+                      </span>
+                      <span>•</span>
+                      <span>{item.product.team}</span>
+                    </div>
+
+                    {(item.customName || item.customNumber) && (
+                      <div className="text-[11px] text-black bg-[#FFFBE6] border border-[#FFD900]/40 px-2 py-0.5 rounded mt-1.5 inline-block font-bold">
+                        ✍️ {item.customName} Nº {item.customNumber}
+                      </div>
+                    )}
+                    {item.includePatch && (
+                      <div className="text-[11px] text-black bg-neutral-100 border border-neutral-200 px-2 py-0.5 rounded mt-1.5 inline-block ml-1 font-bold">
+                        🏆 Patch Oficial
+                      </div>
+                    )}
+
+                    <div className="mt-2 text-sm font-black text-black">
+                      R$ {item.unitPrice.toFixed(2)} cada
+                    </div>
+                  </div>
+                </div>
+
+                {/* Quantity Controls & Total */}
+                <div className="flex sm:flex-col items-center sm:items-end justify-between sm:justify-between pt-3 sm:pt-0 border-t sm:border-t-0 border-neutral-100">
+                  <button
+                    onClick={() => removeFromCart(item.id)}
+                    className="text-neutral-400 hover:text-black transition"
+                    title="Remover"
+                  >
+                    <Trash2 size={16} />
+                  </button>
+
+                  <div className="flex items-center gap-2 bg-neutral-100 rounded-lg p-1 border border-neutral-200">
+                    <button
+                      onClick={() => updateQuantity(item.id, item.quantity - 1)}
+                      className="w-6 h-6 bg-white rounded flex items-center justify-center text-black hover:bg-neutral-200 transition font-bold"
+                    >
+                      <Minus size={12} />
+                    </button>
+                    <span className="w-5 text-center text-xs font-black text-black">
+                      {item.quantity}
+                    </span>
+                    <button
+                      onClick={() => updateQuantity(item.id, item.quantity + 1)}
+                      className="w-6 h-6 bg-white rounded flex items-center justify-center text-black hover:bg-neutral-200 transition font-bold"
+                    >
+                      <Plus size={12} />
+                    </button>
+                  </div>
+
+                  <div className="font-black text-base text-black">
+                    R$ {(item.unitPrice * item.quantity).toFixed(2)}
+                  </div>
+                </div>
               </div>
+            ))}
 
-              <div className="grid grid-cols-2 gap-2">
+            <Link
+              href="/campeonatos"
+              className="inline-flex items-center gap-2 text-xs font-black uppercase text-black hover:text-[#B29200] pt-2"
+            >
+              <ArrowLeft size={14} /> Continuar Comprando Mais Camisas
+            </Link>
+          </div>
+
+          {/* Right Column: Order Summary & WhatsApp Checkout */}
+          <div className="lg:col-span-5 space-y-4">
+            <div className="bg-white rounded-2xl border border-neutral-200 p-6 shadow-sm space-y-4">
+              <h2 className="text-base font-black uppercase text-black pb-3 border-b border-neutral-100 flex items-center gap-2">
+                <span>📋</span> Resumo do Pedido
+              </h2>
+
+              <div className="space-y-3">
                 <div>
-                  <label className="text-xs font-bold text-slate-700 block mb-1">
-                    Cidade / UF:
+                  <label className="text-[11px] font-black uppercase text-neutral-700 block mb-1">
+                    Nome Completo:
                   </label>
                   <input
                     type="text"
-                    placeholder="Ex: São Paulo / SP"
-                    value={customerCity}
-                    onChange={(e) => setCustomerCity(e.target.value)}
-                    className="w-full bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-2.5 text-xs sm:text-sm text-slate-800 focus:outline-none focus:border-emerald-500"
+                    placeholder="Seu nome para o envio..."
+                    value={customerName}
+                    onChange={(e) => setCustomerName(e.target.value)}
+                    className="w-full bg-[#F8F9FA] border border-neutral-300 rounded-lg px-3.5 py-2 text-xs text-black focus:outline-none focus:border-black"
                   />
                 </div>
+
+                <div className="grid grid-cols-2 gap-2">
+                  <div>
+                    <label className="text-[11px] font-black uppercase text-neutral-700 block mb-1">
+                      Cidade / UF:
+                    </label>
+                    <input
+                      type="text"
+                      placeholder="Ex: São Paulo / SP"
+                      value={customerCity}
+                      onChange={(e) => setCustomerCity(e.target.value)}
+                      className="w-full bg-[#F8F9FA] border border-neutral-300 rounded-lg px-3.5 py-2 text-xs text-black focus:outline-none focus:border-black"
+                    />
+                  </div>
+                  <div>
+                    <label className="text-[11px] font-black uppercase text-neutral-700 block mb-1">
+                      Forma de Pagamento:
+                    </label>
+                    <select
+                      value={paymentMethod}
+                      onChange={(e) => setPaymentMethod(e.target.value as any)}
+                      className="w-full bg-[#F8F9FA] border border-neutral-300 rounded-lg px-3.5 py-2 text-xs text-black focus:outline-none focus:border-black"
+                    >
+                      <option value="Pix">Pix (Aprovação rápida)</option>
+                      <option value="Cartao">Cartão de Crédito</option>
+                    </select>
+                  </div>
+                </div>
+
                 <div>
-                  <label className="text-xs font-bold text-slate-700 block mb-1">
-                    Forma de Pagamento:
+                  <label className="text-[11px] font-black uppercase text-neutral-700 block mb-1">
+                    Endereço de Entrega (Rua, Nº, Bairro, CEP):
                   </label>
-                  <select
-                    value={paymentMethod}
-                    onChange={(e) => setPaymentMethod(e.target.value as 'Pix' | 'Cartao')}
-                    className="w-full bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-2.5 text-xs sm:text-sm text-slate-800 focus:outline-none focus:border-emerald-500"
-                  >
-                    <option value="Pix">Pix (Aprovação imediata)</option>
-                    <option value="Cartao">Cartão de Crédito</option>
-                  </select>
+                  <input
+                    type="text"
+                    placeholder="Rua, Número, Bairro e CEP..."
+                    value={customerAddress}
+                    onChange={(e) => setCustomerAddress(e.target.value)}
+                    className="w-full bg-[#F8F9FA] border border-neutral-300 rounded-lg px-3.5 py-2 text-xs text-black focus:outline-none focus:border-black"
+                  />
+                </div>
+
+                <div>
+                  <label className="text-[11px] font-black uppercase text-neutral-700 block mb-1">
+                    Observações adicionais (opcional):
+                  </label>
+                  <input
+                    type="text"
+                    placeholder="Ex: Embalagem para presente, etc..."
+                    value={notes}
+                    onChange={(e) => setNotes(e.target.value)}
+                    className="w-full bg-[#F8F9FA] border border-neutral-300 rounded-lg px-3.5 py-2 text-xs text-black focus:outline-none focus:border-black"
+                  />
                 </div>
               </div>
 
-              <div>
-                <label className="text-xs font-bold text-slate-700 block mb-1">
-                  Endereço de Entrega (Rua, Nº, Bairro, CEP):
-                </label>
-                <input
-                  type="text"
-                  placeholder="Ex: Rua das Flores, 123 - Centro - CEP 01001-000"
-                  value={customerAddress}
-                  onChange={(e) => setCustomerAddress(e.target.value)}
-                  className="w-full bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-2.5 text-xs sm:text-sm text-slate-800 focus:outline-none focus:border-emerald-500"
-                />
+              {/* Subtotals & Total */}
+              <div className="pt-3 border-t border-neutral-100 space-y-2 text-xs">
+                <div className="flex items-center justify-between text-neutral-600">
+                  <span>Subtotal das Camisas:</span>
+                  <span className="font-bold text-black">R$ {cartTotal.toFixed(2)}</span>
+                </div>
+                <div className="flex items-center justify-between text-neutral-600">
+                  <span>Frete para sua Região:</span>
+                  {cart.length >= 2 ? (
+                    <span className="font-black text-[#008A3E] uppercase">GRÁTIS (2+ PEÇAS)</span>
+                  ) : (
+                    <span className="text-neutral-500 font-bold">A calcular no WhatsApp</span>
+                  )}
+                </div>
+                <div className="flex items-center justify-between text-base font-black text-black pt-2 border-t border-neutral-100">
+                  <span>TOTAL ESTIMADO:</span>
+                  <span className="text-2xl text-black">R$ {cartTotal.toFixed(2)}</span>
+                </div>
               </div>
 
-              <div>
-                <label className="text-xs font-bold text-slate-700 block mb-1">
-                  Observações adicionais (opcional):
-                </label>
-                <textarea
-                  rows={2}
-                  placeholder="Alguma dúvida, instrução especial ou modelo alternativo..."
-                  value={notes}
-                  onChange={(e) => setNotes(e.target.value)}
-                  className="w-full bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-2 text-xs text-slate-800 focus:outline-none focus:border-emerald-500 resize-none"
-                />
-              </div>
-            </div>
+              {/* Netshoes-Style High Contrast Yellow Checkout CTA */}
+              <button
+                onClick={handleCheckoutWhatsApp}
+                className="w-full py-4 px-6 rounded-lg bg-[#FFD900] hover:bg-[#E6C300] active:bg-[#CCAC00] text-black font-black text-sm uppercase tracking-wider flex items-center justify-center gap-2 shadow-xl transition transform hover:-translate-y-0.5"
+              >
+                <MessageCircle size={20} className="fill-black" />
+                <span>FINALIZAR PEDIDO NO WHATSAPP</span>
+              </button>
 
-            {/* Total Calculation */}
-            <div className="pt-4 border-t border-slate-100 space-y-2">
-              <div className="flex items-center justify-between text-xs text-slate-600">
-                <span>Subtotal dos produtos:</span>
-                <span className="font-bold text-slate-900">R$ {cartTotal.toFixed(2)}</span>
-              </div>
-              <div className="flex items-center justify-between text-xs text-slate-600">
-                <span>Frete:</span>
-                {cart.length >= 2 ? (
-                  <span className="font-black text-emerald-600 uppercase">Grátis (Promocional)</span>
-                ) : (
-                  <span className="text-slate-500">Calculado no WhatsApp</span>
-                )}
-              </div>
-              <div className="flex items-center justify-between text-base font-black text-slate-900 pt-2 border-t border-slate-100">
-                <span>Total Estimado:</span>
-                <span className="text-2xl text-emerald-600">R$ {cartTotal.toFixed(2)}</span>
-              </div>
-            </div>
-
-            {/* WhatsApp Checkout Button */}
-            <button
-              onClick={handleCheckoutWhatsApp}
-              className="w-full py-4 px-6 rounded-2xl bg-emerald-500 hover:bg-emerald-600 active:bg-emerald-700 text-white font-black text-base flex items-center justify-center gap-2.5 shadow-xl shadow-emerald-500/30 transition transform hover:-translate-y-0.5"
-            >
-              <MessageCircle size={22} className="fill-white" />
-              <span>Finalizar Pedido no WhatsApp</span>
-            </button>
-
-            {/* Copy text option */}
-            <button
-              onClick={handleCopyMessage}
-              className="w-full py-2.5 rounded-xl border border-slate-200 hover:bg-slate-50 text-slate-600 text-xs font-semibold flex items-center justify-center gap-1.5 transition"
-            >
-              {copied ? <Check size={14} className="text-emerald-600" /> : <Copy size={14} />}
-              <span>{copied ? 'Mensagem Copiada!' : 'Copiar Resumo do Pedido'}</span>
-            </button>
-
-            {/* Safety Notice */}
-            <div className="bg-slate-50 rounded-xl p-3 text-[11px] text-slate-500 space-y-1">
-              <p className="flex items-center gap-1.5 font-semibold text-slate-700">
-                <ShieldCheck size={14} className="text-emerald-600 shrink-0" />
-                Compra direta e segura via WhatsApp oficial
-              </p>
-              <p>
-                Ao clicar em finalizar, você será redirecionado para o WhatsApp com todos os detalhes do seu pedido prontos para envio.
-              </p>
+              <button
+                onClick={handleCopyMessage}
+                className="w-full py-2.5 rounded-lg border border-neutral-300 hover:bg-neutral-50 text-black text-xs font-black uppercase flex items-center justify-center gap-1.5 transition"
+              >
+                {copied ? <Check size={14} className="text-[#008A3E]" /> : <Copy size={14} />}
+                <span>{copied ? 'MENSAGEM COPIADA!' : 'COPIAR RESUMO DO PEDIDO'}</span>
+              </button>
             </div>
           </div>
 

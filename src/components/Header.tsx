@@ -15,362 +15,432 @@ import {
   Flame, 
   Sparkles, 
   ShieldCheck, 
-  PhoneCall,
-  ChevronDown
+  ChevronDown,
+  Phone,
+  MessageCircle,
+  Truck,
+  Zap
 } from 'lucide-react';
 
 export default function Header() {
   const { storeConfig, cartCount, isAdmin, logout, searchQuery, setSearchQuery } = useStore();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [searchOpen, setSearchOpen] = useState(false);
   const [championshipsDropdown, setChampionshipsDropdown] = useState(false);
   const [nationalDropdown, setNationalDropdown] = useState(false);
   const pathname = usePathname();
 
+  const handleWhatsAppContact = () => {
+    const text = 'Olá Jopi Sport Shop! Vim pelo site e gostaria de tirar uma dúvida.';
+    const cleanNumber = storeConfig.whatsappNumber.replace(/\D/g, '');
+    window.open(`https://wa.me/${cleanNumber}?text=${encodeURIComponent(text)}`, '_blank');
+  };
+
   return (
-    <header className="sticky top-0 z-50 shadow-md">
-      {/* Top Notification Bar */}
-      <div className="bg-gradient-to-r from-emerald-600 via-teal-600 to-emerald-700 text-white text-xs sm:text-sm py-2 px-4 text-center font-semibold tracking-wide flex items-center justify-center gap-2">
-        <span>{storeConfig.bannerText}</span>
-        <a 
-          href={`https://wa.me/${storeConfig.whatsappNumber}`} 
-          target="_blank" 
-          rel="noopener noreferrer"
-          className="hidden md:inline-flex items-center gap-1 bg-white/20 hover:bg-white/30 px-2 py-0.5 rounded text-xs transition"
-        >
-          <PhoneCall size={12} /> WhatsApp Oficial
-        </a>
+    <header className="sticky top-0 z-50 shadow-xl bg-black">
+      {/* Top Banner (Netshoes style ticker with high contrast) */}
+      <div className="bg-[#FFD900] text-black text-xs font-black tracking-wider uppercase py-1.5 px-4 text-center border-b border-black">
+        <div className="max-w-7xl mx-auto flex items-center justify-between">
+          <div className="hidden sm:flex items-center gap-2 text-[11px]">
+            <Truck size={14} className="stroke-[2.5]" />
+            <span>FRETE GRÁTIS EM PEDIDOS A PARTIR DE 2 MANTOS</span>
+          </div>
+
+          <div className="flex-1 text-center font-extrabold text-xs sm:text-[11px] truncate px-2">
+            {storeConfig.bannerText}
+          </div>
+
+          <button
+            onClick={handleWhatsAppContact}
+            className="hidden md:flex items-center gap-1.5 bg-black text-[#FFD900] hover:bg-neutral-900 px-2.5 py-0.5 rounded text-[11px] font-black uppercase tracking-wide transition"
+          >
+            <MessageCircle size={12} className="fill-[#FFD900]" />
+            <span>Atendimento WhatsApp</span>
+          </button>
+        </div>
       </div>
 
-      {/* Main Navigation Bar */}
-      <div className="bg-slate-900 border-b border-slate-800 text-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6">
-          <div className="flex items-center justify-between h-18">
-            
-            {/* Logo */}
-            <Link href="/" className="flex items-center gap-2.5 group">
-              <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-emerald-500 to-yellow-400 p-0.5 shadow-lg shadow-emerald-500/20 group-hover:scale-105 transition duration-300">
-                <div className="w-full h-full bg-slate-950 rounded-[10px] flex items-center justify-center font-black text-xl">
-                  ⚽
-                </div>
-              </div>
-              <div className="flex flex-col">
-                <span className="text-xl sm:text-2xl font-black tracking-tight leading-none">
-                  JOPI<span className="text-emerald-400">SPORT</span>
+      {/* Main Bar (Deep Black with Bold Logo and Large Search Bar) */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3.5">
+        <div className="flex items-center justify-between gap-4 lg:gap-8">
+          
+          {/* Brand Logo (Netshoes style punchy typography) */}
+          <Link href="/" className="flex items-center gap-2 shrink-0 group">
+            <div className="flex flex-col">
+              <div className="flex items-center leading-none">
+                <span className="text-2xl sm:text-3xl font-black italic tracking-tighter text-[#FFD900]">
+                  JOPI
                 </span>
-                <span className="text-[10px] font-semibold uppercase tracking-widest text-yellow-400">
-                  Mantos &amp; Camisas
+                <span className="text-2xl sm:text-3xl font-black italic tracking-tighter text-white ml-1.5">
+                  SPORT
                 </span>
               </div>
-            </Link>
+              <span className="text-[9px] font-extrabold tracking-[0.3em] uppercase text-[#FFD900] bg-neutral-900 px-1 py-0.5 rounded-sm mt-0.5 self-start">
+                SHOP OFICIAL
+              </span>
+            </div>
+          </Link>
 
-            {/* Desktop Navigation Links */}
-            <nav className="hidden lg:flex items-center gap-1 font-medium text-sm">
-              <Link 
-                href="/" 
-                className={`px-3 py-2 rounded-lg transition-colors hover:text-emerald-400 ${pathname === '/' ? 'text-emerald-400 font-semibold' : 'text-slate-200'}`}
-              >
-                Início
-              </Link>
-
-              {/* Campeonatos Dropdown */}
-              <div 
-                className="relative"
-                onMouseEnter={() => setChampionshipsDropdown(true)}
-                onMouseLeave={() => setChampionshipsDropdown(false)}
-              >
-                <Link
-                  href="/campeonatos"
-                  className={`flex items-center gap-1.5 px-3 py-2 rounded-lg transition-colors hover:text-emerald-400 ${pathname.startsWith('/campeonatos') ? 'text-emerald-400 font-semibold' : 'text-slate-200'}`}
+          {/* Central Search Bar (Netshoes style wide prominent bar) */}
+          <div className="hidden md:flex flex-1 max-w-2xl relative">
+            <div className="w-full flex items-center bg-white rounded-lg overflow-hidden border-2 border-transparent focus-within:border-[#FFD900] transition shadow-inner">
+              <input
+                type="text"
+                placeholder="O que você procura? Ex: Flamengo, Real Madrid, Brasil, Manga Longa..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="w-full px-4 py-2.5 text-sm text-neutral-900 placeholder-neutral-400 focus:outline-none"
+              />
+              {searchQuery && (
+                <button
+                  onClick={() => setSearchQuery('')}
+                  className="px-2 text-xs font-bold text-neutral-400 hover:text-black"
                 >
-                  <Trophy size={16} className="text-yellow-400" />
-                  <span>Campeonatos</span>
-                  <ChevronDown size={14} className={`transition-transform duration-200 ${championshipsDropdown ? 'rotate-180' : ''}`} />
-                </Link>
-
-                {championshipsDropdown && (
-                  <div className="absolute top-full left-0 w-64 bg-slate-900 border border-slate-800 rounded-xl shadow-2xl p-2 pt-1 animate-in fade-in slide-in-from-top-2 duration-150 z-50">
-                    <div className="text-[11px] font-bold text-slate-400 uppercase px-3 py-1.5">
-                      Principais Ligas
-                    </div>
-                    <div className="grid grid-cols-1 gap-1">
-                      {championships.map((champ) => (
-                        <Link
-                          key={champ.id}
-                          href={`/campeonatos/${champ.slug}`}
-                          className="flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm text-slate-200 hover:bg-slate-800 hover:text-emerald-400 transition"
-                        >
-                          <span className="text-base">{champ.icon}</span>
-                          <span>{champ.name}</span>
-                        </Link>
-                      ))}
-                    </div>
-                    <div className="border-t border-slate-800 mt-2 pt-2 px-3">
-                      <Link href="/campeonatos" className="text-xs text-emerald-400 font-semibold hover:underline block py-1">
-                        Ver todos os campeonatos →
-                      </Link>
-                    </div>
-                  </div>
-                )}
-              </div>
-
-              {/* Seleções Dropdown */}
-              <div 
-                className="relative"
-                onMouseEnter={() => setNationalDropdown(true)}
-                onMouseLeave={() => setNationalDropdown(false)}
-              >
-                <Link
-                  href="/selecoes"
-                  className={`flex items-center gap-1.5 px-3 py-2 rounded-lg transition-colors hover:text-emerald-400 ${pathname.startsWith('/selecoes') ? 'text-emerald-400 font-semibold' : 'text-slate-200'}`}
-                >
-                  <Globe2 size={16} className="text-blue-400" />
-                  <span>Seleções</span>
-                  <ChevronDown size={14} className={`transition-transform duration-200 ${nationalDropdown ? 'rotate-180' : ''}`} />
-                </Link>
-
-                {nationalDropdown && (
-                  <div className="absolute top-full left-0 w-64 bg-slate-900 border border-slate-800 rounded-xl shadow-2xl p-2 pt-1 animate-in fade-in slide-in-from-top-2 duration-150 z-50">
-                    <div className="text-[11px] font-bold text-slate-400 uppercase px-3 py-1.5">
-                      Seleções Mundiais
-                    </div>
-                    <div className="grid grid-cols-2 gap-1">
-                      {nationalTeams.slice(0, 10).map((sel) => (
-                        <Link
-                          key={sel.id}
-                          href={`/selecoes/${sel.slug}`}
-                          className="flex items-center gap-2 px-2.5 py-1.5 rounded-lg text-xs text-slate-200 hover:bg-slate-800 hover:text-emerald-400 transition"
-                        >
-                          <span>{sel.icon}</span>
-                          <span className="truncate">{sel.name}</span>
-                        </Link>
-                      ))}
-                    </div>
-                    <div className="border-t border-slate-800 mt-2 pt-2 px-3">
-                      <Link href="/selecoes" className="text-xs text-emerald-400 font-semibold hover:underline block py-1">
-                        Ver todas as seleções →
-                      </Link>
-                    </div>
-                  </div>
-                )}
-              </div>
-
-              <Link 
-                href="/lancamentos" 
-                className={`flex items-center gap-1.5 px-3 py-2 rounded-lg transition-colors hover:text-emerald-400 ${pathname === '/lancamentos' ? 'text-emerald-400 font-semibold' : 'text-slate-200'}`}
-              >
-                <Sparkles size={16} className="text-emerald-400" />
-                <span>Lançamentos</span>
-              </Link>
-
-              <Link 
-                href="/promocoes" 
-                className={`flex items-center gap-1.5 px-3 py-2 rounded-lg transition-colors hover:text-yellow-400 ${pathname === '/promocoes' ? 'text-yellow-400 font-semibold' : 'text-slate-200'}`}
-              >
-                <Flame size={16} className="text-yellow-400" />
-                <span>Ofertas</span>
-              </Link>
-            </nav>
-
-            {/* Right Action Icons */}
-            <div className="flex items-center gap-2 sm:gap-3">
-              {/* Search Toggle Button */}
-              <button
-                onClick={() => setSearchOpen(!searchOpen)}
-                className={`p-2 rounded-xl border border-slate-800 transition ${searchOpen ? 'bg-slate-800 text-emerald-400' : 'text-slate-300 hover:bg-slate-800'}`}
-                aria-label="Buscar produtos"
-              >
-                <Search size={19} />
-              </button>
-
-              {/* Shopping Cart Button */}
-              <Link
-                href="/carrinho"
-                className="relative p-2 rounded-xl border border-slate-800 hover:bg-slate-800 text-slate-300 transition flex items-center justify-center"
-                aria-label="Ver carrinho"
-              >
-                <ShoppingBag size={20} />
-                {cartCount > 0 && (
-                  <span className="absolute -top-1.5 -right-1.5 bg-emerald-500 text-white font-black text-[11px] w-5 h-5 rounded-full flex items-center justify-center shadow-lg animate-pulse">
-                    {cartCount}
-                  </span>
-                )}
-              </Link>
-
-              {/* Admin Button */}
-              {isAdmin ? (
-                <div className="hidden sm:flex items-center gap-1.5 bg-emerald-950/80 border border-emerald-600/40 rounded-xl px-2.5 py-1">
-                  <Link
-                    href="/admin"
-                    className="text-xs font-semibold text-emerald-400 hover:text-emerald-300 flex items-center gap-1"
-                  >
-                    <ShieldCheck size={14} /> Admin
-                  </Link>
-                  <button
-                    onClick={logout}
-                    className="text-[11px] text-red-400 hover:text-red-300 ml-1 pl-1 border-l border-emerald-800"
-                    title="Sair do painel admin"
-                  >
-                    Sair
-                  </button>
-                </div>
-              ) : (
-                <Link
-                  href="/admin/login"
-                  className="hidden sm:flex items-center gap-1 text-xs font-medium text-slate-400 hover:text-slate-200 px-2 py-1.5 rounded-lg hover:bg-slate-800 transition"
-                  title="Acesso Administrador"
-                >
-                  <ShieldCheck size={16} />
-                  <span>Admin</span>
-                </Link>
+                  ✕
+                </button>
               )}
-
-              {/* Mobile Menu Button */}
               <button
-                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                className="lg:hidden p-2 rounded-xl border border-slate-800 text-slate-300 hover:bg-slate-800 transition"
-                aria-label="Menu"
+                className="bg-[#FFD900] hover:bg-[#E6C300] text-black px-5 py-2.5 font-black text-sm flex items-center justify-center transition border-l border-neutral-200"
+                aria-label="Buscar"
               >
-                {mobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
+                <Search size={18} className="stroke-[2.5]" />
               </button>
             </div>
           </div>
 
-          {/* Quick Search Dropdown Bar */}
-          {searchOpen && (
-            <div className="py-3 border-t border-slate-800 animate-in fade-in slide-in-from-top-1 duration-150">
-              <div className="relative">
-                <input
-                  type="text"
-                  placeholder="Pesquisar time, camisa, campeonato ou seleção..."
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-2.5 pl-10 text-sm text-white placeholder-slate-400 focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 transition"
-                  autoFocus
-                />
-                <Search size={18} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400" />
-                {searchQuery && (
-                  <button
-                    onClick={() => setSearchQuery('')}
-                    className="absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-white text-xs bg-slate-800 px-2 py-1 rounded"
-                  >
-                    Limpar
-                  </button>
-                )}
-              </div>
-            </div>
-          )}
-        </div>
-
-        {/* Mobile Navigation Drawer */}
-        {mobileMenuOpen && (
-          <div className="lg:hidden bg-slate-950 border-t border-slate-800 px-4 py-4 space-y-3">
-            <Link
-              href="/"
-              onClick={() => setMobileMenuOpen(false)}
-              className="flex items-center gap-3 px-3 py-2 rounded-lg text-slate-200 hover:bg-slate-800 font-medium"
+          {/* Right Area: WhatsApp / Admin / Cart */}
+          <div className="flex items-center gap-2 sm:gap-4 shrink-0">
+            {/* WhatsApp Quick Pill */}
+            <button
+              onClick={handleWhatsAppContact}
+              className="hidden sm:flex items-center gap-2 bg-neutral-900 hover:bg-neutral-800 border border-neutral-800 text-[#FFD900] px-3 py-2 rounded-lg text-xs font-extrabold transition group"
             >
-              <span>🏠</span> Início
-            </Link>
-
-            {/* Mobile Campeonatos Accordion */}
-            <div className="space-y-1">
-              <Link
-                href="/campeonatos"
-                onClick={() => setMobileMenuOpen(false)}
-                className="flex items-center justify-between px-3 py-2 rounded-lg text-slate-200 hover:bg-slate-800 font-semibold"
-              >
-                <div className="flex items-center gap-2.5">
-                  <Trophy size={18} className="text-yellow-400" />
-                  <span>Campeonatos</span>
-                </div>
-                <span className="text-xs text-emerald-400">Ver todos</span>
-              </Link>
-              <div className="pl-6 grid grid-cols-2 gap-1">
-                {championships.map((c) => (
-                  <Link
-                    key={c.id}
-                    href={`/campeonatos/${c.slug}`}
-                    onClick={() => setMobileMenuOpen(false)}
-                    className="flex items-center gap-1.5 py-1.5 text-xs text-slate-300 hover:text-emerald-400"
-                  >
-                    <span>{c.icon}</span>
-                    <span>{c.name}</span>
-                  </Link>
-                ))}
+              <div className="w-2 h-2 rounded-full bg-[#FFD900] animate-ping" />
+              <MessageCircle size={16} className="fill-[#FFD900] text-black" />
+              <div className="text-left leading-tight hidden lg:block">
+                <span className="text-[10px] text-neutral-400 block font-normal">Dúvidas?</span>
+                <span className="text-white group-hover:text-[#FFD900] transition">Compre no Zap</span>
               </div>
-            </div>
+            </button>
 
-            {/* Mobile Seleções Accordion */}
-            <div className="space-y-1 pt-2 border-t border-slate-800">
-              <Link
-                href="/selecoes"
-                onClick={() => setMobileMenuOpen(false)}
-                className="flex items-center justify-between px-3 py-2 rounded-lg text-slate-200 hover:bg-slate-800 font-semibold"
-              >
-                <div className="flex items-center gap-2.5">
-                  <Globe2 size={18} className="text-blue-400" />
-                  <span>Seleções</span>
-                </div>
-                <span className="text-xs text-emerald-400">Ver todas</span>
-              </Link>
-              <div className="pl-6 grid grid-cols-2 gap-1">
-                {nationalTeams.slice(0, 8).map((s) => (
-                  <Link
-                    key={s.id}
-                    href={`/selecoes/${s.slug}`}
-                    onClick={() => setMobileMenuOpen(false)}
-                    className="flex items-center gap-1.5 py-1.5 text-xs text-slate-300 hover:text-emerald-400"
-                  >
-                    <span>{s.icon}</span>
-                    <span>{s.name}</span>
-                  </Link>
-                ))}
+            {/* Admin Access */}
+            {isAdmin ? (
+              <div className="flex items-center gap-1.5 bg-neutral-900 border border-[#FFD900]/40 px-2.5 py-1.5 rounded-lg text-xs">
+                <Link href="/admin" className="text-[#FFD900] font-bold hover:underline flex items-center gap-1">
+                  <ShieldCheck size={14} /> Admin
+                </Link>
+                <button onClick={logout} className="text-neutral-400 hover:text-red-400 text-[10px] ml-1 pl-1 border-l border-neutral-700">
+                  Sair
+                </button>
               </div>
-            </div>
-
-            <div className="pt-2 border-t border-slate-800 space-y-2">
+            ) : (
               <Link
-                href="/lancamentos"
-                onClick={() => setMobileMenuOpen(false)}
-                className="flex items-center gap-2.5 px-3 py-2 rounded-lg text-slate-200 hover:bg-slate-800 font-medium"
-              >
-                <Sparkles size={18} className="text-emerald-400" />
-                <span>Lançamentos 2025/26</span>
-              </Link>
-              <Link
-                href="/promocoes"
-                onClick={() => setMobileMenuOpen(false)}
-                className="flex items-center gap-2.5 px-3 py-2 rounded-lg text-yellow-400 hover:bg-slate-800 font-medium"
-              >
-                <Flame size={18} className="text-yellow-400" />
-                <span>Ofertas Especiais</span>
-              </Link>
-              <Link
-                href="/carrinho"
-                onClick={() => setMobileMenuOpen(false)}
-                className="flex items-center justify-between px-3 py-2 rounded-lg bg-emerald-600/20 text-emerald-400 font-medium"
-              >
-                <div className="flex items-center gap-2.5">
-                  <ShoppingBag size={18} />
-                  <span>Meu Carrinho</span>
-                </div>
-                <span className="font-bold text-xs bg-emerald-500 text-white px-2 py-0.5 rounded-full">
-                  {cartCount} itens
-                </span>
-              </Link>
-              <Link
-                href={isAdmin ? "/admin" : "/admin/login"}
-                onClick={() => setMobileMenuOpen(false)}
-                className="flex items-center gap-2.5 px-3 py-2 rounded-lg text-slate-400 hover:text-white font-medium text-sm"
+                href="/admin/login"
+                className="text-neutral-400 hover:text-[#FFD900] p-2 text-xs font-bold transition flex items-center gap-1"
+                title="Acesso Administrador"
               >
                 <ShieldCheck size={18} />
-                <span>{isAdmin ? "Painel de Administração" : "Acesso Admin"}</span>
+                <span className="hidden xl:inline text-[11px]">Admin</span>
               </Link>
+            )}
+
+            {/* Netshoes-Style Shopping Cart Button */}
+            <Link
+              href="/carrinho"
+              className="relative flex items-center gap-2 bg-[#FFD900] hover:bg-[#E6C300] text-black font-black text-xs sm:text-sm px-3 sm:px-4 py-2.5 rounded-lg transition shadow-md group"
+            >
+              <ShoppingBag size={18} className="stroke-[2.5]" />
+              <span className="hidden sm:inline uppercase">Meu Carrinho</span>
+              <span className="bg-black text-[#FFD900] font-black text-xs px-2 py-0.5 rounded-full min-w-5 text-center">
+                {cartCount}
+              </span>
+            </Link>
+
+            {/* Mobile Hamburger Button */}
+            <button
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              className="md:hidden p-2 text-white hover:text-[#FFD900] transition"
+              aria-label="Abrir Menu"
+            >
+              {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+            </button>
+          </div>
+        </div>
+
+        {/* Mobile Search Bar */}
+        <div className="mt-3 md:hidden">
+          <div className="flex items-center bg-white rounded-lg overflow-hidden border border-neutral-700">
+            <input
+              type="text"
+              placeholder="Buscar camisas, times, seleções..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="w-full px-3 py-2 text-xs text-neutral-900 placeholder-neutral-500 focus:outline-none"
+            />
+            <button className="bg-[#FFD900] text-black px-4 py-2 text-xs font-black">
+              <Search size={15} />
+            </button>
+          </div>
+        </div>
+      </div>
+
+      {/* Secondary Category Navigation Bar (Netshoes Department bar) */}
+      <nav className="bg-neutral-950 border-t border-neutral-800 text-white hidden md:block">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6">
+          <div className="flex items-center gap-1 lg:gap-2 text-xs font-extrabold uppercase tracking-wide">
+            
+            <Link
+              href="/"
+              className={`px-3 py-3 border-b-2 transition flex items-center gap-1.5 ${
+                pathname === '/'
+                  ? 'border-[#FFD900] text-[#FFD900]'
+                  : 'border-transparent text-neutral-300 hover:text-[#FFD900]'
+              }`}
+            >
+              <span>INÍCIO</span>
+            </Link>
+
+            {/* Campeonatos with Dropdown */}
+            <div
+              className="relative"
+              onMouseEnter={() => setChampionshipsDropdown(true)}
+              onMouseLeave={() => setChampionshipsDropdown(false)}
+            >
+              <Link
+                href="/campeonatos"
+                className={`px-3 py-3 border-b-2 transition flex items-center gap-1.5 ${
+                  pathname.startsWith('/campeonatos')
+                    ? 'border-[#FFD900] text-[#FFD900]'
+                    : 'border-transparent text-neutral-300 hover:text-[#FFD900]'
+                }`}
+              >
+                <Trophy size={14} className="text-[#FFD900]" />
+                <span>CAMPEONATOS</span>
+                <ChevronDown size={13} className={`transition-transform duration-200 ${championshipsDropdown ? 'rotate-180' : ''}`} />
+              </Link>
+
+              {championshipsDropdown && (
+                <div className="absolute top-full left-0 w-72 bg-black border border-neutral-800 rounded-b-xl shadow-2xl p-2 z-50">
+                  <div className="text-[10px] font-black tracking-widest text-[#FFD900] uppercase px-3 py-1.5 border-b border-neutral-800">
+                    LIGAS PRINCIPAIS
+                  </div>
+                  <div className="grid grid-cols-1 gap-0.5 pt-1">
+                    {championships.map((c) => (
+                      <Link
+                        key={c.id}
+                        href={`/campeonatos/${c.slug}`}
+                        className="flex items-center gap-2.5 px-3 py-2 text-xs text-neutral-200 hover:bg-neutral-900 hover:text-[#FFD900] rounded transition"
+                      >
+                        <span className="text-base">{c.icon}</span>
+                        <span>{c.name}</span>
+                      </Link>
+                    ))}
+                  </div>
+                  <div className="p-2 border-t border-neutral-800 mt-1">
+                    <Link
+                      href="/campeonatos"
+                      className="block text-center text-xs font-black text-black bg-[#FFD900] hover:bg-[#E6C300] py-1.5 rounded uppercase transition"
+                    >
+                      Ver Todos os Campeonatos
+                    </Link>
+                  </div>
+                </div>
+              )}
+            </div>
+
+            {/* Seleções with Dropdown */}
+            <div
+              className="relative"
+              onMouseEnter={() => setNationalDropdown(true)}
+              onMouseLeave={() => setNationalDropdown(false)}
+            >
+              <Link
+                href="/selecoes"
+                className={`px-3 py-3 border-b-2 transition flex items-center gap-1.5 ${
+                  pathname.startsWith('/selecoes')
+                    ? 'border-[#FFD900] text-[#FFD900]'
+                    : 'border-transparent text-neutral-300 hover:text-[#FFD900]'
+                }`}
+              >
+                <Globe2 size={14} className="text-[#FFD900]" />
+                <span>SELEÇÕES</span>
+                <ChevronDown size={13} className={`transition-transform duration-200 ${nationalDropdown ? 'rotate-180' : ''}`} />
+              </Link>
+
+              {nationalDropdown && (
+                <div className="absolute top-full left-0 w-72 bg-black border border-neutral-800 rounded-b-xl shadow-2xl p-2 z-50">
+                  <div className="text-[10px] font-black tracking-widest text-[#FFD900] uppercase px-3 py-1.5 border-b border-neutral-800">
+                    SELEÇÕES DA COPA E MUNDO
+                  </div>
+                  <div className="grid grid-cols-2 gap-0.5 pt-1">
+                    {nationalTeams.slice(0, 10).map((s) => (
+                      <Link
+                        key={s.id}
+                        href={`/selecoes/${s.slug}`}
+                        className="flex items-center gap-2 px-2.5 py-1.5 text-xs text-neutral-200 hover:bg-neutral-900 hover:text-[#FFD900] rounded transition"
+                      >
+                        <span>{s.icon}</span>
+                        <span className="truncate">{s.name}</span>
+                      </Link>
+                    ))}
+                  </div>
+                  <div className="p-2 border-t border-neutral-800 mt-1">
+                    <Link
+                      href="/selecoes"
+                      className="block text-center text-xs font-black text-black bg-[#FFD900] hover:bg-[#E6C300] py-1.5 rounded uppercase transition"
+                    >
+                      Ver Todas as Seleções
+                    </Link>
+                  </div>
+                </div>
+              )}
+            </div>
+
+            {/* Direct Quick League Links */}
+            <Link
+              href="/campeonatos/brasileirao"
+              className="px-3 py-3 border-b-2 border-transparent text-neutral-300 hover:text-[#FFD900] transition"
+            >
+              BRASILEIRÃO
+            </Link>
+
+            <Link
+              href="/campeonatos/premier-league"
+              className="px-3 py-3 border-b-2 border-transparent text-neutral-300 hover:text-[#FFD900] transition"
+            >
+              PREMIER LEAGUE
+            </Link>
+
+            <Link
+              href="/campeonatos/la-liga"
+              className="px-3 py-3 border-b-2 border-transparent text-neutral-300 hover:text-[#FFD900] transition"
+            >
+              LA LIGA
+            </Link>
+
+            <Link
+              href="/lancamentos"
+              className={`px-3 py-3 border-b-2 transition flex items-center gap-1.5 ${
+                pathname === '/lancamentos'
+                  ? 'border-[#FFD900] text-[#FFD900]'
+                  : 'border-transparent text-neutral-300 hover:text-[#FFD900]'
+              }`}
+            >
+              <Sparkles size={13} className="text-[#FFD900]" />
+              <span>LANÇAMENTOS</span>
+            </Link>
+
+            <Link
+              href="/promocoes"
+              className="ml-auto px-3 py-3 text-black bg-[#FFD900] hover:bg-[#E6C300] font-black flex items-center gap-1.5 transition rounded-t-sm"
+            >
+              <Flame size={14} className="fill-black" />
+              <span>OFERTAS DA SEMANA</span>
+            </Link>
+          </div>
+        </div>
+      </nav>
+
+      {/* Mobile Drawer */}
+      {mobileMenuOpen && (
+        <div className="md:hidden bg-neutral-950 border-t border-neutral-800 p-4 space-y-3 animate-in slide-in-from-top-2">
+          <Link
+            href="/"
+            onClick={() => setMobileMenuOpen(false)}
+            className="block py-2 text-sm font-bold text-white hover:text-[#FFD900]"
+          >
+            🏠 Início
+          </Link>
+          
+          <div className="py-2 border-y border-neutral-800 space-y-1">
+            <Link
+              href="/campeonatos"
+              onClick={() => setMobileMenuOpen(false)}
+              className="flex items-center justify-between text-sm font-black text-[#FFD900]"
+            >
+              <span>🏆 Campeonatos Principais</span>
+              <span className="text-xs">Ver todos →</span>
+            </Link>
+            <div className="grid grid-cols-2 gap-1 pt-1">
+              {championships.slice(0, 6).map((c) => (
+                <Link
+                  key={c.id}
+                  href={`/campeonatos/${c.slug}`}
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="text-xs text-neutral-300 hover:text-[#FFD900] py-1 flex items-center gap-1.5"
+                >
+                  <span>{c.icon}</span>
+                  <span>{c.name}</span>
+                </Link>
+              ))}
             </div>
           </div>
-        )}
-      </div>
+
+          <div className="py-2 border-b border-neutral-800 space-y-1">
+            <Link
+              href="/selecoes"
+              onClick={() => setMobileMenuOpen(false)}
+              className="flex items-center justify-between text-sm font-black text-[#FFD900]"
+            >
+              <span>🌍 Seleções Mundiais</span>
+              <span className="text-xs">Ver todas →</span>
+            </Link>
+            <div className="grid grid-cols-2 gap-1 pt-1">
+              {nationalTeams.slice(0, 6).map((s) => (
+                <Link
+                  key={s.id}
+                  href={`/selecoes/${s.slug}`}
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="text-xs text-neutral-300 hover:text-[#FFD900] py-1 flex items-center gap-1.5"
+                >
+                  <span>{s.icon}</span>
+                  <span>{s.name}</span>
+                </Link>
+              ))}
+            </div>
+          </div>
+
+          <div className="pt-1 space-y-2">
+            <Link
+              href="/lancamentos"
+              onClick={() => setMobileMenuOpen(false)}
+              className="block text-sm font-bold text-white hover:text-[#FFD900]"
+            >
+              ✨ Lançamentos 2025/26
+            </Link>
+            <Link
+              href="/promocoes"
+              onClick={() => setMobileMenuOpen(false)}
+              className="block text-sm font-black text-[#FFD900]"
+            >
+              🔥 Ofertas Especiais
+            </Link>
+            <Link
+              href="/carrinho"
+              onClick={() => setMobileMenuOpen(false)}
+              className="flex items-center justify-between p-2.5 bg-[#FFD900] text-black font-black rounded-lg"
+            >
+              <span>🛒 Meu Carrinho ({cartCount})</span>
+              <span>Finalizar →</span>
+            </Link>
+            <button
+              onClick={() => {
+                setMobileMenuOpen(false);
+                handleWhatsAppContact();
+              }}
+              className="w-full text-center py-2.5 border border-[#FFD900] text-[#FFD900] font-black text-xs rounded-lg uppercase"
+            >
+              💬 Falar com Vendedor no WhatsApp
+            </button>
+            <Link
+              href="/admin/login"
+              onClick={() => setMobileMenuOpen(false)}
+              className="block text-center text-xs text-neutral-500 pt-2"
+            >
+              Painel do Administrador
+            </Link>
+          </div>
+        </div>
+      )}
     </header>
   );
 }
