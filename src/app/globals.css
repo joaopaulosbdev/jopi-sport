@@ -4,22 +4,24 @@
   --primary-yellow: #FFD900;
   --primary-yellow-hover: #E6C300;
   --primary-yellow-light: #FFFBE6;
+  --primary-yellow-subtle: #FFF9D2;
   --primary-black: #000000;
   --dark-surface: #111111;
   --dark-border: #222222;
-  --light-bg: #F8F9FA;
+  --light-bg: #F4F5F7;
   --light-card: #FFFFFF;
   --light-border: #E5E7EB;
 }
 
 body {
-  background-color: #F4F5F7;
+  background-color: #F8F9FA;
   color: #111827;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
 }
 
-/* Custom Sports Scrollbars */
+/* Custom FutFanatics Sports Scrollbars */
 ::-webkit-scrollbar {
   width: 8px;
   height: 8px;
@@ -35,19 +37,36 @@ body {
   background: #E6C300;
 }
 
-/* Netshoes-style banner stripes */
+/* FutFanatics diagonal badges & sport stripes */
+.futfanatics-badge-skew {
+  transform: skewX(-12deg);
+}
+.futfanatics-badge-skew > * {
+  transform: skewX(12deg);
+}
+
 .sports-stripe {
   background: repeating-linear-gradient(
     -45deg,
     #000000,
     #000000 12px,
-    #111111 12px,
-    #111111 24px
+    #141414 12px,
+    #141414 24px
   );
 }
 
-.yellow-badge {
-  background-color: #FFD900;
-  color: #000000;
-  font-weight: 800;
+.sports-grid-pattern {
+  background-image: radial-gradient(rgba(255, 217, 0, 0.15) 1px, transparent 1px);
+  background-size: 20px 20px;
+}
+
+/* Smooth transitions for product cards */
+.product-card-shadow {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.product-card-shadow:hover {
+  box-shadow: 0 12px 24px -6px rgba(0, 0, 0, 0.12), 0 4px 8px -4px rgba(0, 0, 0, 0.06);
+  transform: translateY(-3px);
 }

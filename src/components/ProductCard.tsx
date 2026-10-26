@@ -50,25 +50,25 @@ export default function ProductCard({ product }: ProductCardProps) {
   };
 
   return (
-    <div className="group relative bg-white rounded-xl border border-neutral-200 hover:border-black hover:shadow-xl transition-all duration-300 flex flex-col justify-between overflow-hidden">
+    <div className="group relative bg-white rounded-xl border border-neutral-200 hover:border-black product-card-shadow flex flex-col justify-between overflow-hidden">
       
       {/* Top Image Area */}
       <div>
-        <Link href={`/produto/${product.id}`} className="relative block aspect-square bg-[#F8F9FA] overflow-hidden p-4">
+        <Link href={`/produto/${product.id}`} className="relative block aspect-square bg-[#F8F9FA] overflow-hidden p-4 border-b border-neutral-100">
           
-          {/* Badges based on product data */}
+          {/* Dynamic Badges based on product data (FutFanatics Style) */}
           <div className="absolute top-2.5 left-2.5 flex flex-col gap-1 z-10">
             {discount > 0 && (
-              <span className="bg-black text-[#FFD900] text-[10px] font-black uppercase px-2 py-0.5 rounded shadow">
+              <span className="bg-[#FFD900] text-black text-[10px] font-black uppercase px-2 py-0.5 rounded shadow-sm">
                 -{discount}% OFF
               </span>
             )}
             {product.isNew && (
-              <span className="bg-[#FFD900] text-black text-[10px] font-black uppercase px-2 py-0.5 rounded shadow">
+              <span className="bg-black text-[#FFD900] text-[10px] font-black uppercase px-2 py-0.5 rounded shadow-sm">
                 LANÇAMENTO
               </span>
             )}
-            <span className={`text-[10px] font-black uppercase px-2 py-0.5 rounded shadow ${
+            <span className={`text-[10px] font-black uppercase px-2 py-0.5 rounded shadow-sm ${
               product.isReadyDelivery 
                 ? 'bg-[#E8F8EE] text-[#008A3E] border border-[#008A3E]/30' 
                 : 'bg-neutral-100 text-neutral-700 border border-neutral-300'
@@ -118,12 +118,12 @@ export default function ProductCard({ product }: ProductCardProps) {
           )}
         </Link>
 
-        {/* Content Section */}
+        {/* Content Section - FutFanatics Style */}
         <div className="p-4">
           
-          {/* Subtitle with Team and Season from registration (NO fake reviews!) */}
+          {/* Subtitle with Team and Season (Strictly NO fake reviews!) */}
           <div className="flex items-center justify-between text-[11px] text-neutral-500 mb-1">
-            <span className="font-bold uppercase tracking-wider text-neutral-700">
+            <span className="font-black uppercase tracking-wider text-neutral-800">
               {product.team}
             </span>
             <span className="text-[10px] font-bold text-neutral-500">
@@ -138,7 +138,7 @@ export default function ProductCard({ product }: ProductCardProps) {
             </h3>
           </Link>
 
-          {/* Pricing */}
+          {/* Pricing - FutFanatics Layout */}
           <div className="mt-2 pt-2 border-t border-neutral-100">
             {product.originalPrice ? (
               <div className="text-[11px] text-neutral-400 line-through">
@@ -152,7 +152,7 @@ export default function ProductCard({ product }: ProductCardProps) {
               <span className="text-xl sm:text-2xl font-black text-black tracking-tight">
                 R$ {product.price.toFixed(2)}
               </span>
-              <span className="text-[10px] font-extrabold uppercase text-[#008A3E] bg-[#E8F8EE] px-1.5 py-0.5 rounded">
+              <span className="text-[10px] font-black uppercase text-[#008A3E] bg-[#E8F8EE] px-1.5 py-0.5 rounded">
                 no Pix
               </span>
             </div>
@@ -165,8 +165,8 @@ export default function ProductCard({ product }: ProductCardProps) {
           {/* Size Pills */}
           {product.sizes && product.sizes.length > 0 && (
             <div className="mt-3">
-              <div className="text-[10px] font-extrabold uppercase text-neutral-500 mb-1">
-                Tamanho: <span className="text-black font-black">{selectedSize}</span>
+              <div className="text-[10px] font-black uppercase text-neutral-500 mb-1 flex items-center justify-between">
+                <span>TAMANHO: <strong className="text-black">{selectedSize}</strong></span>
               </div>
               <div className="flex flex-wrap gap-1">
                 {product.sizes.map((sz) => (
@@ -177,7 +177,7 @@ export default function ProductCard({ product }: ProductCardProps) {
                       e.preventDefault();
                       setSelectedSize(sz);
                     }}
-                    className={`text-[11px] font-extrabold px-2 py-0.5 rounded border transition ${
+                    className={`text-[11px] font-black px-2 py-0.5 rounded border transition ${
                       selectedSize === sz
                         ? 'bg-black text-[#FFD900] border-black'
                         : 'bg-white text-neutral-700 border-neutral-300 hover:border-black'
@@ -193,7 +193,7 @@ export default function ProductCard({ product }: ProductCardProps) {
         </div>
       </div>
 
-      {/* Action Buttons */}
+      {/* Action Buttons - FutFanatics Style with Yellow WhatsApp Buy button */}
       <div className="p-4 pt-0 flex items-center gap-2">
         <button
           type="button"

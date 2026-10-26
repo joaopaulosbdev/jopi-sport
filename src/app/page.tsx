@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
 import Link from 'next/link';
 import HeroSection from '@/components/HeroSection';
 import ProductCard from '@/components/ProductCard';
@@ -13,11 +13,15 @@ import {
   MessageCircle, 
   ArrowRight,
   FilterX,
-  Search
+  Search,
+  Sparkles,
+  Shirt,
+  PackageCheck
 } from 'lucide-react';
 
 export default function Home() {
   const { products, searchQuery, setSearchQuery, storeConfig, categories } = useStore();
+  const [activeTab, setActiveTab] = useState<'all' | 'brasileirao' | 'europe' | 'national' | 'ready'>('all');
 
   const championships = categories.filter((c) => c.type === 'championship');
   const nationalTeams = categories.filter((c) => c.type === 'national');
@@ -34,9 +38,19 @@ export default function Home() {
       })
     : [];
 
+  // Filter shelf products based on active tab
+  const shelfProducts = products.filter((p) => {
+    if (activeTab === 'brasileirao') return p.subcategory.toLowerCase() === 'brasileirao';
+    if (activeTab === 'europe') return p.category === 'championship' && p.subcategory.toLowerCase() !== 'brasileirao';
+    if (activeTab === 'national') return p.category === 'national';
+    if (activeTab === 'ready') return p.isReadyDelivery;
+    return true;
+  });
+
   const featuredProducts = products.filter((p) => p.featured);
   const newProducts = products.filter((p) => p.isNew);
   const promoProducts = products.filter((p) => p.originalPrice && p.originalPrice > p.price);
+  const readyDeliveryProducts = products.filter((p) => p.isReadyDelivery);
 
   const handleWhatsAppContact = () => {
     const text = 'Olá Jopi Sport Shop! Vim pelo site e gostaria de saber as novidades e catálogo completo das camisas!';
@@ -56,7 +70,7 @@ export default function Home() {
                 RESULTADOS PARA &ldquo;<span className="text-[#B29200]">{searchQuery}</span>&rdquo;
               </h1>
             </div>
-            <p className="text-xs sm:text-sm text-neutral-500 mt-1 pl-4">
+            <p className="text-xs sm:text-sm text-neutral-500 mt-1 pl-4 font-medium">
               Encontramos {filteredProducts.length} modelo(s) disponível(is)
             </p>
           </div>
@@ -64,7 +78,7 @@ export default function Home() {
             onClick={() => setSearchQuery('')}
             className="flex items-center gap-1.5 text-xs font-black uppercase text-neutral-700 bg-neutral-200 hover:bg-neutral-300 px-3.5 py-2 rounded-lg transition"
           >
-            <FilterX size={15} /> Limpar filtro
+            <FilterX size={15} /> Limpar busca
           </button>
         </div>
 
@@ -80,13 +94,13 @@ export default function Home() {
               <Search size={24} />
             </div>
             <h2 className="text-lg font-black uppercase text-neutral-900 mb-1">Nenhum resultado encontrado</h2>
-            <p className="text-xs text-neutral-500 mb-6">
+            <p className="text-xs text-neutral-500 mb-6 font-medium">
               Não encontramos nenhuma camisa com o termo &ldquo;{searchQuery}&rdquo;. Peça sob encomenda no WhatsApp!
             </p>
             <div className="flex flex-col sm:flex-row gap-2 justify-center">
               <button
                 onClick={() => setSearchQuery('')}
-                className="px-5 py-2.5 rounded-lg bg-black text-white text-xs font-black uppercase hover:bg-neutral-800 transition"
+                className="px-5 py-2.5 rounded-lg bg-black text-[#FFD900] text-xs font-black uppercase hover:bg-neutral-800 transition"
               >
                 Ver Todas as Camisas
               </button>
@@ -105,86 +119,159 @@ export default function Home() {
 
   return (
     <div className="bg-[#F4F5F7]">
-      {/* Hero Section */}
+      {/* FutFanatics Hero Section with Club Crests & Trust Badges */}
       <HeroSection />
 
-      {/* Destaques da Rodada */}
+      {/* Main Interactive Showcase with Tabs (FutFanatics Style) */}
       <section className="py-10 sm:py-14 max-w-7xl mx-auto px-4 sm:px-6">
-        <div className="flex items-end justify-between mb-6 pb-3 border-b border-neutral-200">
+        
+        {/* FutFanatics Section Header with Sports Slash */}
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-6 pb-4 border-b border-neutral-300">
           <div>
             <div className="flex items-center gap-2">
               <span className="w-2.5 h-6 bg-[#FFD900] rounded-sm" />
               <h2 className="text-xl sm:text-2xl font-black uppercase tracking-tight text-neutral-900 flex items-center gap-2">
-                <span>MAIS VENDIDOS DA SEMANA</span>
-                <span className="hidden sm:inline bg-black text-[#FFD900] text-[10px] font-black uppercase px-2 py-0.5 rounded">
-                  DESTAQUES
+                <span>DESTAQUES DA TEMPORADA</span>
+                <span className="bg-black text-[#FFD900] text-[10px] font-black uppercase px-2 py-0.5 rounded">
+                  2025/26
                 </span>
               </h2>
             </div>
             <p className="text-xs text-neutral-500 mt-1 pl-4 font-medium">
-              Os mantos mais procurados pelos torcedores em todo o Brasil
+              Os mantos mais desejados pelos torcedores em todo o Brasil
             </p>
           </div>
-          
-          <Link
-            href="/lancamentos"
-            className="text-xs font-black uppercase text-black hover:text-[#B29200] flex items-center gap-1 transition"
-          >
-            <span>Ver todos</span>
-            <ArrowRight size={14} />
-          </Link>
+
+          {/* FutFanatics Shelf Filter Tabs */}
+          <div className="flex items-center gap-1 overflow-x-auto pb-1 scrollbar-none">
+            <button
+              onClick={() => setActiveTab('all')}
+              className={`px-3 py-1.5 rounded-lg text-xs font-black uppercase transition shrink-0 ${
+                activeTab === 'all'
+                  ? 'bg-black text-[#FFD900]'
+                  : 'bg-white text-neutral-700 hover:bg-neutral-200 border border-neutral-200'
+              }`}
+            >
+              Todos ({products.length})
+            </button>
+            <button
+              onClick={() => setActiveTab('brasileirao')}
+              className={`px-3 py-1.5 rounded-lg text-xs font-black uppercase transition shrink-0 ${
+                activeTab === 'brasileirao'
+                  ? 'bg-black text-[#FFD900]'
+                  : 'bg-white text-neutral-700 hover:bg-neutral-200 border border-neutral-200'
+              }`}
+            >
+              Brasileirão
+            </button>
+            <button
+              onClick={() => setActiveTab('europe')}
+              className={`px-3 py-1.5 rounded-lg text-xs font-black uppercase transition shrink-0 ${
+                activeTab === 'europe'
+                  ? 'bg-black text-[#FFD900]'
+                  : 'bg-white text-neutral-700 hover:bg-neutral-200 border border-neutral-200'
+              }`}
+            >
+              Futebol Europeu
+            </button>
+            <button
+              onClick={() => setActiveTab('national')}
+              className={`px-3 py-1.5 rounded-lg text-xs font-black uppercase transition shrink-0 ${
+                activeTab === 'national'
+                  ? 'bg-black text-[#FFD900]'
+                  : 'bg-white text-neutral-700 hover:bg-neutral-200 border border-neutral-200'
+              }`}
+            >
+              Seleções
+            </button>
+            <button
+              onClick={() => setActiveTab('ready')}
+              className={`px-3 py-1.5 rounded-lg text-xs font-black uppercase transition shrink-0 ${
+                activeTab === 'ready'
+                  ? 'bg-[#FFD900] text-black font-black'
+                  : 'bg-white text-neutral-700 hover:bg-neutral-200 border border-neutral-200'
+              }`}
+            >
+              Pronta Entrega
+            </button>
+          </div>
         </div>
 
+        {/* Products Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
-          {featuredProducts.slice(0, 8).map((product) => (
+          {shelfProducts.slice(0, 8).map((product) => (
             <ProductCard key={product.id} product={product} />
           ))}
         </div>
+
+        {shelfProducts.length > 8 && (
+          <div className="text-center mt-8">
+            <Link
+              href="/campeonatos"
+              className="inline-flex items-center gap-2 px-6 py-3 bg-black hover:bg-neutral-800 text-[#FFD900] font-black text-xs uppercase tracking-wider rounded-lg transition"
+            >
+              <span>Ver Mais Camisas no Catálogo</span>
+              <ArrowRight size={15} />
+            </Link>
+          </div>
+        )}
       </section>
 
-      {/* Promotional Banner Grid */}
+      {/* FutFanatics 2-Banner Split */}
       <section className="py-4 max-w-7xl mx-auto px-4 sm:px-6">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           
-          <div className="bg-black text-white rounded-2xl p-6 sm:p-8 flex items-center justify-between border-2 border-[#FFD900] relative overflow-hidden">
+          {/* Banner 1: Versões Torcedor vs Jogador */}
+          <div className="bg-black text-white rounded-2xl p-6 sm:p-8 flex flex-col justify-between border-2 border-[#FFD900] relative overflow-hidden group">
+            <div 
+              className="absolute inset-0 opacity-10 pointer-events-none"
+              style={{
+                backgroundImage: 'repeating-linear-gradient(45deg, #FFD900 0, #FFD900 2px, transparent 0, transparent 24px)',
+              }}
+            />
             <div className="space-y-2 z-10">
               <span className="bg-[#FFD900] text-black text-[10px] font-black uppercase px-2.5 py-0.5 rounded inline-block">
-                BRASILEIRÃO
+                VERSÕES EXCLUSIVAS
               </span>
-              <h3 className="text-2xl font-black italic uppercase tracking-tight text-white">
-                MANTOS NACIONAIS
+              <h3 className="text-2xl sm:text-3xl font-black italic uppercase tracking-tight text-white">
+                TORCEDOR OU JOGADOR?
               </h3>
-              <p className="text-xs text-neutral-300 max-w-xs font-medium">
-                Flamengo, Palmeiras, Corinthians, São Paulo, Vasco e muito mais com personalização.
+              <p className="text-xs text-neutral-300 max-w-sm font-medium leading-relaxed">
+                Opção Torcedor com caimento padrão e escudo bordado, ou Versão Jogador com caimento atlético e escudo termocolado.
               </p>
+            </div>
+            <div className="pt-5 z-10">
               <Link
-                href="/campeonatos/brasileirao"
-                className="inline-flex items-center gap-2 text-xs font-black uppercase text-black bg-[#FFD900] hover:bg-[#E6C300] px-4 py-2 rounded-lg transition"
+                href="/campeonatos"
+                className="inline-flex items-center gap-2 text-xs font-black uppercase text-black bg-[#FFD900] hover:bg-[#E6C300] px-4 py-2.5 rounded-lg transition shadow"
               >
-                <span>CONFERIR CLUBES</span>
+                <span>ESCOLHER MEU MODELO</span>
                 <ArrowRight size={14} />
               </Link>
             </div>
           </div>
 
-          <div className="bg-neutral-900 text-white rounded-2xl p-6 sm:p-8 flex items-center justify-between border border-neutral-800 relative overflow-hidden">
+          {/* Banner 2: Personalização com Nome & Número */}
+          <div className="bg-neutral-900 text-white rounded-2xl p-6 sm:p-8 flex flex-col justify-between border border-neutral-800 relative overflow-hidden group">
             <div className="space-y-2 z-10">
-              <span className="bg-[#FFD900] text-black text-[10px] font-black uppercase px-2.5 py-0.5 rounded inline-block">
-                FUTEBOL EUROPEU
+              <span className="bg-neutral-800 text-[#FFD900] border border-[#FFD900]/30 text-[10px] font-black uppercase px-2.5 py-0.5 rounded inline-block">
+                PERSONALIZAÇÃO OFICIAL
               </span>
-              <h3 className="text-2xl font-black italic uppercase tracking-tight text-white">
-                GIGANTES DO MUNDO
+              <h3 className="text-2xl sm:text-3xl font-black italic uppercase tracking-tight text-white">
+                SEU NOME NO MANTO
               </h3>
-              <p className="text-xs text-neutral-300 max-w-xs font-medium">
-                Real Madrid, Barcelona, Manchester City, Liverpool, Bayern e Champions League.
+              <p className="text-xs text-neutral-300 max-w-sm font-medium leading-relaxed">
+                Adicione seu nome e número favoritos com a fonte oficial do clube ou seleções direto pelo WhatsApp.
               </p>
-              <Link
-                href="/campeonatos/premier-league"
-                className="inline-flex items-center gap-2 text-xs font-black uppercase text-[#FFD900] border border-[#FFD900] hover:bg-[#FFD900] hover:text-black px-4 py-2 rounded-lg transition"
+            </div>
+            <div className="pt-5 z-10">
+              <button
+                onClick={handleWhatsAppContact}
+                className="inline-flex items-center gap-2 text-xs font-black uppercase text-[#FFD900] border-2 border-[#FFD900] hover:bg-[#FFD900] hover:text-black px-4 py-2 rounded-lg transition"
               >
-                <span>VER CAMISAS EUROPÉIAS</span>
-                <ArrowRight size={14} />
-              </Link>
+                <MessageCircle size={15} className="fill-current" />
+                <span>PERSONALIZAR NO ZAP</span>
+              </button>
             </div>
           </div>
 
@@ -193,16 +280,16 @@ export default function Home() {
 
       {/* Principais Campeonatos Shelf */}
       <section className="py-10 sm:py-14 max-w-7xl mx-auto px-4 sm:px-6">
-        <div className="flex items-end justify-between mb-6 pb-3 border-b border-neutral-200">
+        <div className="flex items-end justify-between mb-6 pb-3 border-b border-neutral-300">
           <div>
             <div className="flex items-center gap-2">
               <span className="w-2.5 h-6 bg-[#FFD900] rounded-sm" />
               <h2 className="text-xl sm:text-2xl font-black uppercase tracking-tight text-neutral-900">
-                CAMPEONATOS &amp; LIGAS
+                CAMPEONATOS &amp; LIGAS PRINCIPAIS
               </h2>
             </div>
             <p className="text-xs text-neutral-500 mt-1 pl-4 font-medium">
-              Navegue pelas principais competições do futebol mundial
+              Navegue pelas maiores competições do futebol nacional e internacional
             </p>
           </div>
           
@@ -237,7 +324,7 @@ export default function Home() {
                 </h2>
               </div>
               <p className="text-xs text-neutral-500 mt-1 pl-4 font-medium">
-                Vista o manto do seu país com orgulho e qualidade
+                Vista as cores do seu país com o máximo de conforto e fidelidade
               </p>
             </div>
             
@@ -258,10 +345,38 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Pronta Entrega Shelf */}
+      {readyDeliveryProducts.length > 0 && (
+        <section className="py-10 sm:py-14 max-w-7xl mx-auto px-4 sm:px-6">
+          <div className="flex items-end justify-between mb-6 pb-3 border-b border-neutral-300">
+            <div>
+              <div className="flex items-center gap-2">
+                <span className="w-2.5 h-6 bg-[#008A3E] rounded-sm" />
+                <h2 className="text-xl sm:text-2xl font-black uppercase tracking-tight text-neutral-900 flex items-center gap-2">
+                  <span>PRONTA ENTREGA // ENVIO RÁPIDO</span>
+                  <span className="bg-[#E8F8EE] text-[#008A3E] border border-[#008A3E]/30 text-[10px] font-black uppercase px-2 py-0.5 rounded">
+                    ESTOQUE NO BRASIL
+                  </span>
+                </h2>
+              </div>
+              <p className="text-xs text-neutral-500 mt-1 pl-4 font-medium">
+                Mantos já disponíveis para envio imediato sem espera de importação
+              </p>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
+            {readyDeliveryProducts.slice(0, 4).map((product) => (
+              <ProductCard key={product.id} product={product} />
+            ))}
+          </div>
+        </section>
+      )}
+
       {/* Ofertas Imperdíveis Shelf */}
       {promoProducts.length > 0 && (
-        <section className="py-10 sm:py-14 max-w-7xl mx-auto px-4 sm:px-6">
-          <div className="flex items-end justify-between mb-6 pb-3 border-b border-neutral-200">
+        <section className="py-10 sm:py-14 max-w-7xl mx-auto px-4 sm:px-6 border-t border-neutral-300">
+          <div className="flex items-end justify-between mb-6 pb-3 border-b border-neutral-300">
             <div>
               <div className="flex items-center gap-2">
                 <span className="w-2.5 h-6 bg-[#FFD900] rounded-sm" />
@@ -292,41 +407,8 @@ export default function Home() {
         </section>
       )}
 
-      {/* Lançamentos Shelf */}
-      {newProducts.length > 0 && (
-        <section className="py-10 sm:py-14 max-w-7xl mx-auto px-4 sm:px-6 border-t border-neutral-200">
-          <div className="flex items-end justify-between mb-6 pb-3 border-b border-neutral-200">
-            <div>
-              <div className="flex items-center gap-2">
-                <span className="w-2.5 h-6 bg-black rounded-sm" />
-                <h2 className="text-xl sm:text-2xl font-black uppercase tracking-tight text-neutral-900">
-                  LANÇAMENTOS RECENTES
-                </h2>
-              </div>
-              <p className="text-xs text-neutral-500 mt-1 pl-4 font-medium">
-                Recém-chegados na Jopi Sport Shop com acabamento premium
-              </p>
-            </div>
-            
-            <Link
-              href="/lancamentos"
-              className="text-xs font-black uppercase text-black hover:text-[#B29200] flex items-center gap-1 transition"
-            >
-              <span>Ver lançamentos</span>
-              <ArrowRight size={14} />
-            </Link>
-          </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
-            {newProducts.slice(0, 4).map((product) => (
-              <ProductCard key={product.id} product={product} />
-            ))}
-          </div>
-        </section>
-      )}
-
-      {/* WhatsApp Banner */}
-      <section className="bg-black text-white py-14 border-t-2 border-[#FFD900]">
+      {/* WhatsApp Custom Order Banner */}
+      <section className="bg-black text-white py-14 border-t-4 border-[#FFD900]">
         <div className="max-w-4xl mx-auto px-4 text-center space-y-5">
           <div className="inline-flex items-center gap-2 bg-[#FFD900] text-black px-4 py-1 rounded font-black text-xs uppercase tracking-wider">
             ATENDIMENTO PERSONALIZADO VIA WHATSAPP
@@ -338,13 +420,13 @@ export default function Home() {
           </h2>
 
           <p className="text-neutral-400 text-xs sm:text-sm max-w-xl mx-auto leading-relaxed font-medium">
-            Temos acesso a centenas de modelos de camisas: edições retrô clássicas, manga longa, kits infantis e tamanhos especiais.
+            Temos acesso a centenas de modelos de camisas: edições retrô clássicas, manga longa, kits infantis e tamanhos especiais até 4XG.
           </p>
 
           <div className="pt-2">
             <button
               onClick={handleWhatsAppContact}
-              className="inline-flex items-center gap-3 px-8 py-4 bg-[#FFD900] hover:bg-[#E6C300] text-black font-black uppercase tracking-wider rounded-lg shadow-xl text-sm sm:text-base transition transform hover:scale-105 active:scale-95"
+              className="inline-flex items-center gap-3 px-8 py-4 bg-[#FFD900] hover:bg-[#E6C300] active:bg-[#CCAC00] text-black font-black uppercase tracking-wider rounded-lg shadow-xl text-sm sm:text-base transition transform hover:scale-105 active:scale-95"
             >
               <MessageCircle size={22} className="fill-black" />
               <span>CONSULTAR MODELO NO WHATSAPP</span>
