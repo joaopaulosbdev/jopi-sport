@@ -37,10 +37,10 @@ export default function CartPage() {
 
   const handleApplyCoupon = (e: React.FormEvent) => {
     e.preventDefault();
-    if (coupon.trim().toUpperCase() === 'VOLT10') {
+    if (coupon.trim().toUpperCase() === 'JOPI10') {
       setCouponApplied(true);
     } else {
-      alert('Cupom inválido. Experimente usar: VOLT10');
+      alert('Cupom inválido. Experimente usar: JOPI10');
     }
   };
 
@@ -57,7 +57,7 @@ export default function CartPage() {
     if (customerAddress.trim()) {
       msg += `Endereço: ${customerAddress.trim()}\n`;
     }
-    msg += `Pagamento: ${paymentMethod}${couponApplied ? ' (Cupom VOLT10 aplicado)' : ''}\n\n`;
+    msg += `Pagamento: ${paymentMethod}${couponApplied ? ' (Cupom JOPI10 aplicado)' : ''}\n\n`;
 
     msg += `ITENS NA SACOLA:\n`;
     cart.forEach((item, index) => {
@@ -341,7 +341,7 @@ export default function CartPage() {
             <form onSubmit={handleApplyCoupon} className="flex gap-2">
               <input
                 type="text"
-                placeholder="CUPOM (Ex: VOLT10)"
+                placeholder="CUPOM (Ex: JOPI10)"
                 value={coupon}
                 onChange={(e) => setCoupon(e.target.value)}
                 className="flex-1 bg-[#0c0e10] border border-[#333537] focus:border-[#FFD900] px-3 py-2 text-xs font-mono uppercase text-white focus:outline-none"
@@ -356,7 +356,7 @@ export default function CartPage() {
             {couponApplied && (
               <div className="text-[11px] font-mono text-[#FFD900] flex items-center gap-1">
                 <Check size={13} />
-                Cupom VOLT10 aplicado: 10% de desconto!
+                Cupom JOPI10 aplicado: 10% de desconto!
               </div>
             )}
 

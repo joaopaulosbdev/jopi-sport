@@ -33,15 +33,15 @@ export default function AdminLoginPage() {
     <div className="min-h-[80vh] flex items-center justify-center px-4 py-12">
       <div className="max-w-md w-full bg-[#1e2021] border border-[#333537] p-8 shadow-2xl space-y-6">
         <div className="text-center">
-          <div className="w-16 h-16 bg-[#0c0e10] border border-[#333537] text-[#FFD900] flex items-center justify-center mx-auto mb-3 shadow">
-            <ShieldCheck size={32} />
+          <div className="w-16 h-16 overflow-hidden mx-auto mb-3 shadow-[0_0_15px_rgba(255,217,0,0.3)]">
+            <img src="/images/sublogo.png" alt="Jopi Sport Shop" className="w-full h-full object-cover" />
           </div>
           <div className="flex items-center justify-center leading-none mb-1">
             <span className="text-2xl font-black uppercase tracking-tight text-white font-headline-sm">
               JOPI
             </span>
-            <span className="text-2xl font-black uppercase tracking-tight text-[#FFD900] ml-1 font-headline-sm">
-              SPORT
+            <span className="text-2xl font-black uppercase tracking-tight text-[#FFD900] ml-1.5 font-headline-sm">
+              SPORT SHOP
             </span>
           </div>
           <h1 className="text-base font-bold uppercase text-white font-mono">Painel Administrativo</h1>

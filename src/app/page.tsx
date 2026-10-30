@@ -318,7 +318,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* 4. Special Pitch Volt Callout Banner */}
+      {/* 4. Special Personalization Callout Banner */}
       <section className="max-w-7xl mx-auto px-4 lg:px-12">
         <div className="relative bg-[#1e2021] border border-[#FFD900]/40 p-8 md:p-12 overflow-hidden shadow-2xl">
           <div className="absolute top-0 right-0 w-96 h-96 bg-[#FFD900]/5 rounded-full blur-3xl pointer-events-none" />

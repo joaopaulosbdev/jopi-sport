@@ -5,14 +5,12 @@ import Link from 'next/link';
 import { useStore } from '@/contexts/StoreContext';
 import { 
   Trophy, 
-  Globe2, 
   MessageCircle, 
   Truck, 
   CreditCard, 
   ShieldCheck, 
   ArrowRight,
   Flame,
-  Sparkles,
   Zap
 } from 'lucide-react';
 
@@ -32,17 +30,17 @@ export default function HeroSection() {
   const { storeConfig, setSearchQuery } = useStore();
 
   const handleWhatsAppContact = () => {
-    const text = 'Olá Jopi Sport! Gostaria de consultar o catálogo e pedir uma camisa!';
+    const text = 'Olá Jopi Sport Shop! Gostaria de consultar o catálogo e pedir uma camisa!';
     const cleanNumber = storeConfig.whatsappNumber.replace(/\D/g, '');
     window.open(`https://wa.me/${cleanNumber}?text=${encodeURIComponent(text)}`, '_blank');
   };
 
   return (
     <div className="w-full">
-      {/* High-Voltage Hero Banner - Stitch Pitch Volt */}
+      {/* Athletic Hero Banner */}
       <section className="relative bg-[#121415] text-white overflow-hidden border-b border-[#333537]/80">
         
-        {/* Subtle Pitch Floor Gradient */}
+        {/* Subtle Floor Gradient */}
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-[#1e2021]/60 via-[#121415] to-[#0c0e10] pointer-events-none" />
         
         {/* Diagonal high-contrast grid lines */}
@@ -59,7 +57,7 @@ export default function HeroSection() {
             {/* Left Column: Headlines & Call to Actions */}
             <div className="lg:col-span-7 space-y-6 text-center lg:text-left">
               
-              <div className="inline-flex items-center gap-2 bg-[#1e2021] border border-[#FFD900]/40 text-[#FFD900] px-3.5 py-1 text-xs font-bold uppercase tracking-widest shadow-[0_0_12px_rgba(255, 217, 0,0.15)]">
+              <div className="inline-flex items-center gap-2 bg-[#1e2021] border border-[#FFD900]/40 text-[#FFD900] px-3.5 py-1 text-xs font-bold uppercase tracking-widest shadow-[0_0_12px_rgba(255,217,0,0.15)]">
                 <span className="w-2 h-2 rounded-full bg-[#FFD900] animate-ping" />
                 <span className="font-mono">NOVO DROP EXCLUSIVO 2025/26</span>
               </div>
@@ -67,12 +65,12 @@ export default function HeroSection() {
               <div className="space-y-2">
                 <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black uppercase tracking-tight text-white leading-none font-headline-lg">
                   VISTA A PAIXÃO. <br />
-                  <span className="text-[#FFD900] drop-shadow-[0_0_20px_rgba(255, 217, 0,0.3)]">
-                    SINTA A VOLTAGEM.
+                  <span className="text-[#FFD900] drop-shadow-[0_0_20px_rgba(255,217,0,0.3)]">
+                    VISTA O SEU MANTO.
                   </span>
                 </h1>
                 <p className="text-sm sm:text-base text-[#c6c9ac] max-w-xl mx-auto lg:mx-0 font-body-md pt-2">
-                  Mantos oficiais, edições limitadas de colecionador e clássicos retrô com tecnologia de alta performance e pronta entrega para todo o Brasil.
+                  Mantos oficiais, edições limitadas de colecionador e clássicos retrô na Jopi Sport Shop com tecnologia de alta performance e pronta entrega para todo o Brasil.
                 </p>
               </div>
 
@@ -80,7 +78,7 @@ export default function HeroSection() {
               <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 pt-2">
                 <Link
                   href="/lancamentos"
-                  className="w-full sm:w-auto flex items-center justify-center gap-3 bg-[#FFD900] hover:bg-white text-[#121415] hover:text-black font-black uppercase text-sm tracking-wider px-8 py-3.5 transition-all shadow-[0_0_25px_rgba(255, 217, 0,0.35)]"
+                  className="w-full sm:w-auto flex items-center justify-center gap-3 bg-[#FFD900] hover:bg-white text-[#121415] hover:text-black font-black uppercase text-sm tracking-wider px-8 py-3.5 transition-all shadow-[0_0_25px_rgba(255,217,0,0.35)]"
                 >
                   <Zap size={18} className="fill-[#121415]" />
                   <span>Explorar Drop</span>
@@ -126,9 +124,10 @@ export default function HeroSection() {
             <div className="lg:col-span-5 relative flex justify-center">
               <div className="relative w-full max-w-md bg-[#1e2021] border border-[#333537] p-4 shadow-2xl">
                 
-                {/* Glow badge */}
-                <div className="absolute -top-3 -right-3 bg-[#FFD900] text-[#121415] text-[10px] font-black uppercase tracking-widest px-3 py-1 shadow-[0_0_15px_rgba(255, 217, 0,0.5)]">
-                  DROP DA SEMANA
+                {/* Glow badge with Jopi Icon */}
+                <div className="absolute -top-3 -right-3 bg-[#FFD900] text-[#121415] text-[10px] font-black uppercase tracking-widest px-3 py-1 shadow-[0_0_15px_rgba(255,217,0,0.5)] flex items-center gap-1.5">
+                  <img src="/images/sublogo.png" alt="Jopi Sport Shop" className="w-3.5 h-3.5 object-cover" />
+                  <span>DROP DA SEMANA</span>
                 </div>
 
                 <div className="relative aspect-[4/5] overflow-hidden bg-[#0c0e10] border border-[#333537]/60 group">
@@ -164,7 +163,7 @@ export default function HeroSection() {
                     <span className="w-1.5 h-1.5 rounded-full bg-[#FFD900]" />
                     Pronta Entrega
                   </span>
-                  <span>Personalização Grátis</span>
+                  <span>Personalização Oficial</span>
                 </div>
 
               </div>

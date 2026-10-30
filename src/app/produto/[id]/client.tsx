@@ -190,7 +190,7 @@ export default function ProductDetailPage({ params }: Props) {
                 </div>
                 <div>
                   <span className="text-[#c6c9ac] block text-[10px] uppercase">Tecnologia:</span>
-                  <span className="text-white font-bold">AeroDry Volt</span>
+                  <span className="text-white font-bold">AeroDry Pro</span>
                 </div>
                 <div>
                   <span className="text-[#c6c9ac] block text-[10px] uppercase">Composição:</span>

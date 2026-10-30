@@ -8,7 +8,6 @@ import {
   Phone,
   ShieldCheck,
   Lock,
-  Zap,
   CheckCircle,
   Truck
 } from 'lucide-react';
@@ -20,7 +19,7 @@ export default function Footer() {
   const nationalTeams = categories.filter((c) => c.type === 'national');
 
   const handleWhatsAppContact = () => {
-    const text = 'Olá Jopi Sport! Vim pelo site e gostaria de tirar uma dúvida.';
+    const text = 'Olá Jopi Sport Shop! Vim pelo site e gostaria de tirar uma dúvida.';
     const cleanNumber = storeConfig.whatsappNumber.replace(/\D/g, '');
     window.open(`https://wa.me/${cleanNumber}?text=${encodeURIComponent(text)}`, '_blank');
   };
@@ -30,7 +29,7 @@ export default function Footer() {
       {/* Floating WhatsApp Action Button */}
       <button
         onClick={handleWhatsAppContact}
-        className="fixed bottom-6 right-6 z-50 bg-[#FFD900] hover:bg-white text-[#121415] hover:text-black px-4 py-3 shadow-[0_0_25px_rgba(255, 217, 0,0.4)] flex items-center gap-2.5 font-black text-xs uppercase tracking-wider transition-all transform hover:scale-105 active:scale-95 group border border-[#121415]"
+        className="fixed bottom-6 right-6 z-50 bg-[#FFD900] hover:bg-white text-[#121415] hover:text-black px-4 py-3 shadow-[0_0_25px_rgba(255,217,0,0.4)] flex items-center gap-2.5 font-black text-xs uppercase tracking-wider transition-all transform hover:scale-105 active:scale-95 group border border-[#121415]"
         aria-label="Fale conosco no WhatsApp"
       >
         <MessageCircle size={22} className="fill-[#121415] text-[#121415] group-hover:rotate-12 transition-transform" />
@@ -43,22 +42,26 @@ export default function Footer() {
           
           {/* Brand Info */}
           <div className="lg:col-span-2 space-y-4">
-            <Link href="/" className="flex items-center gap-2.5">
-              <div className="w-8 h-8 bg-[#FFD900] text-[#121415] flex items-center justify-center font-black text-lg">
-                ⚡
+            <Link href="/" className="flex items-center gap-3">
+              <div className="w-10 h-10 overflow-hidden shrink-0 shadow-[0_0_12px_rgba(255,217,0,0.3)]">
+                <img 
+                  src="/images/sublogo.png" 
+                  alt="Jopi Sport Shop" 
+                  className="w-full h-full object-cover"
+                />
               </div>
               <div className="flex items-center leading-none">
                 <span className="text-2xl font-black uppercase text-white font-headline-sm">
                   JOPI
                 </span>
                 <span className="text-2xl font-black uppercase text-[#FFD900] ml-1.5 font-headline-sm">
-                  SPORT
+                  SPORT SHOP
                 </span>
               </div>
             </Link>
 
             <p className="text-[#c6c9ac] text-xs sm:text-sm leading-relaxed max-w-sm">
-              Mantos oficiais dos maiores clubes do futebol brasileiro, ligas europeias e seleções mundiais. Personalização de nome e número com acabamento profissional e atendimento ágil no WhatsApp.
+              Mantos oficiais dos maiores clubes do futebol brasileiro, ligas europeias e seleções mundiais na Jopi Sport Shop. Personalização de nome e número com acabamento profissional e atendimento ágil no WhatsApp.
             </p>
 
             <div className="pt-2 flex flex-wrap items-center gap-3">
@@ -141,7 +144,7 @@ export default function Footer() {
         {/* Bottom copyright & badges */}
         <div className="border-t border-[#333537]/60 mt-12 pt-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-mono text-[#c6c9ac]">
           <div>
-            © {new Date().getFullYear()} JOPI SPORT | VOLT DROP CULTURE. Todos os direitos reservados.
+            © {new Date().getFullYear()} JOPI SPORT SHOP. Todos os direitos reservados.
           </div>
           <div className="flex items-center gap-3 text-[11px]">
             <span className="bg-[#1e2021] border border-[#333537] px-2 py-0.5 text-white">PIX</span>

@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { useStore } from '@/contexts/StoreContext';
 import { 
@@ -15,7 +16,6 @@ import {
   Flame,
   Globe2,
   Trophy,
-  History,
   Sparkles
 } from 'lucide-react';
 
@@ -30,23 +30,23 @@ export default function Header() {
   const nationalTeams = categories.filter((c) => c.type === 'national');
 
   const handleWhatsAppContact = () => {
-    const text = 'Olá Jopi Sport! Gostaria de atendimento sobre as camisas do catálogo.';
+    const text = 'Olá Jopi Sport Shop! Gostaria de atendimento sobre as camisas do catálogo.';
     const cleanNumber = storeConfig.whatsappNumber.replace(/\D/g, '');
     window.open(`https://wa.me/${cleanNumber}?text=${encodeURIComponent(text)}`, '_blank');
   };
 
   return (
     <header className="fixed top-0 left-0 right-0 w-full z-50 bg-[#121415]/95 backdrop-blur-xl border-b border-[#333537]/60 shadow-[0_4px_24px_rgba(0,0,0,0.6)]">
-      {/* Top Banner Ticker - Stitch Volt Edition */}
+      {/* Top Banner Ticker */}
       <div className="bg-[#0c0e10] py-1.5 px-4 lg:px-12 border-b border-[#333537]/40 text-xs">
         <div className="max-w-7xl mx-auto flex items-center justify-between">
           <div className="flex items-center gap-2 font-label-sm text-[#c6c9ac] uppercase tracking-widest text-[11px]">
             <span className="w-2 h-2 rounded-full bg-[#FFD900] animate-pulse"></span>
-            <span className="hidden sm:inline font-bold">Transmissão Oficial Volt Drop</span>
+            <span className="hidden sm:inline font-bold">Catálogo Oficial 2025/26</span>
           </div>
 
           <div className="font-label-sm text-[11px] uppercase font-bold text-[#FFD900] tracking-wider truncate px-2 text-center">
-            FRETE GRÁTIS EM PEDIDOS ACIMA DE R$ 249 | CUPOM <span className="bg-[#FFD900] text-[#191e00] px-1.5 py-0.5 font-black text-[10px]">VOLT10</span>
+            FRETE GRÁTIS EM PEDIDOS ACIMA DE R$ 249 | CUPOM <span className="bg-[#FFD900] text-[#121415] px-1.5 py-0.5 font-black text-[10px]">JOPI10</span>
           </div>
 
           <div className="hidden md:flex items-center gap-4 font-label-sm text-[11px] text-[#c6c9ac]">
@@ -66,10 +66,14 @@ export default function Header() {
       {/* Main Bar */}
       <div className="max-w-7xl mx-auto px-4 lg:px-12 h-16 md:h-20 flex items-center justify-between gap-4">
         
-        {/* Brand Logo - High Performance Pitch Volt */}
-        <Link href="/" className="flex items-center gap-2.5 shrink-0 group">
-          <div className="w-9 h-9 md:w-10 md:h-10 bg-[#FFD900] flex items-center justify-center font-black text-[#121415] text-xl tracking-tighter shadow-[0_0_15px_rgba(255, 217, 0,0.4)] group-hover:bg-white transition-all">
-            ⚡
+        {/* Brand Logo - Official Jopi Sport Shop */}
+        <Link href="/" className="flex items-center gap-3 shrink-0 group">
+          <div className="w-10 h-10 md:w-11 md:h-11 overflow-hidden shrink-0 shadow-[0_0_15px_rgba(255,217,0,0.3)] group-hover:scale-105 transition-transform">
+            <img 
+              src="/images/sublogo.png" 
+              alt="Jopi Sport Shop" 
+              className="w-full h-full object-cover"
+            />
           </div>
           <div className="flex flex-col">
             <div className="flex items-center leading-none">
@@ -77,13 +81,13 @@ export default function Header() {
                 JOPI
               </span>
               <span className="text-2xl md:text-3xl font-black uppercase tracking-tight text-[#FFD900] ml-1.5 font-headline-sm">
-                SPORT
+                SPORT SHOP
               </span>
             </div>
             <div className="flex items-center gap-1.5 mt-0.5">
               <span className="h-0.5 w-3 bg-[#FFD900]" />
               <span className="text-[9px] font-bold tracking-[0.2em] uppercase text-[#c6c9ac]">
-                VOLT DROP CULTURE
+                A LOJA DO TORCEDOR
               </span>
             </div>
           </div>
@@ -105,7 +109,7 @@ export default function Header() {
             Lançamentos
           </Link>
 
-          {/* Campeonatos / Nacionais Dropdown */}
+          {/* Campeonatos / Clubes Dropdown */}
           <div 
             className="relative"
             onMouseEnter={() => setChampionshipsDropdown(true)}
@@ -216,7 +220,7 @@ export default function Header() {
           {/* Cart Button */}
           <Link
             href="/carrinho"
-            className="relative flex items-center gap-2.5 bg-[#FFD900] text-[#121415] hover:bg-white hover:text-black font-bold uppercase tracking-wider px-4 py-2.5 transition-all shadow-[0_0_15px_rgba(255, 217, 0,0.3)]"
+            className="relative flex items-center gap-2.5 bg-[#FFD900] text-[#121415] hover:bg-white hover:text-black font-bold uppercase tracking-wider px-4 py-2.5 transition-all shadow-[0_0_15px_rgba(255,217,0,0.3)]"
           >
             <ShoppingBag size={18} className="stroke-[2.5]" />
             <span className="hidden sm:inline text-xs font-black">Sacola</span>
@@ -267,7 +271,7 @@ export default function Header() {
               onClick={() => setMobileMenuOpen(false)}
               className="px-3 py-2 bg-[#1e2021] border border-[#333537] text-white hover:text-[#FFD900]"
             >
-              ⚡ Início
+              Início
             </Link>
             <Link
               href="/lancamentos"

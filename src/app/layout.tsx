@@ -20,9 +20,13 @@ const spaceGrotesk = Space_Grotesk({
 });
 
 export const metadata: Metadata = {
-  title: 'JOPI SPORT | VOLT DROP - Mantos Oficiais de Futebol',
-  description: 'Mantos oficiais de futebol, edições limitadas e clássicos retrô. Brasileirão, Premier League, La Liga e Seleções com frete grátis e compra expressa.',
-  keywords: 'camisas de futebol, mantos oficiais, jopi sport, volt fc, brasileirão, seleções, premier league, la liga, camisas de time',
+  title: 'JOPI SPORT SHOP | Mantos Oficiais de Futebol',
+  description: 'Mantos oficiais de futebol, edições limitadas e clássicos retrô na Jopi Sport Shop. Brasileirão, Premier League, La Liga e Seleções com frete grátis e compra expressa.',
+  keywords: 'camisas de futebol, mantos oficiais, jopi sport shop, brasileirão, seleções, premier league, la liga, camisas de time',
+  icons: {
+    icon: '/images/sublogo.png',
+    apple: '/images/sublogo.png',
+  },
 };
 
 export default function RootLayout({
@@ -33,6 +37,7 @@ export default function RootLayout({
   return (
     <html lang="pt-BR" className={`dark ${oswald.variable} ${spaceGrotesk.variable}`}>
       <head>
+        <link rel="icon" href="/images/sublogo.png" type="image/png" />
         <link
           href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&display=swap"
           rel="stylesheet"
