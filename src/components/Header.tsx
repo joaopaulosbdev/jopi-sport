@@ -2,9 +2,9 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
-import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { useStore } from '@/contexts/StoreContext';
+import BrandLogo from '@/components/BrandLogo';
 import { 
   ShoppingBag, 
   Search, 
@@ -69,11 +69,7 @@ export default function Header() {
         {/* Brand Logo - Official Jopi Sport Shop */}
         <Link href="/" className="flex items-center gap-3 shrink-0 group">
           <div className="w-10 h-10 md:w-11 md:h-11 overflow-hidden shrink-0 shadow-[0_0_15px_rgba(255,217,0,0.3)] group-hover:scale-105 transition-transform">
-            <img 
-              src="/images/sublogo.png" 
-              alt="Jopi Sport Shop" 
-              className="w-full h-full object-cover"
-            />
+            <BrandLogo variant="icon" className="w-full h-full object-cover" />
           </div>
           <div className="flex flex-col">
             <div className="flex items-center leading-none">

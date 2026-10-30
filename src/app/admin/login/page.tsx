@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useStore } from '@/contexts/StoreContext';
+import BrandLogo from '@/components/BrandLogo';
 import { ShieldCheck, Lock, ArrowRight, Zap } from 'lucide-react';
 
 export default function AdminLoginPage() {
@@ -34,7 +35,7 @@ export default function AdminLoginPage() {
       <div className="max-w-md w-full bg-[#1e2021] border border-[#333537] p-8 shadow-2xl space-y-6">
         <div className="text-center">
           <div className="w-16 h-16 overflow-hidden mx-auto mb-3 shadow-[0_0_15px_rgba(255,217,0,0.3)]">
-            <img src="/images/sublogo.png" alt="Jopi Sport Shop" className="w-full h-full object-cover" />
+            <BrandLogo variant="icon" className="w-full h-full object-cover" />
           </div>
           <div className="flex items-center justify-center leading-none mb-1">
             <span className="text-2xl font-black uppercase tracking-tight text-white font-headline-sm">

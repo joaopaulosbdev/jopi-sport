@@ -3,6 +3,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { useStore } from '@/contexts/StoreContext';
+import BrandLogo from '@/components/BrandLogo';
 import { 
   Trophy, 
   MessageCircle, 
@@ -126,7 +127,7 @@ export default function HeroSection() {
                 
                 {/* Glow badge with Jopi Icon */}
                 <div className="absolute -top-3 -right-3 bg-[#FFD900] text-[#121415] text-[10px] font-black uppercase tracking-widest px-3 py-1 shadow-[0_0_15px_rgba(255,217,0,0.5)] flex items-center gap-1.5">
-                  <img src="/images/sublogo.png" alt="Jopi Sport Shop" className="w-3.5 h-3.5 object-cover" />
+                  <BrandLogo variant="icon" className="w-3.5 h-3.5 object-cover" />
                   <span>DROP DA SEMANA</span>
                 </div>
 

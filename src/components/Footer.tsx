@@ -3,6 +3,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { useStore } from '@/contexts/StoreContext';
+import BrandLogo from '@/components/BrandLogo';
 import { 
   MessageCircle, 
   Phone,
@@ -44,11 +45,7 @@ export default function Footer() {
           <div className="lg:col-span-2 space-y-4">
             <Link href="/" className="flex items-center gap-3">
               <div className="w-10 h-10 overflow-hidden shrink-0 shadow-[0_0_12px_rgba(255,217,0,0.3)]">
-                <img 
-                  src="/images/sublogo.png" 
-                  alt="Jopi Sport Shop" 
-                  className="w-full h-full object-cover"
-                />
+                <BrandLogo variant="icon" className="w-full h-full object-cover" />
               </div>
               <div className="flex items-center leading-none">
                 <span className="text-2xl font-black uppercase text-white font-headline-sm">
