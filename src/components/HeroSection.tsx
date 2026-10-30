@@ -49,7 +49,7 @@ export default function HeroSection() {
         <div 
           className="absolute inset-0 opacity-5 pointer-events-none"
           style={{
-            backgroundImage: 'repeating-linear-gradient(45deg, #d2f100 0, #d2f100 1px, transparent 0, transparent 40px)',
+            backgroundImage: 'repeating-linear-gradient(45deg, #FFD900 0, #FFD900 1px, transparent 0, transparent 40px)',
           }}
         />
 
@@ -59,15 +59,15 @@ export default function HeroSection() {
             {/* Left Column: Headlines & Call to Actions */}
             <div className="lg:col-span-7 space-y-6 text-center lg:text-left">
               
-              <div className="inline-flex items-center gap-2 bg-[#1e2021] border border-[#d2f100]/40 text-[#d2f100] px-3.5 py-1 text-xs font-bold uppercase tracking-widest shadow-[0_0_12px_rgba(210,241,0,0.15)]">
-                <span className="w-2 h-2 rounded-full bg-[#d2f100] animate-ping" />
+              <div className="inline-flex items-center gap-2 bg-[#1e2021] border border-[#FFD900]/40 text-[#FFD900] px-3.5 py-1 text-xs font-bold uppercase tracking-widest shadow-[0_0_12px_rgba(255, 217, 0,0.15)]">
+                <span className="w-2 h-2 rounded-full bg-[#FFD900] animate-ping" />
                 <span className="font-mono">NOVO DROP EXCLUSIVO 2025/26</span>
               </div>
 
               <div className="space-y-2">
                 <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black uppercase tracking-tight text-white leading-none font-headline-lg">
                   VISTA A PAIXÃO. <br />
-                  <span className="text-[#d2f100] drop-shadow-[0_0_20px_rgba(210,241,0,0.3)]">
+                  <span className="text-[#FFD900] drop-shadow-[0_0_20px_rgba(255, 217, 0,0.3)]">
                     SINTA A VOLTAGEM.
                   </span>
                 </h1>
@@ -80,7 +80,7 @@ export default function HeroSection() {
               <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 pt-2">
                 <Link
                   href="/lancamentos"
-                  className="w-full sm:w-auto flex items-center justify-center gap-3 bg-[#d2f100] hover:bg-white text-[#121415] hover:text-black font-black uppercase text-sm tracking-wider px-8 py-3.5 transition-all shadow-[0_0_25px_rgba(210,241,0,0.35)]"
+                  className="w-full sm:w-auto flex items-center justify-center gap-3 bg-[#FFD900] hover:bg-white text-[#121415] hover:text-black font-black uppercase text-sm tracking-wider px-8 py-3.5 transition-all shadow-[0_0_25px_rgba(255, 217, 0,0.35)]"
                 >
                   <Zap size={18} className="fill-[#121415]" />
                   <span>Explorar Drop</span>
@@ -89,7 +89,7 @@ export default function HeroSection() {
 
                 <Link
                   href="/campeonatos"
-                  className="w-full sm:w-auto flex items-center justify-center gap-2 bg-[#1e2021] hover:bg-[#282a2c] text-white hover:text-[#d2f100] border border-[#333537] font-bold uppercase text-sm tracking-wider px-6 py-3.5 transition-colors"
+                  className="w-full sm:w-auto flex items-center justify-center gap-2 bg-[#1e2021] hover:bg-[#282a2c] text-white hover:text-[#FFD900] border border-[#333537] font-bold uppercase text-sm tracking-wider px-6 py-3.5 transition-colors"
                 >
                   <Trophy size={16} />
                   <span>Ver Catálogo</span>
@@ -97,9 +97,9 @@ export default function HeroSection() {
 
                 <button
                   onClick={handleWhatsAppContact}
-                  className="w-full sm:w-auto flex items-center justify-center gap-2 bg-transparent text-[#c6c9ac] hover:text-[#d2f100] font-bold text-xs uppercase tracking-wider py-2 transition-colors"
+                  className="w-full sm:w-auto flex items-center justify-center gap-2 bg-transparent text-[#c6c9ac] hover:text-[#FFD900] font-bold text-xs uppercase tracking-wider py-2 transition-colors"
                 >
-                  <MessageCircle size={15} className="text-[#d2f100]" />
+                  <MessageCircle size={15} className="text-[#FFD900]" />
                   <span>Atendimento WhatsApp</span>
                 </button>
               </div>
@@ -107,7 +107,7 @@ export default function HeroSection() {
               {/* Quick Trust Highlights */}
               <div className="grid grid-cols-3 gap-2 pt-6 border-t border-[#333537]/50 max-w-lg mx-auto lg:mx-0">
                 <div className="flex flex-col text-left">
-                  <span className="text-[#d2f100] font-headline-sm font-black text-xl">100%</span>
+                  <span className="text-[#FFD900] font-headline-sm font-black text-xl">100%</span>
                   <span className="text-[10px] text-[#c6c9ac] uppercase font-bold tracking-wider">Qualidade Premium</span>
                 </div>
                 <div className="flex flex-col text-left border-l border-[#333537]/60 pl-3">
@@ -115,7 +115,7 @@ export default function HeroSection() {
                   <span className="text-[10px] text-[#c6c9ac] uppercase font-bold tracking-wider">Envio Expresso</span>
                 </div>
                 <div className="flex flex-col text-left border-l border-[#333537]/60 pl-3">
-                  <span className="text-[#d2f100] font-headline-sm font-black text-xl">PIX</span>
+                  <span className="text-[#FFD900] font-headline-sm font-black text-xl">PIX</span>
                   <span className="text-[10px] text-[#c6c9ac] uppercase font-bold tracking-wider">5% Desconto</span>
                 </div>
               </div>
@@ -127,7 +127,7 @@ export default function HeroSection() {
               <div className="relative w-full max-w-md bg-[#1e2021] border border-[#333537] p-4 shadow-2xl">
                 
                 {/* Glow badge */}
-                <div className="absolute -top-3 -right-3 bg-[#d2f100] text-[#121415] text-[10px] font-black uppercase tracking-widest px-3 py-1 shadow-[0_0_15px_rgba(210,241,0,0.5)]">
+                <div className="absolute -top-3 -right-3 bg-[#FFD900] text-[#121415] text-[10px] font-black uppercase tracking-widest px-3 py-1 shadow-[0_0_15px_rgba(255, 217, 0,0.5)]">
                   DROP DA SEMANA
                 </div>
 
@@ -144,7 +144,7 @@ export default function HeroSection() {
                   {/* Jersey Info Floating Bar */}
                   <div className="absolute bottom-4 left-4 right-4 bg-[#121415]/95 border border-[#333537] p-3 flex items-center justify-between">
                     <div>
-                      <div className="text-[10px] font-mono text-[#d2f100] uppercase font-bold tracking-wider">
+                      <div className="text-[10px] font-mono text-[#FFD900] uppercase font-bold tracking-wider">
                         EDIÇÃO MATCH PRO
                       </div>
                       <div className="text-white font-headline-sm text-base font-bold uppercase truncate">
@@ -153,7 +153,7 @@ export default function HeroSection() {
                     </div>
                     <div className="text-right">
                       <div className="text-[#c6c9ac] line-through text-[10px]">R$ 229,90</div>
-                      <div className="text-[#d2f100] font-headline-sm font-bold text-lg">R$ 159,90</div>
+                      <div className="text-[#FFD900] font-headline-sm font-bold text-lg">R$ 159,90</div>
                     </div>
                   </div>
                 </div>
@@ -161,7 +161,7 @@ export default function HeroSection() {
                 {/* Sub-bar stats */}
                 <div className="flex items-center justify-between text-[11px] text-[#c6c9ac] font-bold uppercase tracking-wider pt-3">
                   <span className="flex items-center gap-1">
-                    <span className="w-1.5 h-1.5 rounded-full bg-[#d2f100]" />
+                    <span className="w-1.5 h-1.5 rounded-full bg-[#FFD900]" />
                     Pronta Entrega
                   </span>
                   <span>Personalização Grátis</span>
@@ -176,7 +176,7 @@ export default function HeroSection() {
         {/* Quick Clubs Strip */}
         <div className="border-t border-[#333537]/60 bg-[#0c0e10]/90 py-2.5 px-4 lg:px-12 overflow-x-auto">
           <div className="max-w-7xl mx-auto flex items-center gap-2 min-w-max">
-            <span className="text-[11px] font-black uppercase text-[#d2f100] tracking-wider shrink-0 mr-2 flex items-center gap-1">
+            <span className="text-[11px] font-black uppercase text-[#FFD900] tracking-wider shrink-0 mr-2 flex items-center gap-1">
               <Flame size={13} />
               EM ALTA:
             </span>
@@ -184,7 +184,7 @@ export default function HeroSection() {
               <button
                 key={club.name}
                 onClick={() => setSearchQuery(club.search)}
-                className="text-[11px] font-bold text-[#c6c9ac] hover:text-[#d2f100] hover:border-[#d2f100] bg-[#1e2021] border border-[#333537] px-3 py-1 transition-all"
+                className="text-[11px] font-bold text-[#c6c9ac] hover:text-[#FFD900] hover:border-[#FFD900] bg-[#1e2021] border border-[#333537] px-3 py-1 transition-all"
               >
                 {club.name}
               </button>
@@ -199,7 +199,7 @@ export default function HeroSection() {
         <div className="max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-4">
           
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 bg-[#0c0e10] border border-[#333537] text-[#d2f100] flex items-center justify-center shrink-0">
+            <div className="w-10 h-10 bg-[#0c0e10] border border-[#333537] text-[#FFD900] flex items-center justify-center shrink-0">
               <Truck size={20} />
             </div>
             <div>
@@ -209,7 +209,7 @@ export default function HeroSection() {
           </div>
 
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 bg-[#0c0e10] border border-[#333537] text-[#d2f100] flex items-center justify-center shrink-0">
+            <div className="w-10 h-10 bg-[#0c0e10] border border-[#333537] text-[#FFD900] flex items-center justify-center shrink-0">
               <CreditCard size={20} />
             </div>
             <div>
@@ -219,7 +219,7 @@ export default function HeroSection() {
           </div>
 
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 bg-[#0c0e10] border border-[#333537] text-[#d2f100] flex items-center justify-center shrink-0">
+            <div className="w-10 h-10 bg-[#0c0e10] border border-[#333537] text-[#FFD900] flex items-center justify-center shrink-0">
               <ShieldCheck size={20} />
             </div>
             <div>
@@ -229,7 +229,7 @@ export default function HeroSection() {
           </div>
 
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 bg-[#0c0e10] border border-[#333537] text-[#d2f100] flex items-center justify-center shrink-0">
+            <div className="w-10 h-10 bg-[#0c0e10] border border-[#333537] text-[#FFD900] flex items-center justify-center shrink-0">
               <MessageCircle size={20} />
             </div>
             <div>

@@ -33,14 +33,14 @@ export default function AdminLoginPage() {
     <div className="min-h-[80vh] flex items-center justify-center px-4 py-12">
       <div className="max-w-md w-full bg-[#1e2021] border border-[#333537] p-8 shadow-2xl space-y-6">
         <div className="text-center">
-          <div className="w-16 h-16 bg-[#0c0e10] border border-[#333537] text-[#d2f100] flex items-center justify-center mx-auto mb-3 shadow">
+          <div className="w-16 h-16 bg-[#0c0e10] border border-[#333537] text-[#FFD900] flex items-center justify-center mx-auto mb-3 shadow">
             <ShieldCheck size={32} />
           </div>
           <div className="flex items-center justify-center leading-none mb-1">
             <span className="text-2xl font-black uppercase tracking-tight text-white font-headline-sm">
               JOPI
             </span>
-            <span className="text-2xl font-black uppercase tracking-tight text-[#d2f100] ml-1 font-headline-sm">
+            <span className="text-2xl font-black uppercase tracking-tight text-[#FFD900] ml-1 font-headline-sm">
               SPORT
             </span>
           </div>
@@ -67,7 +67,7 @@ export default function AdminLoginPage() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="Digite sua senha de administrador"
-                className="w-full bg-[#0c0e10] border border-[#333537] focus:border-[#d2f100] px-4 py-3 text-xs font-mono text-white focus:outline-none"
+                className="w-full bg-[#0c0e10] border border-[#333537] focus:border-[#FFD900] px-4 py-3 text-xs font-mono text-white focus:outline-none"
               />
               <Lock size={15} className="absolute right-3 top-3.5 text-[#c6c9ac]" />
             </div>
@@ -75,7 +75,7 @@ export default function AdminLoginPage() {
 
           <button
             type="submit"
-            className="w-full py-3.5 bg-[#d2f100] hover:bg-white text-[#121415] hover:text-black font-black uppercase text-xs tracking-wider transition-all shadow-[0_0_15px_rgba(210,241,0,0.3)] flex items-center justify-center gap-2"
+            className="w-full py-3.5 bg-[#FFD900] hover:bg-white text-[#121415] hover:text-black font-black uppercase text-xs tracking-wider transition-all shadow-[0_0_15px_rgba(255, 217, 0,0.3)] flex items-center justify-center gap-2"
           >
             <span>Acessar Painel</span>
             <ArrowRight size={15} />
@@ -85,7 +85,7 @@ export default function AdminLoginPage() {
         <div className="pt-4 border-t border-[#333537]/60 text-center">
           <button
             onClick={handleQuickDemoLogin}
-            className="text-xs font-mono text-[#d2f100] hover:underline"
+            className="text-xs font-mono text-[#FFD900] hover:underline"
           >
             ⚡ Acesso Rápido com Senha Padrão (&quot;admin&quot;)
           </button>

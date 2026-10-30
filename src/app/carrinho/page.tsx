@@ -97,7 +97,7 @@ export default function CartPage() {
     return (
       <div className="max-w-4xl mx-auto px-4 lg:px-12 py-16 text-center">
         <div className="bg-[#1e2021] border border-[#333537] p-12 max-w-lg mx-auto shadow-2xl">
-          <div className="w-16 h-16 bg-[#0c0e10] border border-[#333537] text-[#d2f100] flex items-center justify-center mx-auto mb-4">
+          <div className="w-16 h-16 bg-[#0c0e10] border border-[#333537] text-[#FFD900] flex items-center justify-center mx-auto mb-4">
             <ShoppingBag size={32} />
           </div>
           <h1 className="text-2xl font-bold uppercase text-white font-headline-md mb-2">
@@ -108,7 +108,7 @@ export default function CartPage() {
           </p>
           <Link
             href="/"
-            className="inline-flex items-center gap-2 bg-[#d2f100] text-[#121415] hover:bg-white font-black uppercase text-xs tracking-wider px-8 py-3.5 shadow-[0_0_20px_rgba(210,241,0,0.3)] transition-all"
+            className="inline-flex items-center gap-2 bg-[#FFD900] text-[#121415] hover:bg-white font-black uppercase text-xs tracking-wider px-8 py-3.5 shadow-[0_0_20px_rgba(255, 217, 0,0.3)] transition-all"
           >
             <span>Explorar Mantos</span>
             <Zap size={15} />
@@ -126,7 +126,7 @@ export default function CartPage() {
         <div className="flex items-center gap-3">
           <Link
             href="/"
-            className="p-2 bg-[#1e2021] border border-[#333537] text-[#c6c9ac] hover:text-[#d2f100] transition-colors"
+            className="p-2 bg-[#1e2021] border border-[#333537] text-[#c6c9ac] hover:text-[#FFD900] transition-colors"
           >
             <ArrowLeft size={18} />
           </Link>
@@ -153,18 +153,18 @@ export default function CartPage() {
       <div className="bg-[#1e2021] border border-[#333537] p-4 mb-8">
         <div className="flex items-center justify-between text-xs font-mono font-bold uppercase mb-2">
           <span className="flex items-center gap-2 text-white">
-            <Truck size={16} className="text-[#d2f100]" />
+            <Truck size={16} className="text-[#FFD900]" />
             {freeShippingReached ? (
-              <span className="text-[#d2f100]">PARABÉNS! VOCÊ ATINGIU O FRETE GRÁTIS</span>
+              <span className="text-[#FFD900]">PARABÉNS! VOCÊ ATINGIU O FRETE GRÁTIS</span>
             ) : (
               <span>FALTAM R$ {(freeShippingThreshold - cartTotal).toFixed(2).replace('.', ',')} PARA FRETE GRÁTIS</span>
             )}
           </span>
-          <span className="text-[#d2f100]">{progressPercent}%</span>
+          <span className="text-[#FFD900]">{progressPercent}%</span>
         </div>
         <div className="w-full bg-[#0c0e10] h-2 overflow-hidden border border-[#333537]">
           <div 
-            className="bg-[#d2f100] h-full transition-all duration-500 shadow-[0_0_10px_rgba(210,241,0,0.6)]" 
+            className="bg-[#FFD900] h-full transition-all duration-500 shadow-[0_0_10px_rgba(255, 217, 0,0.6)]" 
             style={{ width: `${progressPercent}%` }} 
           />
         </div>
@@ -206,7 +206,7 @@ export default function CartPage() {
 
                   <div className="flex flex-wrap gap-2 text-[11px] font-mono text-[#c6c9ac] uppercase pt-1">
                     <span className="bg-[#0c0e10] border border-[#333537] px-2 py-0.5 text-white">
-                      Tam: <strong className="text-[#d2f100]">{item.size}</strong>
+                      Tam: <strong className="text-[#FFD900]">{item.size}</strong>
                     </span>
                     <span className="bg-[#0c0e10] border border-[#333537] px-2 py-0.5">
                       {item.product.version === 'jogador' ? 'Match Issue' : 'Torcedor'}
@@ -215,7 +215,7 @@ export default function CartPage() {
 
                   {/* Personalization if any */}
                   {(item.customName || item.customNumber) && (
-                    <div className="mt-2 text-[11px] font-mono bg-[#121415] border border-[#333537] px-2.5 py-1 text-[#d2f100]">
+                    <div className="mt-2 text-[11px] font-mono bg-[#121415] border border-[#333537] px-2.5 py-1 text-[#FFD900]">
                       ⚡ Personalização: <strong>{item.customName || ''} #{item.customNumber || ''}</strong>
                     </div>
                   )}
@@ -247,7 +247,7 @@ export default function CartPage() {
                   </div>
 
                   <div className="text-right">
-                    <span className="text-[#d2f100] font-headline-sm text-xl font-bold">
+                    <span className="text-[#FFD900] font-headline-sm text-xl font-bold">
                       R$ {(item.unitPrice * item.quantity).toFixed(2).replace('.', ',')}
                     </span>
                   </div>
@@ -260,7 +260,7 @@ export default function CartPage() {
           {/* Delivery & Checkout Form */}
           <div className="bg-[#1e2021] border border-[#333537] p-6 space-y-4 mt-6">
             <h3 className="font-headline-sm text-lg uppercase text-white font-bold flex items-center gap-2">
-              <span className="w-2 h-4 bg-[#d2f100]" />
+              <span className="w-2 h-4 bg-[#FFD900]" />
               Dados para Entrega (Opcional)
             </h3>
             
@@ -272,7 +272,7 @@ export default function CartPage() {
                   placeholder="Nome completo"
                   value={customerName}
                   onChange={(e) => setCustomerName(e.target.value)}
-                  className="w-full bg-[#0c0e10] border border-[#333537] focus:border-[#d2f100] px-3 py-2 text-xs text-white focus:outline-none"
+                  className="w-full bg-[#0c0e10] border border-[#333537] focus:border-[#FFD900] px-3 py-2 text-xs text-white focus:outline-none"
                 />
               </div>
               <div>
@@ -282,7 +282,7 @@ export default function CartPage() {
                   placeholder="Ex: São Paulo / SP"
                   value={customerCity}
                   onChange={(e) => setCustomerCity(e.target.value)}
-                  className="w-full bg-[#0c0e10] border border-[#333537] focus:border-[#d2f100] px-3 py-2 text-xs text-white focus:outline-none"
+                  className="w-full bg-[#0c0e10] border border-[#333537] focus:border-[#FFD900] px-3 py-2 text-xs text-white focus:outline-none"
                 />
               </div>
             </div>
@@ -294,7 +294,7 @@ export default function CartPage() {
                 placeholder="Rua, número, bairro e CEP"
                 value={customerAddress}
                 onChange={(e) => setCustomerAddress(e.target.value)}
-                className="w-full bg-[#0c0e10] border border-[#333537] focus:border-[#d2f100] px-3 py-2 text-xs text-white focus:outline-none"
+                className="w-full bg-[#0c0e10] border border-[#333537] focus:border-[#FFD900] px-3 py-2 text-xs text-white focus:outline-none"
               />
             </div>
 
@@ -307,8 +307,8 @@ export default function CartPage() {
                   onClick={() => setPaymentMethod('Pix')}
                   className={`p-3 text-xs font-mono font-bold uppercase transition-all flex items-center justify-center gap-2 ${
                     paymentMethod === 'Pix'
-                      ? 'bg-[#d2f100] text-[#121415] shadow-[0_0_12px_rgba(210,241,0,0.3)]'
-                      : 'bg-[#0c0e10] text-[#c6c9ac] border border-[#333537] hover:border-[#d2f100]'
+                      ? 'bg-[#FFD900] text-[#121415] shadow-[0_0_12px_rgba(255, 217, 0,0.3)]'
+                      : 'bg-[#0c0e10] text-[#c6c9ac] border border-[#333537] hover:border-[#FFD900]'
                   }`}
                 >
                   <span>PIX (5% OFF)</span>
@@ -318,8 +318,8 @@ export default function CartPage() {
                   onClick={() => setPaymentMethod('Cartao')}
                   className={`p-3 text-xs font-mono font-bold uppercase transition-all flex items-center justify-center gap-2 ${
                     paymentMethod === 'Cartao'
-                      ? 'bg-[#d2f100] text-[#121415] shadow-[0_0_12px_rgba(210,241,0,0.3)]'
-                      : 'bg-[#0c0e10] text-[#c6c9ac] border border-[#333537] hover:border-[#d2f100]'
+                      ? 'bg-[#FFD900] text-[#121415] shadow-[0_0_12px_rgba(255, 217, 0,0.3)]'
+                      : 'bg-[#0c0e10] text-[#c6c9ac] border border-[#333537] hover:border-[#FFD900]'
                   }`}
                 >
                   <span>CARTÃO (ATÉ 12X)</span>
@@ -344,17 +344,17 @@ export default function CartPage() {
                 placeholder="CUPOM (Ex: VOLT10)"
                 value={coupon}
                 onChange={(e) => setCoupon(e.target.value)}
-                className="flex-1 bg-[#0c0e10] border border-[#333537] focus:border-[#d2f100] px-3 py-2 text-xs font-mono uppercase text-white focus:outline-none"
+                className="flex-1 bg-[#0c0e10] border border-[#333537] focus:border-[#FFD900] px-3 py-2 text-xs font-mono uppercase text-white focus:outline-none"
               />
               <button
                 type="submit"
-                className="bg-[#282a2c] hover:bg-[#d2f100] text-white hover:text-[#121415] px-4 py-2 text-xs font-mono font-bold uppercase transition-colors"
+                className="bg-[#282a2c] hover:bg-[#FFD900] text-white hover:text-[#121415] px-4 py-2 text-xs font-mono font-bold uppercase transition-colors"
               >
                 Aplicar
               </button>
             </form>
             {couponApplied && (
-              <div className="text-[11px] font-mono text-[#d2f100] flex items-center gap-1">
+              <div className="text-[11px] font-mono text-[#FFD900] flex items-center gap-1">
                 <Check size={13} />
                 Cupom VOLT10 aplicado: 10% de desconto!
               </div>
@@ -368,7 +368,7 @@ export default function CartPage() {
               </div>
 
               {discountAmount > 0 && (
-                <div className="flex justify-between text-[#d2f100]">
+                <div className="flex justify-between text-[#FFD900]">
                   <span>Desconto ({couponApplied ? 'Cupom 10%' : 'PIX 5%'}):</span>
                   <span>- R$ {discountAmount.toFixed(2).replace('.', ',')}</span>
                 </div>
@@ -376,14 +376,14 @@ export default function CartPage() {
 
               <div className="flex justify-between">
                 <span>Frete:</span>
-                <span className={freeShippingReached ? 'text-[#d2f100] font-bold' : 'text-white'}>
+                <span className={freeShippingReached ? 'text-[#FFD900] font-bold' : 'text-white'}>
                   {freeShippingReached ? 'GRÁTIS' : 'A calcular'}
                 </span>
               </div>
 
               <div className="border-t border-[#333537] pt-3 flex justify-between items-baseline">
                 <span className="font-headline-sm text-base text-white font-bold uppercase">Total:</span>
-                <span className="text-[#d2f100] font-headline-sm text-3xl font-black">
+                <span className="text-[#FFD900] font-headline-sm text-3xl font-black">
                   R$ {finalTotal.toFixed(2).replace('.', ',')}
                 </span>
               </div>
@@ -393,7 +393,7 @@ export default function CartPage() {
             <div className="space-y-3 pt-2">
               <button
                 onClick={handleCheckoutWhatsApp}
-                className="w-full flex items-center justify-center gap-2 bg-[#d2f100] hover:bg-white text-[#121415] hover:text-black py-4 font-black uppercase text-xs tracking-wider transition-all shadow-[0_0_20px_rgba(210,241,0,0.35)]"
+                className="w-full flex items-center justify-center gap-2 bg-[#FFD900] hover:bg-white text-[#121415] hover:text-black py-4 font-black uppercase text-xs tracking-wider transition-all shadow-[0_0_20px_rgba(255, 217, 0,0.35)]"
               >
                 <MessageCircle size={18} className="fill-[#121415]" />
                 <span>Finalizar no WhatsApp</span>
@@ -403,7 +403,7 @@ export default function CartPage() {
                 onClick={handleCopyMessage}
                 className="w-full flex items-center justify-center gap-2 bg-[#121415] hover:bg-[#282a2c] text-[#c6c9ac] hover:text-white border border-[#333537] py-3 text-xs font-mono font-bold uppercase transition-colors"
               >
-                {copied ? <Check size={14} className="text-[#d2f100]" /> : <Copy size={14} />}
+                {copied ? <Check size={14} className="text-[#FFD900]" /> : <Copy size={14} />}
                 <span>{copied ? 'Copiado para Área de Transferência!' : 'Copiar Resumo do Pedido'}</span>
               </button>
             </div>

@@ -65,7 +65,7 @@ export default function ChampionshipSlugPage({ params }: Props) {
     return (
       <div className="min-h-[60vh] flex items-center justify-center p-4">
         <div className="bg-[#1e2021] border border-[#333537] p-8 text-center max-w-md w-full shadow-2xl">
-          <div className="w-16 h-16 bg-[#0c0e10] border border-[#333537] text-[#d2f100] flex items-center justify-center mx-auto mb-3">
+          <div className="w-16 h-16 bg-[#0c0e10] border border-[#333537] text-[#FFD900] flex items-center justify-center mx-auto mb-3">
             <Trophy size={32} />
           </div>
           <h1 className="text-xl font-bold uppercase text-white font-headline-sm mb-1">
@@ -74,7 +74,7 @@ export default function ChampionshipSlugPage({ params }: Props) {
           <p className="text-xs text-[#c6c9ac] mb-6 font-mono">Não localizamos a liga solicitada.</p>
           <Link
             href="/campeonatos"
-            className="inline-flex items-center gap-2 px-6 py-3 bg-[#d2f100] text-[#121415] text-xs font-black uppercase tracking-wider"
+            className="inline-flex items-center gap-2 px-6 py-3 bg-[#FFD900] text-[#121415] text-xs font-black uppercase tracking-wider"
           >
             <ArrowLeft size={15} /> Voltar para Campeonatos
           </Link>
@@ -89,11 +89,11 @@ export default function ChampionshipSlugPage({ params }: Props) {
         
         {/* Breadcrumb */}
         <nav className="flex items-center gap-2 text-xs font-mono text-[#c6c9ac] uppercase mb-8">
-          <Link href="/" className="hover:text-[#d2f100] transition-colors">Início</Link>
+          <Link href="/" className="hover:text-[#FFD900] transition-colors">Início</Link>
           <span>/</span>
-          <Link href="/campeonatos" className="hover:text-[#d2f100] transition-colors">Campeonatos</Link>
+          <Link href="/campeonatos" className="hover:text-[#FFD900] transition-colors">Campeonatos</Link>
           <span>/</span>
-          <span className="text-[#d2f100]">{category.name}</span>
+          <span className="text-[#FFD900]">{category.name}</span>
         </nav>
 
         {/* Header Banner */}
@@ -103,11 +103,11 @@ export default function ChampionshipSlugPage({ params }: Props) {
               {category.imageUrl ? (
                 <img src={category.imageUrl} alt={category.name} className="w-full h-full object-contain" />
               ) : (
-                <Trophy size={28} className="text-[#d2f100]" />
+                <Trophy size={28} className="text-[#FFD900]" />
               )}
             </div>
             <div>
-              <div className="text-[10px] uppercase font-mono font-bold text-[#d2f100] tracking-widest mb-0.5">
+              <div className="text-[10px] uppercase font-mono font-bold text-[#FFD900] tracking-widest mb-0.5">
                 {category.country || category.continent}
               </div>
               <h1 className="text-2xl sm:text-4xl font-black uppercase tracking-tight text-white font-headline-md">
@@ -121,7 +121,7 @@ export default function ChampionshipSlugPage({ params }: Props) {
 
           <button
             onClick={handleWhatsAppCustom}
-            className="self-start md:self-auto px-5 py-3.5 bg-[#d2f100] hover:bg-white text-[#121415] hover:text-black text-xs font-black uppercase tracking-wider flex items-center gap-2 shadow-[0_0_15px_rgba(210,241,0,0.3)] transition-all"
+            className="self-start md:self-auto px-5 py-3.5 bg-[#FFD900] hover:bg-white text-[#121415] hover:text-black text-xs font-black uppercase tracking-wider flex items-center gap-2 shadow-[0_0_15px_rgba(255, 217, 0,0.3)] transition-all"
           >
             <MessageCircle size={16} />
             <span>Consultar Outro Time no Zap</span>
@@ -132,7 +132,7 @@ export default function ChampionshipSlugPage({ params }: Props) {
         <div className="bg-[#1e2021] border border-[#333537] p-4 mb-8">
           <div className="flex items-center justify-between pb-3 border-b border-[#333537]/60 mb-3">
             <div className="flex items-center gap-2 text-xs font-mono font-bold uppercase text-white">
-              <Filter size={15} className="text-[#d2f100]" />
+              <Filter size={15} className="text-[#FFD900]" />
               <span>Filtrar Mantos ({filteredProducts.length} de {categoryProducts.length})</span>
             </div>
 
@@ -153,7 +153,7 @@ export default function ChampionshipSlugPage({ params }: Props) {
               <select
                 value={selectedTeam}
                 onChange={(e) => setSelectedTeam(e.target.value)}
-                className="w-full bg-[#0c0e10] border border-[#333537] focus:border-[#d2f100] text-xs font-mono text-white p-2 focus:outline-none"
+                className="w-full bg-[#0c0e10] border border-[#333537] focus:border-[#FFD900] text-xs font-mono text-white p-2 focus:outline-none"
               >
                 <option value="all">Todos os Clubes</option>
                 {availableTeams.map((team) => (
@@ -168,7 +168,7 @@ export default function ChampionshipSlugPage({ params }: Props) {
               <select
                 value={selectedSeason}
                 onChange={(e) => setSelectedSeason(e.target.value)}
-                className="w-full bg-[#0c0e10] border border-[#333537] focus:border-[#d2f100] text-xs font-mono text-white p-2 focus:outline-none"
+                className="w-full bg-[#0c0e10] border border-[#333537] focus:border-[#FFD900] text-xs font-mono text-white p-2 focus:outline-none"
               >
                 <option value="all">Todas as Temporadas</option>
                 {availableSeasons.map((season) => (
@@ -183,7 +183,7 @@ export default function ChampionshipSlugPage({ params }: Props) {
               <select
                 value={selectedVersion}
                 onChange={(e) => setSelectedVersion(e.target.value)}
-                className="w-full bg-[#0c0e10] border border-[#333537] focus:border-[#d2f100] text-xs font-mono text-white p-2 focus:outline-none"
+                className="w-full bg-[#0c0e10] border border-[#333537] focus:border-[#FFD900] text-xs font-mono text-white p-2 focus:outline-none"
               >
                 <option value="all">Todas as Versões</option>
                 <option value="torcedor">Torcedor Oficial</option>
@@ -197,7 +197,7 @@ export default function ChampionshipSlugPage({ params }: Props) {
               <select
                 value={selectedDelivery}
                 onChange={(e) => setSelectedDelivery(e.target.value)}
-                className="w-full bg-[#0c0e10] border border-[#333537] focus:border-[#d2f100] text-xs font-mono text-white p-2 focus:outline-none"
+                className="w-full bg-[#0c0e10] border border-[#333537] focus:border-[#FFD900] text-xs font-mono text-white p-2 focus:outline-none"
               >
                 <option value="all">Todas as Opções</option>
                 <option value="ready">⚡ Pronta Entrega</option>
@@ -224,7 +224,7 @@ export default function ChampionshipSlugPage({ params }: Props) {
             </p>
             <button
               onClick={clearFilters}
-              className="px-6 py-2.5 bg-[#d2f100] text-[#121415] text-xs font-black uppercase tracking-wider"
+              className="px-6 py-2.5 bg-[#FFD900] text-[#121415] text-xs font-black uppercase tracking-wider"
             >
               Limpar Filtros
             </button>

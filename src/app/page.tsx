@@ -64,9 +64,9 @@ export default function Home() {
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-8 pb-4 border-b border-[#333537]">
           <div>
             <div className="flex items-center gap-2">
-              <span className="w-2.5 h-6 bg-[#d2f100]" />
+              <span className="w-2.5 h-6 bg-[#FFD900]" />
               <h1 className="text-xl sm:text-2xl font-black uppercase tracking-tight text-white font-headline-sm">
-                RESULTADOS PARA &ldquo;<span className="text-[#d2f100]">{searchQuery}</span>&rdquo;
+                RESULTADOS PARA &ldquo;<span className="text-[#FFD900]">{searchQuery}</span>&rdquo;
               </h1>
             </div>
             <p className="text-xs text-[#c6c9ac] mt-1 pl-4 font-mono">
@@ -75,7 +75,7 @@ export default function Home() {
           </div>
           <button
             onClick={() => setSearchQuery('')}
-            className="flex items-center gap-1.5 text-xs font-bold uppercase text-[#121415] bg-[#d2f100] hover:bg-white px-4 py-2 transition-all shadow"
+            className="flex items-center gap-1.5 text-xs font-bold uppercase text-[#121415] bg-[#FFD900] hover:bg-white px-4 py-2 transition-all shadow"
           >
             <FilterX size={15} /> Limpar busca
           </button>
@@ -89,7 +89,7 @@ export default function Home() {
           </div>
         ) : (
           <div className="bg-[#1e2021] border border-[#333537] p-12 text-center max-w-lg mx-auto shadow-2xl">
-            <div className="w-12 h-12 bg-[#0c0e10] border border-[#333537] flex items-center justify-center mx-auto mb-3 text-[#d2f100]">
+            <div className="w-12 h-12 bg-[#0c0e10] border border-[#333537] flex items-center justify-center mx-auto mb-3 text-[#FFD900]">
               <Search size={24} />
             </div>
             <h2 className="text-lg font-bold uppercase text-white font-headline-sm mb-1">
@@ -101,13 +101,13 @@ export default function Home() {
             <div className="flex flex-col sm:flex-row gap-2 justify-center">
               <button
                 onClick={() => setSearchQuery('')}
-                className="px-4 py-2.5 bg-[#121415] border border-[#333537] text-white hover:text-[#d2f100] text-xs font-bold uppercase tracking-wider"
+                className="px-4 py-2.5 bg-[#121415] border border-[#333537] text-white hover:text-[#FFD900] text-xs font-bold uppercase tracking-wider"
               >
                 Ver todos os mantos
               </button>
               <button
                 onClick={handleWhatsAppContact}
-                className="px-4 py-2.5 bg-[#d2f100] text-[#121415] hover:bg-white text-xs font-black uppercase tracking-wider flex items-center justify-center gap-1.5"
+                className="px-4 py-2.5 bg-[#FFD900] text-[#121415] hover:bg-white text-xs font-black uppercase tracking-wider flex items-center justify-center gap-1.5"
               >
                 <MessageCircle size={15} /> Pedir no WhatsApp
               </button>
@@ -129,7 +129,7 @@ export default function Home() {
         <div className="flex items-end justify-between mb-8 pb-3 border-b border-[#333537]">
           <div>
             <div className="flex items-center gap-2">
-              <span className="w-2.5 h-5 bg-[#d2f100]" />
+              <span className="w-2.5 h-5 bg-[#FFD900]" />
               <h2 className="text-2xl sm:text-3xl font-black uppercase tracking-tight text-white font-headline-md">
                 CATEGORIAS EM ALTA
               </h2>
@@ -140,7 +140,7 @@ export default function Home() {
           </div>
           <Link
             href="/campeonatos"
-            className="text-xs font-mono font-bold uppercase text-[#d2f100] hover:underline flex items-center gap-1"
+            className="text-xs font-mono font-bold uppercase text-[#FFD900] hover:underline flex items-center gap-1"
           >
             <span>Ver Todas</span>
             <ArrowRight size={13} />
@@ -152,7 +152,7 @@ export default function Home() {
           {/* Brasileirão Card */}
           <Link
             href="/campeonatos/brasileirao"
-            className="group relative h-48 sm:h-56 overflow-hidden bg-[#1e2021] border border-[#333537] hover:border-[#d2f100] transition-all p-6 flex flex-col justify-end shadow-lg"
+            className="group relative h-48 sm:h-56 overflow-hidden bg-[#1e2021] border border-[#333537] hover:border-[#FFD900] transition-all p-6 flex flex-col justify-end shadow-lg"
           >
             <div className="absolute inset-0 bg-gradient-to-t from-[#0c0e10] via-[#0c0e10]/60 to-transparent z-10" />
             <img
@@ -161,7 +161,7 @@ export default function Home() {
               className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 opacity-40"
             />
             <div className="relative z-20 space-y-1">
-              <span className="text-[10px] font-mono font-bold uppercase text-[#d2f100] tracking-widest">
+              <span className="text-[10px] font-mono font-bold uppercase text-[#FFD900] tracking-widest">
                 SÉRIE A 2025/26
               </span>
               <h3 className="text-xl font-bold uppercase text-white font-headline-sm">
@@ -174,7 +174,7 @@ export default function Home() {
           {/* Gigantes Europeus */}
           <Link
             href="/campeonatos"
-            className="group relative h-48 sm:h-56 overflow-hidden bg-[#1e2021] border border-[#333537] hover:border-[#d2f100] transition-all p-6 flex flex-col justify-end shadow-lg"
+            className="group relative h-48 sm:h-56 overflow-hidden bg-[#1e2021] border border-[#333537] hover:border-[#FFD900] transition-all p-6 flex flex-col justify-end shadow-lg"
           >
             <div className="absolute inset-0 bg-gradient-to-t from-[#0c0e10] via-[#0c0e10]/60 to-transparent z-10" />
             <img
@@ -183,7 +183,7 @@ export default function Home() {
               className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 opacity-40"
             />
             <div className="relative z-20 space-y-1">
-              <span className="text-[10px] font-mono font-bold uppercase text-[#d2f100] tracking-widest">
+              <span className="text-[10px] font-mono font-bold uppercase text-[#FFD900] tracking-widest">
                 UCL & LIGAS
               </span>
               <h3 className="text-xl font-bold uppercase text-white font-headline-sm">
@@ -196,7 +196,7 @@ export default function Home() {
           {/* Seleções Mundiais */}
           <Link
             href="/selecoes"
-            className="group relative h-48 sm:h-56 overflow-hidden bg-[#1e2021] border border-[#333537] hover:border-[#d2f100] transition-all p-6 flex flex-col justify-end shadow-lg"
+            className="group relative h-48 sm:h-56 overflow-hidden bg-[#1e2021] border border-[#333537] hover:border-[#FFD900] transition-all p-6 flex flex-col justify-end shadow-lg"
           >
             <div className="absolute inset-0 bg-gradient-to-t from-[#0c0e10] via-[#0c0e10]/60 to-transparent z-10" />
             <img
@@ -205,7 +205,7 @@ export default function Home() {
               className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 opacity-40"
             />
             <div className="relative z-20 space-y-1">
-              <span className="text-[10px] font-mono font-bold uppercase text-[#d2f100] tracking-widest">
+              <span className="text-[10px] font-mono font-bold uppercase text-[#FFD900] tracking-widest">
                 COPA DO MUNDO
               </span>
               <h3 className="text-xl font-bold uppercase text-white font-headline-sm">
@@ -218,7 +218,7 @@ export default function Home() {
           {/* Lendas Retrô */}
           <Link
             href="/lancamentos"
-            className="group relative h-48 sm:h-56 overflow-hidden bg-[#1e2021] border border-[#333537] hover:border-[#d2f100] transition-all p-6 flex flex-col justify-end shadow-lg"
+            className="group relative h-48 sm:h-56 overflow-hidden bg-[#1e2021] border border-[#333537] hover:border-[#FFD900] transition-all p-6 flex flex-col justify-end shadow-lg"
           >
             <div className="absolute inset-0 bg-gradient-to-t from-[#0c0e10] via-[#0c0e10]/60 to-transparent z-10" />
             <img
@@ -227,7 +227,7 @@ export default function Home() {
               className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 opacity-40"
             />
             <div className="relative z-20 space-y-1">
-              <span className="text-[10px] font-mono font-bold uppercase text-[#d2f100] tracking-widest">
+              <span className="text-[10px] font-mono font-bold uppercase text-[#FFD900] tracking-widest">
                 HISTÓRICOS
               </span>
               <h3 className="text-xl font-bold uppercase text-white font-headline-sm">
@@ -245,7 +245,7 @@ export default function Home() {
         <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-8 pb-4 border-b border-[#333537]">
           <div>
             <div className="flex items-center gap-2">
-              <span className="w-2.5 h-6 bg-[#d2f100]" />
+              <span className="w-2.5 h-6 bg-[#FFD900]" />
               <h2 className="text-2xl sm:text-3xl font-black uppercase tracking-tight text-white font-headline-md">
                 DESTAQUES DO DROP 24/25
               </h2>
@@ -261,7 +261,7 @@ export default function Home() {
               onClick={() => setActiveTab('all')}
               className={`px-3 py-1.5 text-xs font-mono font-bold uppercase transition-all shrink-0 ${
                 activeTab === 'all'
-                  ? 'bg-[#d2f100] text-[#121415] shadow-[0_0_10px_rgba(210,241,0,0.3)]'
+                  ? 'bg-[#FFD900] text-[#121415] shadow-[0_0_10px_rgba(255, 217, 0,0.3)]'
                   : 'bg-[#1e2021] text-[#c6c9ac] hover:text-white border border-[#333537]'
               }`}
             >
@@ -271,7 +271,7 @@ export default function Home() {
               onClick={() => setActiveTab('brasileirao')}
               className={`px-3 py-1.5 text-xs font-mono font-bold uppercase transition-all shrink-0 ${
                 activeTab === 'brasileirao'
-                  ? 'bg-[#d2f100] text-[#121415] shadow-[0_0_10px_rgba(210,241,0,0.3)]'
+                  ? 'bg-[#FFD900] text-[#121415] shadow-[0_0_10px_rgba(255, 217, 0,0.3)]'
                   : 'bg-[#1e2021] text-[#c6c9ac] hover:text-white border border-[#333537]'
               }`}
             >
@@ -281,7 +281,7 @@ export default function Home() {
               onClick={() => setActiveTab('europe')}
               className={`px-3 py-1.5 text-xs font-mono font-bold uppercase transition-all shrink-0 ${
                 activeTab === 'europe'
-                  ? 'bg-[#d2f100] text-[#121415] shadow-[0_0_10px_rgba(210,241,0,0.3)]'
+                  ? 'bg-[#FFD900] text-[#121415] shadow-[0_0_10px_rgba(255, 217, 0,0.3)]'
                   : 'bg-[#1e2021] text-[#c6c9ac] hover:text-white border border-[#333537]'
               }`}
             >
@@ -291,7 +291,7 @@ export default function Home() {
               onClick={() => setActiveTab('national')}
               className={`px-3 py-1.5 text-xs font-mono font-bold uppercase transition-all shrink-0 ${
                 activeTab === 'national'
-                  ? 'bg-[#d2f100] text-[#121415] shadow-[0_0_10px_rgba(210,241,0,0.3)]'
+                  ? 'bg-[#FFD900] text-[#121415] shadow-[0_0_10px_rgba(255, 217, 0,0.3)]'
                   : 'bg-[#1e2021] text-[#c6c9ac] hover:text-white border border-[#333537]'
               }`}
             >
@@ -301,7 +301,7 @@ export default function Home() {
               onClick={() => setActiveTab('ready')}
               className={`px-3 py-1.5 text-xs font-mono font-bold uppercase transition-all shrink-0 ${
                 activeTab === 'ready'
-                  ? 'bg-[#d2f100] text-[#121415] shadow-[0_0_10px_rgba(210,241,0,0.3)]'
+                  ? 'bg-[#FFD900] text-[#121415] shadow-[0_0_10px_rgba(255, 217, 0,0.3)]'
                   : 'bg-[#1e2021] text-[#c6c9ac] hover:text-white border border-[#333537]'
               }`}
             >
@@ -320,13 +320,13 @@ export default function Home() {
 
       {/* 4. Special Pitch Volt Callout Banner */}
       <section className="max-w-7xl mx-auto px-4 lg:px-12">
-        <div className="relative bg-[#1e2021] border border-[#d2f100]/40 p-8 md:p-12 overflow-hidden shadow-2xl">
-          <div className="absolute top-0 right-0 w-96 h-96 bg-[#d2f100]/5 rounded-full blur-3xl pointer-events-none" />
+        <div className="relative bg-[#1e2021] border border-[#FFD900]/40 p-8 md:p-12 overflow-hidden shadow-2xl">
+          <div className="absolute top-0 right-0 w-96 h-96 bg-[#FFD900]/5 rounded-full blur-3xl pointer-events-none" />
           
           <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
             <div className="lg:col-span-8 space-y-3">
-              <span className="text-xs font-mono font-black uppercase text-[#d2f100] tracking-widest flex items-center gap-1.5">
-                <Zap size={14} className="fill-[#d2f100]" />
+              <span className="text-xs font-mono font-black uppercase text-[#FFD900] tracking-widest flex items-center gap-1.5">
+                <Zap size={14} className="fill-[#FFD900]" />
                 PERSONALIZAÇÃO PROFISSIONAL
               </span>
               <h2 className="text-3xl sm:text-4xl font-black uppercase text-white font-headline-md leading-tight">
@@ -339,7 +339,7 @@ export default function Home() {
             <div className="lg:col-span-4 flex flex-col sm:flex-row lg:flex-col gap-3 justify-end">
               <button
                 onClick={handleWhatsAppContact}
-                className="flex items-center justify-center gap-2 bg-[#d2f100] text-[#121415] hover:bg-white font-black uppercase text-xs tracking-wider px-6 py-4 shadow-[0_0_20px_rgba(210,241,0,0.3)] transition-all"
+                className="flex items-center justify-center gap-2 bg-[#FFD900] text-[#121415] hover:bg-white font-black uppercase text-xs tracking-wider px-6 py-4 shadow-[0_0_20px_rgba(255, 217, 0,0.3)] transition-all"
               >
                 <MessageCircle size={18} />
                 <span>Pedir Personalizada</span>

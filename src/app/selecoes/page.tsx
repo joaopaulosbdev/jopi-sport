@@ -19,15 +19,15 @@ export default function SelecoesPage() {
         
         {/* Breadcrumb */}
         <nav className="flex items-center gap-2 text-xs font-mono text-[#c6c9ac] uppercase mb-8">
-          <Link href="/" className="hover:text-[#d2f100] transition-colors">Início</Link>
+          <Link href="/" className="hover:text-[#FFD900] transition-colors">Início</Link>
           <span>/</span>
-          <span className="text-[#d2f100]">Seleções Mundiais</span>
+          <span className="text-[#FFD900]">Seleções Mundiais</span>
         </nav>
 
         {/* Page Header */}
         <div className="mb-10 pb-6 border-b border-[#333537]">
-          <div className="inline-flex items-center gap-2 bg-[#1e2021] border border-[#d2f100]/40 text-[#d2f100] px-3 py-1 text-xs font-mono font-bold uppercase mb-3">
-            <Globe2 size={14} className="text-[#d2f100]" />
+          <div className="inline-flex items-center gap-2 bg-[#1e2021] border border-[#FFD900]/40 text-[#FFD900] px-3 py-1 text-xs font-mono font-bold uppercase mb-3">
+            <Globe2 size={14} className="text-[#FFD900]" />
             SELEÇÕES NACIONAIS & COPAS
           </div>
           <h1 className="text-3xl sm:text-5xl font-black uppercase text-white font-headline-md leading-tight">
@@ -42,7 +42,7 @@ export default function SelecoesPage() {
         {southAmerica.length > 0 && (
           <section className="mb-12">
             <div className="flex items-center gap-2 mb-6 pb-2 border-b border-[#333537]">
-              <span className="w-2.5 h-5 bg-[#d2f100]" />
+              <span className="w-2.5 h-5 bg-[#FFD900]" />
               <h2 className="text-xl sm:text-2xl font-black uppercase text-white font-headline-sm">
                 Seleções Sul-Americanas
               </h2>
@@ -59,7 +59,7 @@ export default function SelecoesPage() {
         {europe.length > 0 && (
           <section className="mb-12">
             <div className="flex items-center gap-2 mb-6 pb-2 border-b border-[#333537]">
-              <span className="w-2.5 h-5 bg-[#d2f100]" />
+              <span className="w-2.5 h-5 bg-[#FFD900]" />
               <h2 className="text-xl sm:text-2xl font-black uppercase text-white font-headline-sm">
                 Seleções Europeias
               </h2>
@@ -76,7 +76,7 @@ export default function SelecoesPage() {
         {others.length > 0 && (
           <section className="mb-12">
             <div className="flex items-center gap-2 mb-6 pb-2 border-b border-[#333537]">
-              <span className="w-2.5 h-5 bg-[#d2f100]" />
+              <span className="w-2.5 h-5 bg-[#FFD900]" />
               <h2 className="text-xl sm:text-2xl font-black uppercase text-white font-headline-sm">
                 Outras Confederações
               </h2>

@@ -38,7 +38,7 @@ export default function RootLayout({
           rel="stylesheet"
         />
       </head>
-      <body className="min-h-screen flex flex-col bg-[#121415] text-[#e2e2e4] font-space-grotesk antialiased selection:bg-[#d2f100] selection:text-[#191e00]">
+      <body className="min-h-screen flex flex-col bg-[#121415] text-[#e2e2e4] font-space-grotesk antialiased selection:bg-[#FFD900] selection:text-[#121415]">
         <StoreProvider>
           <Header />
           <main className="flex-1 pt-24 md:pt-28">{children}</main>

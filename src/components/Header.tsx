@@ -41,20 +41,20 @@ export default function Header() {
       <div className="bg-[#0c0e10] py-1.5 px-4 lg:px-12 border-b border-[#333537]/40 text-xs">
         <div className="max-w-7xl mx-auto flex items-center justify-between">
           <div className="flex items-center gap-2 font-label-sm text-[#c6c9ac] uppercase tracking-widest text-[11px]">
-            <span className="w-2 h-2 rounded-full bg-[#d2f100] animate-pulse"></span>
+            <span className="w-2 h-2 rounded-full bg-[#FFD900] animate-pulse"></span>
             <span className="hidden sm:inline font-bold">Transmissão Oficial Volt Drop</span>
           </div>
 
-          <div className="font-label-sm text-[11px] uppercase font-bold text-[#d2f100] tracking-wider truncate px-2 text-center">
-            FRETE GRÁTIS EM PEDIDOS ACIMA DE R$ 249 | CUPOM <span className="bg-[#d2f100] text-[#191e00] px-1.5 py-0.5 font-black text-[10px]">VOLT10</span>
+          <div className="font-label-sm text-[11px] uppercase font-bold text-[#FFD900] tracking-wider truncate px-2 text-center">
+            FRETE GRÁTIS EM PEDIDOS ACIMA DE R$ 249 | CUPOM <span className="bg-[#FFD900] text-[#191e00] px-1.5 py-0.5 font-black text-[10px]">VOLT10</span>
           </div>
 
           <div className="hidden md:flex items-center gap-4 font-label-sm text-[11px] text-[#c6c9ac]">
             <button 
               onClick={handleWhatsAppContact}
-              className="hover:text-[#d2f100] transition-colors uppercase font-bold flex items-center gap-1"
+              className="hover:text-[#FFD900] transition-colors uppercase font-bold flex items-center gap-1"
             >
-              <MessageCircle size={12} className="text-[#d2f100]" />
+              <MessageCircle size={12} className="text-[#FFD900]" />
               Suporte WhatsApp
             </button>
             <span className="text-[#47464a]">|</span>
@@ -68,7 +68,7 @@ export default function Header() {
         
         {/* Brand Logo - High Performance Pitch Volt */}
         <Link href="/" className="flex items-center gap-2.5 shrink-0 group">
-          <div className="w-9 h-9 md:w-10 md:h-10 bg-[#d2f100] flex items-center justify-center font-black text-[#121415] text-xl tracking-tighter shadow-[0_0_15px_rgba(210,241,0,0.4)] group-hover:bg-white transition-all">
+          <div className="w-9 h-9 md:w-10 md:h-10 bg-[#FFD900] flex items-center justify-center font-black text-[#121415] text-xl tracking-tighter shadow-[0_0_15px_rgba(255, 217, 0,0.4)] group-hover:bg-white transition-all">
             ⚡
           </div>
           <div className="flex flex-col">
@@ -76,12 +76,12 @@ export default function Header() {
               <span className="text-2xl md:text-3xl font-black uppercase tracking-tight text-white font-headline-sm">
                 JOPI
               </span>
-              <span className="text-2xl md:text-3xl font-black uppercase tracking-tight text-[#d2f100] ml-1.5 font-headline-sm">
+              <span className="text-2xl md:text-3xl font-black uppercase tracking-tight text-[#FFD900] ml-1.5 font-headline-sm">
                 SPORT
               </span>
             </div>
             <div className="flex items-center gap-1.5 mt-0.5">
-              <span className="h-0.5 w-3 bg-[#d2f100]" />
+              <span className="h-0.5 w-3 bg-[#FFD900]" />
               <span className="text-[9px] font-bold tracking-[0.2em] uppercase text-[#c6c9ac]">
                 VOLT DROP CULTURE
               </span>
@@ -93,15 +93,15 @@ export default function Header() {
         <nav className="hidden lg:flex items-center gap-6 xl:gap-8 text-xs font-bold uppercase tracking-wider text-[#c6c9ac]">
           <Link 
             href="/" 
-            className={`transition-colors py-1 ${pathname === '/' ? 'text-[#d2f100] border-b-2 border-[#d2f100]' : 'hover:text-white'}`}
+            className={`transition-colors py-1 ${pathname === '/' ? 'text-[#FFD900] border-b-2 border-[#FFD900]' : 'hover:text-white'}`}
           >
             Início
           </Link>
           <Link 
             href="/lancamentos" 
-            className={`transition-colors py-1 flex items-center gap-1 ${pathname === '/lancamentos' ? 'text-[#d2f100] border-b-2 border-[#d2f100]' : 'hover:text-white'}`}
+            className={`transition-colors py-1 flex items-center gap-1 ${pathname === '/lancamentos' ? 'text-[#FFD900] border-b-2 border-[#FFD900]' : 'hover:text-white'}`}
           >
-            <Sparkles size={13} className="text-[#d2f100]" />
+            <Sparkles size={13} className="text-[#FFD900]" />
             Lançamentos
           </Link>
 
@@ -113,15 +113,15 @@ export default function Header() {
           >
             <Link 
               href="/campeonatos"
-              className={`flex items-center gap-1 py-1 transition-colors ${pathname.startsWith('/campeonatos') ? 'text-[#d2f100] border-b-2 border-[#d2f100]' : 'hover:text-white'}`}
+              className={`flex items-center gap-1 py-1 transition-colors ${pathname.startsWith('/campeonatos') ? 'text-[#FFD900] border-b-2 border-[#FFD900]' : 'hover:text-white'}`}
             >
               <span>Clubes</span>
-              <ChevronDown size={12} className={`transition-transform duration-200 ${championshipsDropdown ? 'rotate-180 text-[#d2f100]' : ''}`} />
+              <ChevronDown size={12} className={`transition-transform duration-200 ${championshipsDropdown ? 'rotate-180 text-[#FFD900]' : ''}`} />
             </Link>
 
             {championshipsDropdown && (
               <div className="absolute top-full left-0 w-64 bg-[#1e2021] border border-[#333537] p-2 shadow-2xl z-50">
-                <div className="px-3 py-1.5 text-[10px] uppercase font-bold text-[#d2f100] tracking-widest border-b border-[#333537]/60">
+                <div className="px-3 py-1.5 text-[10px] uppercase font-bold text-[#FFD900] tracking-widest border-b border-[#333537]/60">
                   Ligas e Torneios
                 </div>
                 <div className="py-1">
@@ -129,7 +129,7 @@ export default function Header() {
                     <Link
                       key={cat.id}
                       href={`/campeonatos/${cat.slug}`}
-                      className="flex items-center justify-between px-3 py-2 text-xs text-[#e2e2e4] hover:bg-[#282a2c] hover:text-[#d2f100] transition-colors"
+                      className="flex items-center justify-between px-3 py-2 text-xs text-[#e2e2e4] hover:bg-[#282a2c] hover:text-[#FFD900] transition-colors"
                     >
                       <span>{cat.name}</span>
                       <span className="text-[10px] text-[#c6c9ac]">➔</span>
@@ -148,16 +148,16 @@ export default function Header() {
           >
             <Link 
               href="/selecoes"
-              className={`flex items-center gap-1 py-1 transition-colors ${pathname.startsWith('/selecoes') ? 'text-[#d2f100] border-b-2 border-[#d2f100]' : 'hover:text-white'}`}
+              className={`flex items-center gap-1 py-1 transition-colors ${pathname.startsWith('/selecoes') ? 'text-[#FFD900] border-b-2 border-[#FFD900]' : 'hover:text-white'}`}
             >
               <Globe2 size={13} className="text-[#c6c9ac]" />
               <span>Seleções</span>
-              <ChevronDown size={12} className={`transition-transform duration-200 ${nationalDropdown ? 'rotate-180 text-[#d2f100]' : ''}`} />
+              <ChevronDown size={12} className={`transition-transform duration-200 ${nationalDropdown ? 'rotate-180 text-[#FFD900]' : ''}`} />
             </Link>
 
             {nationalDropdown && (
               <div className="absolute top-full left-0 w-64 bg-[#1e2021] border border-[#333537] p-2 shadow-2xl z-50">
-                <div className="px-3 py-1.5 text-[10px] uppercase font-bold text-[#d2f100] tracking-widest border-b border-[#333537]/60">
+                <div className="px-3 py-1.5 text-[10px] uppercase font-bold text-[#FFD900] tracking-widest border-b border-[#333537]/60">
                   Seleções Mundiais
                 </div>
                 <div className="py-1 max-h-80 overflow-y-auto">
@@ -165,7 +165,7 @@ export default function Header() {
                     <Link
                       key={cat.id}
                       href={`/selecoes/${cat.slug}`}
-                      className="flex items-center justify-between px-3 py-2 text-xs text-[#e2e2e4] hover:bg-[#282a2c] hover:text-[#d2f100] transition-colors"
+                      className="flex items-center justify-between px-3 py-2 text-xs text-[#e2e2e4] hover:bg-[#282a2c] hover:text-[#FFD900] transition-colors"
                     >
                       <span>{cat.name}</span>
                       <span className="text-[10px] text-[#c6c9ac]">➔</span>
@@ -178,7 +178,7 @@ export default function Header() {
 
           <Link 
             href="/promocoes" 
-            className={`transition-colors py-1 flex items-center gap-1 ${pathname === '/promocoes' ? 'text-[#d2f100] border-b-2 border-[#d2f100]' : 'hover:text-white'}`}
+            className={`transition-colors py-1 flex items-center gap-1 ${pathname === '/promocoes' ? 'text-[#FFD900] border-b-2 border-[#FFD900]' : 'hover:text-white'}`}
           >
             <Flame size={13} className="text-[#ffb4ab]" />
             Ofertas
@@ -187,7 +187,7 @@ export default function Header() {
 
         {/* Central Search Bar */}
         <div className="hidden md:flex flex-1 max-w-xs xl:max-w-sm relative">
-          <div className="w-full flex items-center bg-[#1e2021] border border-[#333537] focus-within:border-[#d2f100] transition-all px-3 py-1.5">
+          <div className="w-full flex items-center bg-[#1e2021] border border-[#333537] focus-within:border-[#FFD900] transition-all px-3 py-1.5">
             <Search size={16} className="text-[#c6c9ac] mr-2 shrink-0" />
             <input
               type="text"
@@ -199,7 +199,7 @@ export default function Header() {
             {searchQuery ? (
               <button
                 onClick={() => setSearchQuery('')}
-                className="text-[10px] font-bold text-[#c6c9ac] hover:text-[#d2f100] ml-1"
+                className="text-[10px] font-bold text-[#c6c9ac] hover:text-[#FFD900] ml-1"
               >
                 ✕
               </button>
@@ -216,11 +216,11 @@ export default function Header() {
           {/* Cart Button */}
           <Link
             href="/carrinho"
-            className="relative flex items-center gap-2.5 bg-[#d2f100] text-[#121415] hover:bg-white hover:text-black font-bold uppercase tracking-wider px-4 py-2.5 transition-all shadow-[0_0_15px_rgba(210,241,0,0.3)]"
+            className="relative flex items-center gap-2.5 bg-[#FFD900] text-[#121415] hover:bg-white hover:text-black font-bold uppercase tracking-wider px-4 py-2.5 transition-all shadow-[0_0_15px_rgba(255, 217, 0,0.3)]"
           >
             <ShoppingBag size={18} className="stroke-[2.5]" />
             <span className="hidden sm:inline text-xs font-black">Sacola</span>
-            <span className="bg-[#121415] text-[#d2f100] text-[11px] font-black px-1.5 py-0.5 min-w-[20px] text-center">
+            <span className="bg-[#121415] text-[#FFD900] text-[11px] font-black px-1.5 py-0.5 min-w-[20px] text-center">
               {cartCount}
             </span>
           </Link>
@@ -228,7 +228,7 @@ export default function Header() {
           {/* Mobile Menu Button */}
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="lg:hidden p-2 text-white bg-[#1e2021] border border-[#333537] hover:border-[#d2f100] transition-colors"
+            className="lg:hidden p-2 text-white bg-[#1e2021] border border-[#333537] hover:border-[#FFD900] transition-colors"
             aria-label="Abrir Menu"
           >
             {mobileMenuOpen ? <X size={22} /> : <Menu size={22} />}
@@ -238,7 +238,7 @@ export default function Header() {
 
       {/* Mobile Search Bar */}
       <div className="md:hidden px-4 pb-3">
-        <div className="w-full flex items-center bg-[#1e2021] border border-[#333537] focus-within:border-[#d2f100] px-3 py-2">
+        <div className="w-full flex items-center bg-[#1e2021] border border-[#333537] focus-within:border-[#FFD900] px-3 py-2">
           <Search size={16} className="text-[#c6c9ac] mr-2" />
           <input
             type="text"
@@ -265,35 +265,35 @@ export default function Header() {
             <Link
               href="/"
               onClick={() => setMobileMenuOpen(false)}
-              className="px-3 py-2 bg-[#1e2021] border border-[#333537] text-white hover:text-[#d2f100]"
+              className="px-3 py-2 bg-[#1e2021] border border-[#333537] text-white hover:text-[#FFD900]"
             >
               ⚡ Início
             </Link>
             <Link
               href="/lancamentos"
               onClick={() => setMobileMenuOpen(false)}
-              className="px-3 py-2 bg-[#1e2021] border border-[#333537] text-white hover:text-[#d2f100]"
+              className="px-3 py-2 bg-[#1e2021] border border-[#333537] text-white hover:text-[#FFD900]"
             >
               ✨ Lançamentos 24/25
             </Link>
             <Link
               href="/campeonatos"
               onClick={() => setMobileMenuOpen(false)}
-              className="px-3 py-2 bg-[#1e2021] border border-[#333537] text-white hover:text-[#d2f100]"
+              className="px-3 py-2 bg-[#1e2021] border border-[#333537] text-white hover:text-[#FFD900]"
             >
               🏆 Clubes & Ligas
             </Link>
             <Link
               href="/selecoes"
               onClick={() => setMobileMenuOpen(false)}
-              className="px-3 py-2 bg-[#1e2021] border border-[#333537] text-white hover:text-[#d2f100]"
+              className="px-3 py-2 bg-[#1e2021] border border-[#333537] text-white hover:text-[#FFD900]"
             >
               🌍 Seleções Nacionais
             </Link>
             <Link
               href="/promocoes"
               onClick={() => setMobileMenuOpen(false)}
-              className="px-3 py-2 bg-[#1e2021] border border-[#333537] text-[#ffb4ab] hover:text-[#d2f100]"
+              className="px-3 py-2 bg-[#1e2021] border border-[#333537] text-[#ffb4ab] hover:text-[#FFD900]"
             >
               🔥 Ofertas Relâmpago
             </Link>
@@ -302,7 +302,7 @@ export default function Header() {
                 setMobileMenuOpen(false);
                 handleWhatsAppContact();
               }}
-              className="w-full text-left px-3 py-2 bg-[#d2f100] text-[#121415] font-black uppercase flex items-center justify-between"
+              className="w-full text-left px-3 py-2 bg-[#FFD900] text-[#121415] font-black uppercase flex items-center justify-between"
             >
               <span>Falar no WhatsApp</span>
               <MessageCircle size={16} />

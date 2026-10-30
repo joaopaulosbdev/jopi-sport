@@ -14,14 +14,14 @@ export default function LancamentosPage() {
     <div className="py-8 sm:py-12">
       <div className="max-w-7xl mx-auto px-4 lg:px-12">
         <nav className="flex items-center gap-2 text-xs font-mono text-[#c6c9ac] uppercase mb-8">
-          <Link href="/" className="hover:text-[#d2f100] transition-colors">Início</Link>
+          <Link href="/" className="hover:text-[#FFD900] transition-colors">Início</Link>
           <span>/</span>
-          <span className="text-[#d2f100]">Lançamentos</span>
+          <span className="text-[#FFD900]">Lançamentos</span>
         </nav>
 
         <div className="mb-10 pb-6 border-b border-[#333537]">
-          <div className="inline-flex items-center gap-2 bg-[#1e2021] border border-[#d2f100]/40 text-[#d2f100] px-3 py-1 text-xs font-mono font-bold uppercase mb-3">
-            <Zap size={14} className="fill-[#d2f100]" />
+          <div className="inline-flex items-center gap-2 bg-[#1e2021] border border-[#FFD900]/40 text-[#FFD900] px-3 py-1 text-xs font-mono font-bold uppercase mb-3">
+            <Zap size={14} className="fill-[#FFD900]" />
             NOVO DROP 2024/25
           </div>
           <h1 className="text-3xl sm:text-5xl font-black uppercase text-white font-headline-md leading-tight">

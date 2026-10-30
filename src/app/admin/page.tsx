@@ -101,7 +101,7 @@ export default function AdminDashboardPage() {
     return (
       <div className="min-h-[70vh] flex items-center justify-center p-4">
         <div className="bg-[#1e2021] border border-[#333537] p-8 text-center max-w-md w-full shadow-2xl">
-          <div className="w-16 h-16 bg-[#0c0e10] border border-[#333537] text-[#d2f100] flex items-center justify-center mx-auto mb-4">
+          <div className="w-16 h-16 bg-[#0c0e10] border border-[#333537] text-[#FFD900] flex items-center justify-center mx-auto mb-4">
             <AlertCircle size={32} />
           </div>
           <h1 className="text-xl font-bold uppercase text-white font-headline-sm mb-1">Acesso Restrito</h1>
@@ -110,7 +110,7 @@ export default function AdminDashboardPage() {
           </p>
           <Link
             href="/admin/login"
-            className="inline-flex items-center gap-2 px-6 py-3 bg-[#d2f100] text-[#121415] font-black text-xs uppercase tracking-wider hover:bg-white transition-all shadow"
+            className="inline-flex items-center gap-2 px-6 py-3 bg-[#FFD900] text-[#121415] font-black text-xs uppercase tracking-wider hover:bg-white transition-all shadow"
           >
             Fazer Login no Painel
           </Link>

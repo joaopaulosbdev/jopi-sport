@@ -46,7 +46,7 @@ export default function ProductCard({ product }: ProductCardProps) {
   const displayImage = imageError || !product.images?.[0] ? fallbackImage : product.images[0];
 
   return (
-    <div className="group relative bg-[#1e2021] border border-[#333537] hover:border-[#d2f100] transition-all flex flex-col justify-between overflow-hidden shadow-lg hover:shadow-[0_0_20px_rgba(210,241,0,0.15)]">
+    <div className="group relative bg-[#1e2021] border border-[#333537] hover:border-[#FFD900] transition-all flex flex-col justify-between overflow-hidden shadow-lg hover:shadow-[0_0_20px_rgba(255, 217, 0,0.15)]">
       
       {/* Top Image Area (4:5 Athletic Crop) */}
       <div>
@@ -55,12 +55,12 @@ export default function ProductCard({ product }: ProductCardProps) {
           {/* Micro-Chips & Badges */}
           <div className="absolute top-2.5 left-2.5 flex flex-col gap-1.5 z-10">
             {discount > 0 && (
-              <span className="bg-[#d2f100] text-[#121415] text-[10px] font-black uppercase px-2 py-0.5 tracking-wider shadow">
+              <span className="bg-[#FFD900] text-[#121415] text-[10px] font-black uppercase px-2 py-0.5 tracking-wider shadow">
                 -{discount}% OFF
               </span>
             )}
             {product.isNew && (
-              <span className="bg-[#121415] text-[#d2f100] border border-[#d2f100] text-[10px] font-black uppercase px-2 py-0.5 tracking-wider">
+              <span className="bg-[#121415] text-[#FFD900] border border-[#FFD900] text-[10px] font-black uppercase px-2 py-0.5 tracking-wider">
                 DROP 24/25
               </span>
             )}
@@ -74,8 +74,8 @@ export default function ProductCard({ product }: ProductCardProps) {
           {/* Availability Indicator */}
           <div className="absolute top-2.5 right-2.5 z-10">
             {product.isReadyDelivery ? (
-              <span className="flex items-center gap-1.5 bg-[#0c0e10]/90 border border-[#333537] text-[#d2f100] text-[10px] font-bold uppercase px-2 py-0.5">
-                <span className="w-1.5 h-1.5 rounded-full bg-[#d2f100] animate-pulse" />
+              <span className="flex items-center gap-1.5 bg-[#0c0e10]/90 border border-[#333537] text-[#FFD900] text-[10px] font-bold uppercase px-2 py-0.5">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#FFD900] animate-pulse" />
                 Pronta Entrega
               </span>
             ) : (
@@ -107,7 +107,7 @@ export default function ProductCard({ product }: ProductCardProps) {
           </div>
 
           {/* Product Name */}
-          <Link href={`/produto/${product.id}`} className="block group-hover:text-[#d2f100] transition-colors">
+          <Link href={`/produto/${product.id}`} className="block group-hover:text-[#FFD900] transition-colors">
             <h3 className="text-white font-headline-sm text-lg font-bold uppercase leading-snug line-clamp-2">
               {product.name}
             </h3>
@@ -121,7 +121,7 @@ export default function ProductCard({ product }: ProductCardProps) {
               </div>
             )}
             <div className="flex items-baseline gap-2">
-              <span className="text-[#d2f100] font-headline-sm text-2xl font-bold tracking-tight">
+              <span className="text-[#FFD900] font-headline-sm text-2xl font-bold tracking-tight">
                 R$ {product.price.toFixed(2).replace('.', ',')}
               </span>
               <span className="text-[10px] font-mono text-[#c6c9ac] uppercase">
@@ -137,7 +137,7 @@ export default function ProductCard({ product }: ProductCardProps) {
           <div className="pt-2">
             <div className="flex items-center justify-between text-[10px] text-[#c6c9ac] font-mono uppercase mb-1.5">
               <span>Tamanho:</span>
-              <span className="text-[#d2f100] font-bold">{selectedSize}</span>
+              <span className="text-[#FFD900] font-bold">{selectedSize}</span>
             </div>
             <div className="flex flex-wrap gap-1.5">
               {product.sizes.map((size) => (
@@ -150,8 +150,8 @@ export default function ProductCard({ product }: ProductCardProps) {
                   }}
                   className={`min-w-[34px] h-[30px] px-2 text-xs font-mono font-bold transition-all ${
                     selectedSize === size
-                      ? 'bg-[#d2f100] text-[#121415] shadow-[0_0_8px_rgba(210,241,0,0.4)]'
-                      : 'bg-[#121415] text-[#e2e2e4] border border-[#333537] hover:border-[#d2f100]'
+                      ? 'bg-[#FFD900] text-[#121415] shadow-[0_0_8px_rgba(255, 217, 0,0.4)]'
+                      : 'bg-[#121415] text-[#e2e2e4] border border-[#333537] hover:border-[#FFD900]'
                   }`}
                 >
                   {size}
@@ -170,7 +170,7 @@ export default function ProductCard({ product }: ProductCardProps) {
           className={`flex items-center justify-center gap-1.5 py-2.5 text-xs font-black uppercase tracking-wider transition-all ${
             added
               ? 'bg-emerald-500 text-white'
-              : 'bg-[#d2f100] hover:bg-white text-[#121415] hover:text-black shadow-[0_0_12px_rgba(210,241,0,0.2)]'
+              : 'bg-[#FFD900] hover:bg-white text-[#121415] hover:text-black shadow-[0_0_12px_rgba(255, 217, 0,0.2)]'
           }`}
         >
           {added ? (
@@ -188,9 +188,9 @@ export default function ProductCard({ product }: ProductCardProps) {
 
         <button
           onClick={handleWhatsAppBuy}
-          className="flex items-center justify-center gap-1.5 py-2.5 bg-[#121415] hover:bg-[#282a2c] text-white hover:text-[#d2f100] border border-[#333537] text-xs font-bold uppercase tracking-wider transition-colors"
+          className="flex items-center justify-center gap-1.5 py-2.5 bg-[#121415] hover:bg-[#282a2c] text-white hover:text-[#FFD900] border border-[#333537] text-xs font-bold uppercase tracking-wider transition-colors"
         >
-          <MessageCircle size={14} className="text-[#d2f100]" />
+          <MessageCircle size={14} className="text-[#FFD900]" />
           <span>Comprar</span>
         </button>
       </div>

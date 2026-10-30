@@ -49,7 +49,7 @@ export default function ProductDetailPage({ params }: Props) {
           </p>
           <Link
             href="/"
-            className="inline-flex items-center gap-2 px-6 py-3 bg-[#d2f100] text-[#121415] text-xs font-black uppercase tracking-wider hover:bg-white transition-all shadow"
+            className="inline-flex items-center gap-2 px-6 py-3 bg-[#FFD900] text-[#121415] text-xs font-black uppercase tracking-wider hover:bg-white transition-all shadow"
           >
             <ArrowLeft size={16} /> Voltar para o Início
           </Link>
@@ -108,11 +108,11 @@ export default function ProductDetailPage({ params }: Props) {
         
         {/* Breadcrumb */}
         <nav className="flex items-center gap-2 text-xs font-mono text-[#c6c9ac] uppercase mb-8">
-          <Link href="/" className="hover:text-[#d2f100] transition-colors">Início</Link>
+          <Link href="/" className="hover:text-[#FFD900] transition-colors">Início</Link>
           <span>/</span>
-          <Link href="/campeonatos" className="hover:text-[#d2f100] transition-colors">Catálogo</Link>
+          <Link href="/campeonatos" className="hover:text-[#FFD900] transition-colors">Catálogo</Link>
           <span>/</span>
-          <span className="text-[#d2f100] truncate max-w-xs sm:max-w-sm">{product.name}</span>
+          <span className="text-[#FFD900] truncate max-w-xs sm:max-w-sm">{product.name}</span>
         </nav>
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12">
@@ -124,12 +124,12 @@ export default function ProductDetailPage({ params }: Props) {
               {/* Badges */}
               <div className="absolute top-4 left-4 flex flex-col gap-2 z-10">
                 {discount > 0 && (
-                  <span className="bg-[#d2f100] text-[#121415] text-xs font-black uppercase px-2.5 py-1 tracking-wider shadow">
+                  <span className="bg-[#FFD900] text-[#121415] text-xs font-black uppercase px-2.5 py-1 tracking-wider shadow">
                     -{discount}% OFF
                   </span>
                 )}
                 {product.isNew && (
-                  <span className="bg-[#121415] text-[#d2f100] border border-[#d2f100] text-xs font-black uppercase px-2.5 py-1 tracking-wider">
+                  <span className="bg-[#121415] text-[#FFD900] border border-[#FFD900] text-xs font-black uppercase px-2.5 py-1 tracking-wider">
                     DROP 2024/25
                   </span>
                 )}
@@ -140,8 +140,8 @@ export default function ProductDetailPage({ params }: Props) {
 
               {/* Ready Delivery Badge */}
               <div className="absolute top-4 right-4 z-10">
-                <span className="flex items-center gap-1.5 bg-[#0c0e10]/90 border border-[#333537] text-[#d2f100] text-xs font-bold uppercase px-3 py-1">
-                  <span className="w-2 h-2 rounded-full bg-[#d2f100] animate-pulse" />
+                <span className="flex items-center gap-1.5 bg-[#0c0e10]/90 border border-[#333537] text-[#FFD900] text-xs font-bold uppercase px-3 py-1">
+                  <span className="w-2 h-2 rounded-full bg-[#FFD900] animate-pulse" />
                   {product.isReadyDelivery ? 'Pronta Entrega' : 'Sob Encomenda'}
                 </span>
               </div>
@@ -164,7 +164,7 @@ export default function ProductDetailPage({ params }: Props) {
                     key={idx}
                     onClick={() => setActiveImageIndex(idx)}
                     className={`w-20 aspect-square bg-[#0c0e10] border transition-all overflow-hidden shrink-0 ${
-                      activeImageIndex === idx ? 'border-[#d2f100] shadow-[0_0_10px_rgba(210,241,0,0.4)]' : 'border-[#333537] opacity-60 hover:opacity-100'
+                      activeImageIndex === idx ? 'border-[#FFD900] shadow-[0_0_10px_rgba(255, 217, 0,0.4)]' : 'border-[#333537] opacity-60 hover:opacity-100'
                     }`}
                   >
                     <img src={img} alt={`Thumb ${idx}`} className="w-full h-full object-cover" />
@@ -176,7 +176,7 @@ export default function ProductDetailPage({ params }: Props) {
             {/* Technical Garment Specs */}
             <div className="bg-[#1e2021] border border-[#333537] p-6 space-y-4">
               <h3 className="font-headline-sm text-lg uppercase text-white font-bold flex items-center gap-2">
-                <span className="w-2 h-4 bg-[#d2f100]" />
+                <span className="w-2 h-4 bg-[#FFD900]" />
                 Especificações do Manto
               </h3>
               <p className="text-xs sm:text-sm text-[#c6c9ac] leading-relaxed">
@@ -210,7 +210,7 @@ export default function ProductDetailPage({ params }: Props) {
             
             {/* Header info */}
             <div className="space-y-2 border-b border-[#333537] pb-6">
-              <div className="flex items-center gap-2 text-xs font-mono text-[#d2f100] uppercase tracking-wider">
+              <div className="flex items-center gap-2 text-xs font-mono text-[#FFD900] uppercase tracking-wider">
                 <span>{product.team}</span>
                 <span>•</span>
                 <span>{product.season || '2024/25'}</span>
@@ -227,7 +227,7 @@ export default function ProductDetailPage({ params }: Props) {
                   </div>
                 )}
                 <div className="flex items-baseline gap-3">
-                  <span className="text-[#d2f100] font-headline-sm text-4xl font-black">
+                  <span className="text-[#FFD900] font-headline-sm text-4xl font-black">
                     R$ {totalPrice.toFixed(2).replace('.', ',')}
                   </span>
                   <span className="text-xs font-mono text-white bg-[#1e2021] border border-[#333537] px-2 py-0.5 uppercase">
@@ -247,7 +247,7 @@ export default function ProductDetailPage({ params }: Props) {
                 <button
                   type="button"
                   onClick={() => setShowSizeModal(true)}
-                  className="text-[#d2f100] hover:underline flex items-center gap-1 uppercase font-bold"
+                  className="text-[#FFD900] hover:underline flex items-center gap-1 uppercase font-bold"
                 >
                   <Ruler size={13} /> Tabela de Medidas
                 </button>
@@ -261,8 +261,8 @@ export default function ProductDetailPage({ params }: Props) {
                     onClick={() => setSelectedSize(size)}
                     className={`h-12 text-sm font-mono font-bold transition-all flex items-center justify-center ${
                       selectedSize === size
-                        ? 'bg-[#d2f100] text-[#121415] shadow-[0_0_12px_rgba(210,241,0,0.35)]'
-                        : 'bg-[#1e2021] text-white border border-[#333537] hover:border-[#d2f100]'
+                        ? 'bg-[#FFD900] text-[#121415] shadow-[0_0_12px_rgba(255, 217, 0,0.35)]'
+                        : 'bg-[#1e2021] text-white border border-[#333537] hover:border-[#FFD900]'
                     }`}
                   >
                     {size}
@@ -275,7 +275,7 @@ export default function ProductDetailPage({ params }: Props) {
             <div className="bg-[#1e2021] border border-[#333537] p-5 space-y-4 shadow-xl">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2">
-                  <Sparkles size={16} className="text-[#d2f100]" />
+                  <Sparkles size={16} className="text-[#FFD900]" />
                   <span className="text-xs font-mono font-black uppercase text-white tracking-wider">
                     Personalização Profissional (+R$ 20,00)
                   </span>
@@ -296,7 +296,7 @@ export default function ProductDetailPage({ params }: Props) {
               {/* Real-time Kit Back Preview */}
               <div className="bg-[#0c0e10] border border-[#333537] p-4 text-center space-y-1">
                 <div className="text-[10px] font-mono uppercase text-[#c6c9ac]">PRÉVIA DAS COSTAS:</div>
-                <div className="font-headline-sm text-xl uppercase tracking-widest text-[#d2f100]">
+                <div className="font-headline-sm text-xl uppercase tracking-widest text-[#FFD900]">
                   {customName.trim() ? customName.toUpperCase() : 'SEU NOME'}
                 </div>
                 <div className="font-headline-sm text-5xl font-black text-white">
@@ -316,7 +316,7 @@ export default function ProductDetailPage({ params }: Props) {
                     placeholder="Ex: SILVA"
                     value={customName}
                     onChange={(e) => setCustomName(e.target.value.toUpperCase())}
-                    className="w-full bg-[#0c0e10] border border-[#333537] focus:border-[#d2f100] px-3 py-2 text-xs font-mono uppercase text-white focus:outline-none"
+                    className="w-full bg-[#0c0e10] border border-[#333537] focus:border-[#FFD900] px-3 py-2 text-xs font-mono uppercase text-white focus:outline-none"
                   />
                 </div>
                 <div>
@@ -329,7 +329,7 @@ export default function ProductDetailPage({ params }: Props) {
                     placeholder="Ex: 9"
                     value={customNumber}
                     onChange={(e) => setCustomNumber(e.target.value.replace(/\D/g, ''))}
-                    className="w-full bg-[#0c0e10] border border-[#333537] focus:border-[#d2f100] px-3 py-2 text-xs font-mono text-white focus:outline-none"
+                    className="w-full bg-[#0c0e10] border border-[#333537] focus:border-[#FFD900] px-3 py-2 text-xs font-mono text-white focus:outline-none"
                   />
                 </div>
               </div>
@@ -340,7 +340,7 @@ export default function ProductDetailPage({ params }: Props) {
                   type="checkbox"
                   checked={includePatch}
                   onChange={(e) => setIncludePatch(e.target.checked)}
-                  className="w-4 h-4 accent-[#d2f100]"
+                  className="w-4 h-4 accent-[#FFD900]"
                 />
                 <span className="text-xs font-mono text-[#e2e2e4]">
                   Incluir Patch Oficial de Manga (+R$ 15,00)
@@ -352,10 +352,10 @@ export default function ProductDetailPage({ params }: Props) {
             <div className="space-y-3 pt-2">
               <button
                 onClick={handleAddToCart}
-                className={`w-full py-4 text-xs font-black uppercase tracking-wider flex items-center justify-center gap-2 transition-all shadow-[0_0_20px_rgba(210,241,0,0.3)] ${
+                className={`w-full py-4 text-xs font-black uppercase tracking-wider flex items-center justify-center gap-2 transition-all shadow-[0_0_20px_rgba(255, 217, 0,0.3)] ${
                   added
                     ? 'bg-emerald-500 text-white'
-                    : 'bg-[#d2f100] hover:bg-white text-[#121415] hover:text-black'
+                    : 'bg-[#FFD900] hover:bg-white text-[#121415] hover:text-black'
                 }`}
               >
                 {added ? (
@@ -373,9 +373,9 @@ export default function ProductDetailPage({ params }: Props) {
 
               <button
                 onClick={handleWhatsAppBuy}
-                className="w-full py-3.5 bg-[#1e2021] hover:bg-[#282a2c] text-white hover:text-[#d2f100] border border-[#333537] text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-2 transition-colors"
+                className="w-full py-3.5 bg-[#1e2021] hover:bg-[#282a2c] text-white hover:text-[#FFD900] border border-[#333537] text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-2 transition-colors"
               >
-                <MessageCircle size={18} className="text-[#d2f100]" />
+                <MessageCircle size={18} className="text-[#FFD900]" />
                 <span>Comprar Direto no WhatsApp</span>
               </button>
             </div>
@@ -383,11 +383,11 @@ export default function ProductDetailPage({ params }: Props) {
             {/* Guarantees */}
             <div className="bg-[#121415] border border-[#333537] p-4 grid grid-cols-2 gap-3 text-xs font-mono text-[#c6c9ac]">
               <div className="flex items-center gap-2">
-                <Truck size={16} className="text-[#d2f100] shrink-0" />
+                <Truck size={16} className="text-[#FFD900] shrink-0" />
                 <span>Envio em 24h</span>
               </div>
               <div className="flex items-center gap-2">
-                <ShieldCheck size={16} className="text-[#d2f100] shrink-0" />
+                <ShieldCheck size={16} className="text-[#FFD900] shrink-0" />
                 <span>Garantia Total</span>
               </div>
             </div>
@@ -416,7 +416,7 @@ export default function ProductDetailPage({ params }: Props) {
 
             <div className="overflow-x-auto">
               <table className="w-full text-xs font-mono text-left text-[#c6c9ac]">
-                <thead className="bg-[#0c0e10] text-[#d2f100] uppercase">
+                <thead className="bg-[#0c0e10] text-[#FFD900] uppercase">
                   <tr>
                     <th className="p-2 border border-[#333537]">Tamanho</th>
                     <th className="p-2 border border-[#333537]">Largura (Tórax)</th>
@@ -465,7 +465,7 @@ export default function ProductDetailPage({ params }: Props) {
 
             <button
               onClick={() => setShowSizeModal(false)}
-              className="w-full py-2.5 bg-[#d2f100] text-[#121415] font-black uppercase text-xs"
+              className="w-full py-2.5 bg-[#FFD900] text-[#121415] font-black uppercase text-xs"
             >
               Fechar Tabela
             </button>

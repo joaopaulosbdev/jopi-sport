@@ -11,7 +11,7 @@
   --color-surface-container-high: #282a2c;
   --color-surface-container-highest: #333537;
   --color-surface-variant: #333537;
-  --color-surface-tint: #b7d300;
+  --color-surface-tint: #E6C300;
   --color-on-surface: #e2e2e4;
   --color-on-surface-variant: #c6c9ac;
   --color-inverse-surface: #e2e2e4;
@@ -19,13 +19,13 @@
   --color-outline: #909378;
   --color-outline-variant: #454932;
   --color-primary: #ffffff;
-  --color-on-primary: #2c3400;
-  --color-primary-container: #d2f100;
-  --color-on-primary-container: #5c6b00;
-  --color-primary-fixed: #d2f100;
-  --color-primary-fixed-dim: #b7d300;
-  --color-on-primary-fixed: #191e00;
-  --color-on-primary-fixed-variant: #414c00;
+  --color-on-primary: #121415;
+  --color-primary-container: #FFD900;
+  --color-on-primary-container: #121415;
+  --color-primary-fixed: #FFD900;
+  --color-primary-fixed-dim: #E6C300;
+  --color-on-primary-fixed: #121415;
+  --color-on-primary-fixed-variant: #332b00;
   --color-secondary: #c8c5ca;
   --color-on-secondary: #303033;
   --color-secondary-container: #47464a;
@@ -42,8 +42,8 @@
   --color-on-error: #690005;
   --color-error-container: #93000a;
   --color-on-error-container: #ffdad6;
-  --color-volt: #d2f100;
-  --color-volt-bright: #d8f800;
+  --color-volt: #FFD900;
+  --color-volt-bright: #FFD900;
 
   --spacing-space-xs: 0.25rem;
   --spacing-space-sm: 0.5rem;
@@ -85,7 +85,7 @@ body {
   background: #333537;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #d2f100;
+  background: #FFD900;
 }
 
 /* Typography Presets from Stitch DESIGN.md */
@@ -200,11 +200,11 @@ body {
 
 /* Neon glow & athletic borders */
 .volt-glow {
-  box-shadow: 0 0 24px rgba(216, 248, 0, 0.35);
+  box-shadow: 0 0 24px rgba(255, 217, 0, 0.35);
 }
 
 .volt-border-glow:hover {
-  box-shadow: 0 0 20px rgba(210, 241, 0, 0.25);
+  box-shadow: 0 0 20px rgba(255, 217, 0, 0.25);
 }
 
 .sharp {

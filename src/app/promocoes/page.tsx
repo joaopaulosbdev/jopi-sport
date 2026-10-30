@@ -16,9 +16,9 @@ export default function PromocoesPage() {
     <div className="py-8 sm:py-12">
       <div className="max-w-7xl mx-auto px-4 lg:px-12">
         <nav className="flex items-center gap-2 text-xs font-mono text-[#c6c9ac] uppercase mb-8">
-          <Link href="/" className="hover:text-[#d2f100] transition-colors">Início</Link>
+          <Link href="/" className="hover:text-[#FFD900] transition-colors">Início</Link>
           <span>/</span>
-          <span className="text-[#d2f100]">Promoções</span>
+          <span className="text-[#FFD900]">Promoções</span>
         </nav>
 
         <div className="mb-10 pb-6 border-b border-[#333537]">
