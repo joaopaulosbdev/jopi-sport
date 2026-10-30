@@ -99,18 +99,18 @@ export default function AdminDashboardPage() {
 
   if (!isAdmin) {
     return (
-      <div className="bg-[#F4F5F7] min-h-[70vh] flex items-center justify-center p-4">
-        <div className="bg-white rounded-2xl border-2 border-black p-8 text-center max-w-md w-full shadow-xl">
-          <div className="w-16 h-16 bg-black text-[#FFD900] rounded-xl flex items-center justify-center mx-auto mb-4">
+      <div className="min-h-[70vh] flex items-center justify-center p-4">
+        <div className="bg-[#1e2021] border border-[#333537] p-8 text-center max-w-md w-full shadow-2xl">
+          <div className="w-16 h-16 bg-[#0c0e10] border border-[#333537] text-[#d2f100] flex items-center justify-center mx-auto mb-4">
             <AlertCircle size={32} />
           </div>
-          <h1 className="text-xl font-black uppercase text-black mb-1">Acesso Restrito</h1>
-          <p className="text-xs text-neutral-500 mb-6 font-medium">
+          <h1 className="text-xl font-bold uppercase text-white font-headline-sm mb-1">Acesso Restrito</h1>
+          <p className="text-xs text-[#c6c9ac] mb-6 font-mono">
             Você precisa estar autenticado como administrador para acessar o painel.
           </p>
           <Link
             href="/admin/login"
-            className="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-black text-[#FFD900] font-black text-xs uppercase hover:bg-neutral-800 transition"
+            className="inline-flex items-center gap-2 px-6 py-3 bg-[#d2f100] text-[#121415] font-black text-xs uppercase tracking-wider hover:bg-white transition-all shadow"
           >
             Fazer Login no Painel
           </Link>

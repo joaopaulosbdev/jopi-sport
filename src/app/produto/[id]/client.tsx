@@ -10,11 +10,12 @@ import {
   Check, 
   ShieldCheck, 
   Truck, 
-  RotateCcw,
-  Ruler,
-  ArrowLeft,
+  Ruler, 
+  ArrowLeft, 
+  Sparkles,
+  Zap,
   CheckCircle2,
-  Clock
+  Lock
 } from 'lucide-react';
 
 interface Props {
@@ -39,21 +40,24 @@ export default function ProductDetailPage({ params }: Props) {
   if (!product) {
     return (
       <div className="max-w-4xl mx-auto px-4 py-20 text-center">
-        <h1 className="text-2xl font-black uppercase text-neutral-900 mb-2">Camisa não encontrada</h1>
-        <p className="text-xs sm:text-sm text-neutral-500 mb-6">
-          O produto que você procura pode ter sido esgotado ou removido.
-        </p>
-        <Link
-          href="/"
-          className="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-black text-[#FFD900] text-xs font-black uppercase hover:bg-neutral-800 transition"
-        >
-          <ArrowLeft size={16} /> Voltar para a Página Inicial
-        </Link>
+        <div className="bg-[#1e2021] border border-[#333537] p-12 max-w-lg mx-auto shadow-2xl">
+          <h1 className="text-2xl font-bold uppercase text-white font-headline-md mb-2">
+            Manto não encontrado
+          </h1>
+          <p className="text-xs text-[#c6c9ac] mb-6">
+            O manto que você procura pode ter esgotado ou sido movido.
+          </p>
+          <Link
+            href="/"
+            className="inline-flex items-center gap-2 px-6 py-3 bg-[#d2f100] text-[#121415] text-xs font-black uppercase tracking-wider hover:bg-white transition-all shadow"
+          >
+            <ArrowLeft size={16} /> Voltar para o Início
+          </Link>
+        </div>
       </div>
     );
   }
 
-  // Calculate final unit price including options
   const customizationFee = (customName.trim() || customNumber.trim())
     ? product.customizationPrice || 20
     : 0;
@@ -74,9 +78,9 @@ export default function ProductDetailPage({ params }: Props) {
   };
 
   const handleWhatsAppBuy = () => {
-    const versionLabel = product.version === 'jogador' ? 'Versão Jogador' : 'Versão Torcedor';
+    const versionLabel = product.version === 'jogador' ? 'Match Issue (Jogador)' : 'Torcedor Oficial';
     const deliveryLabel = product.isReadyDelivery ? 'Pronta Entrega' : 'Sob Encomenda';
-    let text = `Olá Jopi Sport Shop! Gostaria de comprar o seguinte manto:\n\n*${product.name}*\nTime: ${product.team}\nVersão: ${versionLabel}\nDisponibilidade: ${deliveryLabel}\nTamanho: ${selectedSize}`;
+    let text = `Olá Jopi Sport! Gostaria de comprar o seguinte manto:\n\n*${product.name}*\nTime: ${product.team}\nVersão: ${versionLabel}\nDisponibilidade: ${deliveryLabel}\nTamanho: ${selectedSize}`;
 
     if (customName.trim() || customNumber.trim()) {
       text += `\nPersonalização: ${customName.toUpperCase()} Nº ${customNumber}`;
@@ -85,7 +89,7 @@ export default function ProductDetailPage({ params }: Props) {
       text += `\nPatch Oficial de Manga: Sim (+R$ ${(product.patchPrice || 15).toFixed(2)})`;
     }
 
-    text += `\n\nValor Total: R$ ${totalPrice.toFixed(2)}\n\nComo procedo com o pagamento via Pix e entrega?`;
+    text += `\n\nValor Total: R$ ${totalPrice.toFixed(2)}\n\nComo procedo com o pagamento e envio?`;
 
     const cleanNumber = storeConfig.whatsappNumber.replace(/\D/g, '');
     window.open(`https://wa.me/${cleanNumber}?text=${encodeURIComponent(text)}`, '_blank');
@@ -95,423 +99,380 @@ export default function ProductDetailPage({ params }: Props) {
     ? Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100)
     : 0;
 
+  const fallbackImage = 'https://images.unsplash.com/photo-1577223625816-7546f13df25d?auto=format&fit=crop&w=800&q=80';
+  const displayImage = imageError || !product.images?.[activeImageIndex] ? fallbackImage : product.images[activeImageIndex];
+
   return (
-    <div className="bg-[#F4F5F7] py-6 sm:py-10">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6">
+    <div className="py-8 sm:py-12">
+      <div className="max-w-7xl mx-auto px-4 lg:px-12">
         
         {/* Breadcrumb */}
-        <nav className="flex items-center gap-2 text-xs font-bold text-neutral-500 mb-6 overflow-x-auto whitespace-nowrap">
-          <Link href="/" className="hover:text-black transition">Início</Link>
-          <ChevronRight size={13} />
-          <Link
-            href={product.category === 'national' ? '/selecoes' : '/campeonatos'}
-            className="hover:text-black transition uppercase"
-          >
-            {product.category === 'national' ? 'Seleções' : 'Campeonatos'}
-          </Link>
-          <ChevronRight size={13} />
-          <Link
-            href={product.category === 'national' ? `/selecoes/${product.subcategory}` : `/campeonatos/${product.subcategory}`}
-            className="hover:text-black transition uppercase"
-          >
-            {product.subcategory}
-          </Link>
-          <ChevronRight size={13} />
-          <span className="text-black font-extrabold truncate max-w-[200px] sm:max-w-none">{product.name}</span>
+        <nav className="flex items-center gap-2 text-xs font-mono text-[#c6c9ac] uppercase mb-8">
+          <Link href="/" className="hover:text-[#d2f100] transition-colors">Início</Link>
+          <span>/</span>
+          <Link href="/campeonatos" className="hover:text-[#d2f100] transition-colors">Catálogo</Link>
+          <span>/</span>
+          <span className="text-[#d2f100] truncate max-w-xs sm:max-w-sm">{product.name}</span>
         </nav>
 
-        {/* Product Box Container */}
-        <div className="bg-white rounded-2xl border border-neutral-200 p-6 sm:p-10 shadow-sm">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-14">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12">
+          
+          {/* Left Column: Gallery */}
+          <div className="lg:col-span-7 space-y-4">
             
-            {/* Left Column: Gallery & Preview */}
-            <div className="lg:col-span-6 space-y-4">
-              <div className="relative aspect-square rounded-xl overflow-hidden bg-[#F8F9FA] border border-neutral-200 flex items-center justify-center p-6">
-                {product.images && product.images.length > 0 && !imageError ? (
-                  // eslint-disable-next-line @next/next/no-img-element
-                  <img
-                    src={product.images[activeImageIndex] || product.images[0]}
-                    alt={product.name}
-                    onError={() => setImageError(true)}
-                    className="w-full h-full object-cover rounded-lg"
-                  />
-                ) : (
-                  <div className="w-full h-full flex flex-col items-center justify-center bg-black text-white p-6 rounded-lg">
-                    <span className="text-xl font-black uppercase text-[#FFD900] text-center tracking-wide">
-                      {product.team}
-                    </span>
-                    <span className="text-xs text-neutral-400 mt-1 font-bold">Temporada {product.season}</span>
-                  </div>
-                )}
-
-                {/* Badge Overlays (Dynamic, following registration) */}
-                <div className="absolute top-4 left-4 flex flex-col gap-1.5 z-10">
-                  {discount > 0 && (
-                    <span className="bg-black text-[#FFD900] text-xs font-black uppercase px-2.5 py-1 rounded shadow">
-                      -{discount}% OFF
-                    </span>
-                  )}
-                  {product.isNew && (
-                    <span className="bg-[#FFD900] text-black text-xs font-black uppercase px-2.5 py-1 rounded shadow">
-                      LANÇAMENTO
-                    </span>
-                  )}
-                  <span className={`text-xs font-black uppercase px-2.5 py-1 rounded shadow ${
-                    product.isReadyDelivery 
-                      ? 'bg-[#E8F8EE] text-[#008A3E] border border-[#008A3E]/30' 
-                      : 'bg-neutral-100 text-neutral-700 border border-neutral-300'
-                  }`}>
-                    {product.isReadyDelivery ? 'PRONTA ENTREGA' : 'SOB ENCOMENDA'}
+            <div className="relative aspect-[4/5] bg-[#0c0e10] border border-[#333537] overflow-hidden shadow-2xl">
+              {/* Badges */}
+              <div className="absolute top-4 left-4 flex flex-col gap-2 z-10">
+                {discount > 0 && (
+                  <span className="bg-[#d2f100] text-[#121415] text-xs font-black uppercase px-2.5 py-1 tracking-wider shadow">
+                    -{discount}% OFF
                   </span>
-                </div>
-
-                <div className="absolute top-4 right-4 z-10">
-                  <span className={`text-xs font-black uppercase px-2.5 py-1 rounded shadow ${
-                    product.version === 'jogador'
-                      ? 'bg-black text-[#FFD900]'
-                      : 'bg-neutral-200 text-neutral-800'
-                  }`}>
-                    {product.version === 'jogador' ? 'VERSÃO JOGADOR' : 'VERSÃO TORCEDOR'}
-                  </span>
-                </div>
-
-                {/* Live Personalization Watermark Preview */}
-                {(customName.trim() || customNumber.trim()) && (
-                  <div className="absolute bottom-4 right-4 bg-black/90 text-white p-3.5 rounded-xl text-center border-2 border-[#FFD900] shadow-2xl">
-                    <span className="text-[10px] text-[#FFD900] font-black block uppercase tracking-widest">
-                      PREVIEW DA PERSONALIZAÇÃO
-                    </span>
-                    <div className="font-black text-sm uppercase tracking-wider text-white mt-0.5">
-                      {customName || 'SEU NOME'}
-                    </div>
-                    <div className="font-black text-3xl text-[#FFD900] font-mono leading-none mt-1">
-                      {customNumber || '10'}
-                    </div>
-                  </div>
                 )}
+                {product.isNew && (
+                  <span className="bg-[#121415] text-[#d2f100] border border-[#d2f100] text-xs font-black uppercase px-2.5 py-1 tracking-wider">
+                    DROP 2024/25
+                  </span>
+                )}
+                <span className="bg-[#1e2021] text-white border border-[#333537] text-[10px] font-mono uppercase px-2 py-0.5">
+                  {product.version === 'jogador' ? 'ED. MATCH ISSUE' : 'ED. TORCEDOR'}
+                </span>
               </div>
 
-              {/* Thumbnails */}
-              {product.images && product.images.length > 1 && (
-                <div className="flex gap-2 overflow-x-auto pb-1">
-                  {product.images.map((imgUrl, index) => (
-                    <button
-                      key={index}
-                      onClick={() => {
-                        setActiveImageIndex(index);
-                        setImageError(false);
-                      }}
-                      className={`w-16 h-16 rounded-lg overflow-hidden border-2 transition ${
-                        activeImageIndex === index ? 'border-black' : 'border-neutral-200 opacity-60 hover:opacity-100'
-                      }`}
-                    >
-                      {/* eslint-disable-next-line @next/next/no-img-element */}
-                      <img src={imgUrl} alt={`Thumbnail ${index}`} className="w-full h-full object-cover" />
-                    </button>
-                  ))}
-                </div>
-              )}
-
-              {/* Trust Badges */}
-              <div className="grid grid-cols-3 gap-3 pt-3 border-t border-neutral-100 text-center">
-                <div className="p-3 bg-[#F8F9FA] rounded-xl border border-neutral-200">
-                  <ShieldCheck size={20} className="mx-auto text-black mb-1" />
-                  <span className="text-[11px] font-black text-black uppercase block">Qualidade 1:1</span>
-                  <span className="text-[10px] text-neutral-500">Bordados e Costuras</span>
-                </div>
-                <div className="p-3 bg-[#F8F9FA] rounded-xl border border-neutral-200">
-                  <Truck size={20} className="mx-auto text-black mb-1" />
-                  <span className="text-[11px] font-black text-black uppercase block">Frete Grátis</span>
-                  <span className="text-[10px] text-neutral-500">A partir de 2 peças</span>
-                </div>
-                <div className="p-3 bg-[#F8F9FA] rounded-xl border border-neutral-200">
-                  <RotateCcw size={20} className="mx-auto text-black mb-1" />
-                  <span className="text-[11px] font-black text-black uppercase block">Garantia 7 Dias</span>
-                  <span className="text-[10px] text-neutral-500">Troca sem burocracia</span>
-                </div>
+              {/* Ready Delivery Badge */}
+              <div className="absolute top-4 right-4 z-10">
+                <span className="flex items-center gap-1.5 bg-[#0c0e10]/90 border border-[#333537] text-[#d2f100] text-xs font-bold uppercase px-3 py-1">
+                  <span className="w-2 h-2 rounded-full bg-[#d2f100] animate-pulse" />
+                  {product.isReadyDelivery ? 'Pronta Entrega' : 'Sob Encomenda'}
+                </span>
               </div>
+
+              <img
+                src={displayImage}
+                alt={product.name}
+                onError={() => setImageError(true)}
+                className="w-full h-full object-cover object-center"
+              />
+
+              <div className="absolute inset-0 bg-gradient-to-t from-[#0c0e10] via-transparent to-transparent opacity-40 pointer-events-none" />
             </div>
 
-            {/* Right Column: Pricing & Configuration */}
-            <div className="lg:col-span-6 space-y-6">
-              
-              <div>
-                <div className="flex items-center gap-2 text-xs font-black uppercase text-neutral-500 mb-1">
-                  <span className="text-black font-extrabold">{product.team}</span>
-                  <span>•</span>
-                  <span>Temporada {product.season}</span>
-                  <span>•</span>
-                  <span className="text-black">{product.version === 'jogador' ? 'Versão Jogador' : 'Versão Torcedor'}</span>
-                </div>
-
-                <h1 className="text-2xl sm:text-3xl font-black text-black uppercase tracking-tight leading-tight">
-                  {product.name}
-                </h1>
-              </div>
-
-              {/* Price Block */}
-              <div className="bg-[#F8F9FA] border-2 border-neutral-200 rounded-xl p-5">
-                {product.originalPrice && (
-                  <div className="text-xs text-neutral-400 line-through">
-                    De: R$ {(product.originalPrice + customizationFee + patchFee).toFixed(2)}
-                  </div>
-                )}
-                
-                <div className="flex items-baseline gap-3 mt-0.5">
-                  <span className="text-3xl sm:text-4xl font-black text-black tracking-tight">
-                    R$ {totalPrice.toFixed(2)}
-                  </span>
-                  <span className="text-xs font-black uppercase text-[#008A3E] bg-[#E8F8EE] px-2 py-0.5 rounded">
-                    no Pix
-                  </span>
-                </div>
-
-                <p className="text-xs text-neutral-600 font-bold mt-1">
-                  ou até 3x de R$ {(totalPrice / 3).toFixed(2)} sem juros no Pix ou Cartão
-                </p>
-
-                <div className="mt-3 pt-3 border-t border-neutral-200 flex items-center justify-between text-xs font-bold">
-                  <span className="text-black flex items-center gap-1.5">
-                    <Truck size={15} className="text-[#FFD900] stroke-[2.5]" />
-                    <span>Envio para todo o Brasil</span>
-                  </span>
-                  <span className={`font-black uppercase flex items-center gap-1 ${
-                    product.isReadyDelivery ? 'text-[#008A3E]' : 'text-neutral-700'
-                  }`}>
-                    {product.isReadyDelivery ? (
-                      <>
-                        <CheckCircle2 size={14} />
-                        <span>Pronta Entrega</span>
-                      </>
-                    ) : (
-                      <>
-                        <Clock size={14} />
-                        <span>Sob Encomenda</span>
-                      </>
-                    )}
-                  </span>
-                </div>
-              </div>
-
-              {/* Size Selector */}
-              <div>
-                <div className="flex items-center justify-between mb-2">
-                  <label className="text-xs font-black uppercase tracking-wider text-black">
-                    1. SELECIONE O TAMANHO: <span className="text-neutral-500 font-bold">{selectedSize}</span>
-                  </label>
+            {/* Thumbnail selector if multiple images */}
+            {product.images && product.images.length > 1 && (
+              <div className="flex gap-3 overflow-x-auto pb-2">
+                {product.images.map((img, idx) => (
                   <button
-                    type="button"
-                    onClick={() => setShowSizeModal(true)}
-                    className="text-xs font-black uppercase text-black hover:text-[#B29200] flex items-center gap-1 underline"
+                    key={idx}
+                    onClick={() => setActiveImageIndex(idx)}
+                    className={`w-20 aspect-square bg-[#0c0e10] border transition-all overflow-hidden shrink-0 ${
+                      activeImageIndex === idx ? 'border-[#d2f100] shadow-[0_0_10px_rgba(210,241,0,0.4)]' : 'border-[#333537] opacity-60 hover:opacity-100'
+                    }`}
                   >
-                    <Ruler size={13} /> Guia de Medidas
+                    <img src={img} alt={`Thumb ${idx}`} className="w-full h-full object-cover" />
                   </button>
-                </div>
-
-                <div className="grid grid-cols-5 gap-2">
-                  {product.sizes.map((size) => (
-                    <button
-                      key={size}
-                      type="button"
-                      onClick={() => setSelectedSize(size)}
-                      className={`py-3 rounded-lg font-black text-sm border-2 transition ${
-                        selectedSize === size
-                          ? 'border-black bg-black text-[#FFD900] shadow-md'
-                          : 'border-neutral-300 bg-white text-neutral-800 hover:border-black'
-                      }`}
-                    >
-                      {size}
-                    </button>
-                  ))}
-                </div>
+                ))}
               </div>
+            )}
 
-              {/* Personalization: Name and Number */}
-              <div className="bg-[#F8F9FA] border border-neutral-300 rounded-xl p-4 space-y-3">
-                <div className="flex items-center justify-between">
-                  <label className="text-xs font-black uppercase tracking-wider text-black">
-                    2. PERSONALIZAR NOME E NÚMERO (+R$ {(product.customizationPrice || 20).toFixed(2)})
-                  </label>
-                  <span className="text-[10px] font-bold text-neutral-500 uppercase bg-neutral-200 px-1.5 py-0.5 rounded">
-                    Opcional
-                  </span>
-                </div>
-
-                <p className="text-xs text-neutral-500 font-medium">
-                  Estampa com fonte e numeração padrão do time.
-                </p>
-
-                <div className="grid grid-cols-3 gap-2">
-                  <div className="col-span-2">
-                    <input
-                      type="text"
-                      placeholder="NOME (EX: SEU NOME OU JOGADOR)"
-                      value={customName}
-                      maxLength={14}
-                      onChange={(e) => setCustomName(e.target.value.toUpperCase())}
-                      className="w-full bg-white border border-neutral-300 rounded-lg px-3.5 py-2.5 text-xs font-black text-black placeholder-neutral-400 focus:outline-none focus:border-black uppercase"
-                    />
-                  </div>
-                  <div>
-                    <input
-                      type="text"
-                      placeholder="Nº"
-                      value={customNumber}
-                      maxLength={2}
-                      onChange={(e) => setCustomNumber(e.target.value.replace(/\D/g, ''))}
-                      className="w-full bg-white border border-neutral-300 rounded-lg px-3.5 py-2.5 text-xs font-black text-center text-black placeholder-neutral-400 focus:outline-none focus:border-black"
-                    />
-                  </div>
-                </div>
-              </div>
-
-              {/* Sleeve Patch Option */}
-              <div className="bg-white border border-neutral-300 rounded-xl p-4 flex items-center justify-between">
+            {/* Technical Garment Specs */}
+            <div className="bg-[#1e2021] border border-[#333537] p-6 space-y-4">
+              <h3 className="font-headline-sm text-lg uppercase text-white font-bold flex items-center gap-2">
+                <span className="w-2 h-4 bg-[#d2f100]" />
+                Especificações do Manto
+              </h3>
+              <p className="text-xs sm:text-sm text-[#c6c9ac] leading-relaxed">
+                {product.description || 'Manto confeccionado com tecido de alta tecnologia dry-fit para máxima ventilação, leveza e durabilidade. Escudo e detalhes com acabamento de precisão.'}
+              </p>
+              
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-3 border-t border-[#333537]/50 text-xs font-mono">
                 <div>
-                  <h4 className="text-xs font-black uppercase text-black">
-                    Patch Oficial de Manga
-                  </h4>
-                  <p className="text-[11px] text-neutral-500 font-medium">
-                    +R$ {(product.patchPrice || 15).toFixed(2)} (Ex: Champions League, Libertadores, Brasileirão)
-                  </p>
+                  <span className="text-[#c6c9ac] block text-[10px] uppercase">Gênero:</span>
+                  <span className="text-white font-bold">Unissex Adulto</span>
                 </div>
-                <label className="relative inline-flex items-center cursor-pointer">
-                  <input
-                    type="checkbox"
-                    checked={includePatch}
-                    onChange={(e) => setIncludePatch(e.target.checked)}
-                    className="sr-only peer"
-                  />
-                  <div className="w-11 h-6 bg-neutral-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-neutral-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-black"></div>
-                </label>
+                <div>
+                  <span className="text-[#c6c9ac] block text-[10px] uppercase">Tecnologia:</span>
+                  <span className="text-white font-bold">AeroDry Volt</span>
+                </div>
+                <div>
+                  <span className="text-[#c6c9ac] block text-[10px] uppercase">Composição:</span>
+                  <span className="text-white font-bold">100% Poliéster</span>
+                </div>
+                <div>
+                  <span className="text-[#c6c9ac] block text-[10px] uppercase">Origem:</span>
+                  <span className="text-white font-bold">Importado Match</span>
+                </div>
               </div>
-
-              {/* Action Buttons */}
-              <div className="space-y-3 pt-2">
-                <button
-                  onClick={handleWhatsAppBuy}
-                  disabled={!product.inStock}
-                  className="w-full py-4 px-6 rounded-lg bg-[#FFD900] hover:bg-[#E6C300] active:bg-[#CCAC00] disabled:opacity-40 text-black font-black text-base uppercase tracking-wider flex items-center justify-center gap-2.5 shadow-xl transition transform hover:-translate-y-0.5"
-                >
-                  <MessageCircle size={22} className="fill-black text-black" />
-                  <span>COMPRAR AGORA NO WHATSAPP</span>
-                </button>
-
-                <button
-                  onClick={handleAddToCart}
-                  disabled={!product.inStock}
-                  className={`w-full py-3 px-6 rounded-lg font-black text-xs uppercase tracking-wider border-2 flex items-center justify-center gap-2 transition ${
-                    added
-                      ? 'bg-black border-black text-[#FFD900]'
-                      : 'bg-white border-black text-black hover:bg-neutral-100'
-                  }`}
-                >
-                  {added ? (
-                    <>
-                      <Check size={18} className="stroke-[3]" />
-                      <span>ADICIONADO AO SEU CARRINHO!</span>
-                    </>
-                  ) : (
-                    <>
-                      <ShoppingBag size={18} />
-                      <span>ADICIONAR AO CARRINHO</span>
-                    </>
-                  )}
-                </button>
-              </div>
-
-              {/* Description */}
-              <div className="pt-4 border-t border-neutral-200">
-                <h3 className="font-black text-xs uppercase tracking-wider text-black mb-2">
-                  DETALHES DO PRODUTO
-                </h3>
-                <p className="text-xs sm:text-sm text-neutral-600 leading-relaxed font-medium">
-                  {product.description}
-                </p>
-              </div>
-
             </div>
 
           </div>
+
+          {/* Right Column: Purchasing & Personalization */}
+          <div className="lg:col-span-5 space-y-6">
+            
+            {/* Header info */}
+            <div className="space-y-2 border-b border-[#333537] pb-6">
+              <div className="flex items-center gap-2 text-xs font-mono text-[#d2f100] uppercase tracking-wider">
+                <span>{product.team}</span>
+                <span>•</span>
+                <span>{product.season || '2024/25'}</span>
+              </div>
+              <h1 className="text-2xl sm:text-3xl font-black uppercase text-white font-headline-md leading-tight">
+                {product.name}
+              </h1>
+
+              {/* Price block */}
+              <div className="pt-2">
+                {product.originalPrice && (
+                  <div className="text-xs text-[#c6c9ac] line-through font-mono">
+                    De R$ {product.originalPrice.toFixed(2).replace('.', ',')}
+                  </div>
+                )}
+                <div className="flex items-baseline gap-3">
+                  <span className="text-[#d2f100] font-headline-sm text-4xl font-black">
+                    R$ {totalPrice.toFixed(2).replace('.', ',')}
+                  </span>
+                  <span className="text-xs font-mono text-white bg-[#1e2021] border border-[#333537] px-2 py-0.5 uppercase">
+                    5% OFF NO PIX: R$ {(totalPrice * 0.95).toFixed(2).replace('.', ',')}
+                  </span>
+                </div>
+                <div className="text-xs text-[#c6c9ac] font-mono pt-1">
+                  ou parcele em até <strong className="text-white">12x de R$ {(totalPrice / 12).toFixed(2).replace('.', ',')}</strong>
+                </div>
+              </div>
+            </div>
+
+            {/* Sizing Selector */}
+            <div className="space-y-3">
+              <div className="flex items-center justify-between text-xs font-mono">
+                <span className="text-white uppercase font-bold">Selecione o Tamanho:</span>
+                <button
+                  type="button"
+                  onClick={() => setShowSizeModal(true)}
+                  className="text-[#d2f100] hover:underline flex items-center gap-1 uppercase font-bold"
+                >
+                  <Ruler size={13} /> Tabela de Medidas
+                </button>
+              </div>
+
+              <div className="grid grid-cols-5 gap-2">
+                {product.sizes.map((size) => (
+                  <button
+                    key={size}
+                    type="button"
+                    onClick={() => setSelectedSize(size)}
+                    className={`h-12 text-sm font-mono font-bold transition-all flex items-center justify-center ${
+                      selectedSize === size
+                        ? 'bg-[#d2f100] text-[#121415] shadow-[0_0_12px_rgba(210,241,0,0.35)]'
+                        : 'bg-[#1e2021] text-white border border-[#333537] hover:border-[#d2f100]'
+                    }`}
+                  >
+                    {size}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* Jersey Personalization Module (Stitch Hallmark Feature) */}
+            <div className="bg-[#1e2021] border border-[#333537] p-5 space-y-4 shadow-xl">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                  <Sparkles size={16} className="text-[#d2f100]" />
+                  <span className="text-xs font-mono font-black uppercase text-white tracking-wider">
+                    Personalização Profissional (+R$ 20,00)
+                  </span>
+                </div>
+                {(customName.trim() || customNumber.trim()) && (
+                  <button
+                    onClick={() => {
+                      setCustomName('');
+                      setCustomNumber('');
+                    }}
+                    className="text-[10px] font-mono text-[#ffb4ab] hover:underline uppercase"
+                  >
+                    Limpar
+                  </button>
+                )}
+              </div>
+
+              {/* Real-time Kit Back Preview */}
+              <div className="bg-[#0c0e10] border border-[#333537] p-4 text-center space-y-1">
+                <div className="text-[10px] font-mono uppercase text-[#c6c9ac]">PRÉVIA DAS COSTAS:</div>
+                <div className="font-headline-sm text-xl uppercase tracking-widest text-[#d2f100]">
+                  {customName.trim() ? customName.toUpperCase() : 'SEU NOME'}
+                </div>
+                <div className="font-headline-sm text-5xl font-black text-white">
+                  {customNumber.trim() ? customNumber : '10'}
+                </div>
+              </div>
+
+              {/* Input fields */}
+              <div className="grid grid-cols-2 gap-3">
+                <div>
+                  <label className="block text-[10px] font-mono uppercase text-[#c6c9ac] mb-1">
+                    Nome na Camisa
+                  </label>
+                  <input
+                    type="text"
+                    maxLength={14}
+                    placeholder="Ex: SILVA"
+                    value={customName}
+                    onChange={(e) => setCustomName(e.target.value.toUpperCase())}
+                    className="w-full bg-[#0c0e10] border border-[#333537] focus:border-[#d2f100] px-3 py-2 text-xs font-mono uppercase text-white focus:outline-none"
+                  />
+                </div>
+                <div>
+                  <label className="block text-[10px] font-mono uppercase text-[#c6c9ac] mb-1">
+                    Número (Até 2 dígitos)
+                  </label>
+                  <input
+                    type="text"
+                    maxLength={2}
+                    placeholder="Ex: 9"
+                    value={customNumber}
+                    onChange={(e) => setCustomNumber(e.target.value.replace(/\D/g, ''))}
+                    className="w-full bg-[#0c0e10] border border-[#333537] focus:border-[#d2f100] px-3 py-2 text-xs font-mono text-white focus:outline-none"
+                  />
+                </div>
+              </div>
+
+              {/* Patch option */}
+              <label className="flex items-center gap-3 pt-2 cursor-pointer border-t border-[#333537]/60">
+                <input
+                  type="checkbox"
+                  checked={includePatch}
+                  onChange={(e) => setIncludePatch(e.target.checked)}
+                  className="w-4 h-4 accent-[#d2f100]"
+                />
+                <span className="text-xs font-mono text-[#e2e2e4]">
+                  Incluir Patch Oficial de Manga (+R$ 15,00)
+                </span>
+              </label>
+            </div>
+
+            {/* Action Buttons */}
+            <div className="space-y-3 pt-2">
+              <button
+                onClick={handleAddToCart}
+                className={`w-full py-4 text-xs font-black uppercase tracking-wider flex items-center justify-center gap-2 transition-all shadow-[0_0_20px_rgba(210,241,0,0.3)] ${
+                  added
+                    ? 'bg-emerald-500 text-white'
+                    : 'bg-[#d2f100] hover:bg-white text-[#121415] hover:text-black'
+                }`}
+              >
+                {added ? (
+                  <>
+                    <Check size={18} className="stroke-[3]" />
+                    <span>Adicionado à Sacola!</span>
+                  </>
+                ) : (
+                  <>
+                    <ShoppingBag size={18} className="stroke-[2.5]" />
+                    <span>Adicionar à Sacola</span>
+                  </>
+                )}
+              </button>
+
+              <button
+                onClick={handleWhatsAppBuy}
+                className="w-full py-3.5 bg-[#1e2021] hover:bg-[#282a2c] text-white hover:text-[#d2f100] border border-[#333537] text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-2 transition-colors"
+              >
+                <MessageCircle size={18} className="text-[#d2f100]" />
+                <span>Comprar Direto no WhatsApp</span>
+              </button>
+            </div>
+
+            {/* Guarantees */}
+            <div className="bg-[#121415] border border-[#333537] p-4 grid grid-cols-2 gap-3 text-xs font-mono text-[#c6c9ac]">
+              <div className="flex items-center gap-2">
+                <Truck size={16} className="text-[#d2f100] shrink-0" />
+                <span>Envio em 24h</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <ShieldCheck size={16} className="text-[#d2f100] shrink-0" />
+                <span>Garantia Total</span>
+              </div>
+            </div>
+
+          </div>
+
         </div>
 
       </div>
 
-      {/* Size Guide Modal */}
+      {/* Sizing Modal */}
       {showSizeModal && (
         <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
-          <div className="bg-white rounded-2xl max-w-lg w-full p-6 sm:p-8 shadow-2xl animate-in zoom-in-95 duration-150">
-            <div className="flex items-center justify-between pb-4 border-b border-neutral-200 mb-4">
-              <div className="flex items-center gap-2">
-                <Ruler className="text-black" />
-                <h3 className="font-black text-base uppercase text-black">Tabela de Medidas (cm)</h3>
-              </div>
+          <div className="bg-[#1e2021] border border-[#333537] max-w-lg w-full p-6 space-y-4 shadow-2xl">
+            <div className="flex items-center justify-between pb-3 border-b border-[#333537]">
+              <h3 className="font-headline-sm text-lg font-bold uppercase text-white">
+                Tabela de Medidas (Cm)
+              </h3>
               <button
                 onClick={() => setShowSizeModal(false)}
-                className="w-8 h-8 rounded-full bg-neutral-100 text-black hover:bg-neutral-200 flex items-center justify-center font-bold"
+                className="text-[#c6c9ac] hover:text-white text-lg font-mono font-bold"
               >
                 ✕
               </button>
             </div>
 
             <div className="overflow-x-auto">
-              <table className="w-full text-left text-xs sm:text-sm">
-                <thead>
-                  <tr className="border-b border-neutral-200 bg-[#F8F9FA] font-black text-black uppercase text-[11px]">
-                    <th className="p-3">Tamanho</th>
-                    <th className="p-3">Largura</th>
-                    <th className="p-3">Comprimento</th>
-                    <th className="p-3">Altura Recomendada</th>
+              <table className="w-full text-xs font-mono text-left text-[#c6c9ac]">
+                <thead className="bg-[#0c0e10] text-[#d2f100] uppercase">
+                  <tr>
+                    <th className="p-2 border border-[#333537]">Tamanho</th>
+                    <th className="p-2 border border-[#333537]">Largura (Tórax)</th>
+                    <th className="p-2 border border-[#333537]">Comprimento</th>
+                    <th className="p-2 border border-[#333537]">Peso Sugerido</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-neutral-100 text-neutral-700">
+                <tbody>
                   <tr>
-                    <td className="p-3 font-black text-black">P</td>
-                    <td className="p-3">50 cm</td>
-                    <td className="p-3">70 cm</td>
-                    <td className="p-3">1,60m - 1,70m</td>
+                    <td className="p-2 border border-[#333537] font-bold text-white">P</td>
+                    <td className="p-2 border border-[#333537]">50 - 52 cm</td>
+                    <td className="p-2 border border-[#333537]">70 - 72 cm</td>
+                    <td className="p-2 border border-[#333537]">55 - 68 kg</td>
                   </tr>
                   <tr>
-                    <td className="p-3 font-black text-black">M</td>
-                    <td className="p-3">52 cm</td>
-                    <td className="p-3">72 cm</td>
-                    <td className="p-3">1,70m - 1,75m</td>
+                    <td className="p-2 border border-[#333537] font-bold text-white">M</td>
+                    <td className="p-2 border border-[#333537]">53 - 55 cm</td>
+                    <td className="p-2 border border-[#333537]">73 - 75 cm</td>
+                    <td className="p-2 border border-[#333537]">68 - 78 kg</td>
                   </tr>
                   <tr>
-                    <td className="p-3 font-black text-black">G</td>
-                    <td className="p-3">55 cm</td>
-                    <td className="p-3">75 cm</td>
-                    <td className="p-3">1,75m - 1,80m</td>
+                    <td className="p-2 border border-[#333537] font-bold text-white">G</td>
+                    <td className="p-2 border border-[#333537]">56 - 58 cm</td>
+                    <td className="p-2 border border-[#333537]">76 - 78 cm</td>
+                    <td className="p-2 border border-[#333537]">78 - 88 kg</td>
                   </tr>
                   <tr>
-                    <td className="p-3 font-black text-black">GG</td>
-                    <td className="p-3">58 cm</td>
-                    <td className="p-3">78 cm</td>
-                    <td className="p-3">1,80m - 1,88m</td>
+                    <td className="p-2 border border-[#333537] font-bold text-white">GG</td>
+                    <td className="p-2 border border-[#333537]">59 - 61 cm</td>
+                    <td className="p-2 border border-[#333537]">79 - 81 cm</td>
+                    <td className="p-2 border border-[#333537]">88 - 98 kg</td>
                   </tr>
                   <tr>
-                    <td className="p-3 font-black text-black">XG</td>
-                    <td className="p-3">62 cm</td>
-                    <td className="p-3">81 cm</td>
-                    <td className="p-3">1,85m - 1,95m</td>
+                    <td className="p-2 border border-[#333537] font-bold text-white">XG</td>
+                    <td className="p-2 border border-[#333537]">62 - 64 cm</td>
+                    <td className="p-2 border border-[#333537]">82 - 84 cm</td>
+                    <td className="p-2 border border-[#333537]">98 - 110 kg</td>
                   </tr>
                 </tbody>
               </table>
             </div>
 
-            <p className="text-[11px] text-neutral-500 mt-4 font-medium">
-              * Dica: Compare as medidas com uma camisa que você já usa habitualmente para garantir o caimento ideal.
+            <p className="text-[11px] text-[#c6c9ac]">
+              * As medidas podem variar até 2cm para mais ou para menos. Em caso de dúvida, sugerimos pedir um tamanho maior.
             </p>
 
             <button
               onClick={() => setShowSizeModal(false)}
-              className="mt-6 w-full py-3 bg-black text-[#FFD900] rounded-lg text-xs font-black uppercase hover:bg-neutral-800 transition"
+              className="w-full py-2.5 bg-[#d2f100] text-[#121415] font-black uppercase text-xs"
             >
-              Fechar Guia
+              Fechar Tabela
             </button>
           </div>
         </div>
       )}
+
     </div>
   );
 }

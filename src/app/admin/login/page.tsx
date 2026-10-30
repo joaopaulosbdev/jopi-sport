@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useStore } from '@/contexts/StoreContext';
-import { ShieldCheck, Lock, ArrowRight, Sparkles } from 'lucide-react';
+import { ShieldCheck, Lock, ArrowRight, Zap } from 'lucide-react';
 
 export default function AdminLoginPage() {
   const [password, setPassword] = useState('');
@@ -30,70 +30,64 @@ export default function AdminLoginPage() {
   };
 
   return (
-    <div className="bg-[#F4F5F7] min-h-[80vh] flex items-center justify-center px-4 py-12">
-      <div className="max-w-md w-full bg-white rounded-2xl border-2 border-black p-8 shadow-2xl">
-        <div className="text-center mb-8">
-          <div className="w-16 h-16 bg-black text-[#FFD900] rounded-xl flex items-center justify-center mx-auto mb-3 shadow-lg">
+    <div className="min-h-[80vh] flex items-center justify-center px-4 py-12">
+      <div className="max-w-md w-full bg-[#1e2021] border border-[#333537] p-8 shadow-2xl space-y-6">
+        <div className="text-center">
+          <div className="w-16 h-16 bg-[#0c0e10] border border-[#333537] text-[#d2f100] flex items-center justify-center mx-auto mb-3 shadow">
             <ShieldCheck size={32} />
           </div>
           <div className="flex items-center justify-center leading-none mb-1">
-            <span className="text-xl font-black italic tracking-tighter text-black">
+            <span className="text-2xl font-black uppercase tracking-tight text-white font-headline-sm">
               JOPI
             </span>
-            <span className="text-xl font-black italic tracking-tighter text-[#B29200] ml-1">
-              SPORT SHOP
+            <span className="text-2xl font-black uppercase tracking-tight text-[#d2f100] ml-1 font-headline-sm">
+              SPORT
             </span>
           </div>
-          <h1 className="text-lg font-black uppercase text-black">Painel Administrativo</h1>
-          <p className="text-xs text-neutral-500 mt-0.5">
-            Cadastre nomes, fotos, valores e gerencie sua loja
+          <h1 className="text-base font-bold uppercase text-white font-mono">Painel Administrativo</h1>
+          <p className="text-xs text-[#c6c9ac] mt-1 font-mono">
+            Gerencie produtos, categorias e configurações da loja
           </p>
         </div>
 
         {error && (
-          <div className="mb-5 p-3 bg-red-50 border border-red-300 text-red-800 text-xs font-bold rounded-lg text-center">
+          <div className="p-3 bg-[#93000a]/20 border border-[#ffb4ab] text-[#ffdad6] text-xs font-mono font-bold text-center">
             {error}
           </div>
         )}
 
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <label className="text-xs font-black uppercase text-black block mb-1">
-              Senha de Acesso:
+            <label className="block text-[11px] font-mono uppercase text-[#c6c9ac] mb-1">
+              Senha de Acesso
             </label>
             <div className="relative">
               <input
                 type="password"
-                placeholder="Digite a senha..."
                 value={password}
-                onChange={(e) => {
-                  setPassword(e.target.value);
-                  setError('');
-                }}
-                className="w-full bg-[#F8F9FA] border border-neutral-300 rounded-lg px-4 py-3 pl-10 text-sm text-black focus:outline-none focus:border-black"
-                autoFocus
+                onChange={(e) => setPassword(e.target.value)}
+                placeholder="Digite sua senha de administrador"
+                className="w-full bg-[#0c0e10] border border-[#333537] focus:border-[#d2f100] px-4 py-3 text-xs font-mono text-white focus:outline-none"
               />
-              <Lock size={18} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-neutral-400" />
+              <Lock size={15} className="absolute right-3 top-3.5 text-[#c6c9ac]" />
             </div>
           </div>
 
           <button
             type="submit"
-            className="w-full py-3.5 px-4 rounded-lg bg-black text-[#FFD900] hover:bg-neutral-800 font-black text-xs uppercase tracking-wider flex items-center justify-center gap-2 transition shadow-lg"
+            className="w-full py-3.5 bg-[#d2f100] hover:bg-white text-[#121415] hover:text-black font-black uppercase text-xs tracking-wider transition-all shadow-[0_0_15px_rgba(210,241,0,0.3)] flex items-center justify-center gap-2"
           >
-            <span>ENTRAR NO PAINEL</span>
-            <ArrowRight size={16} />
+            <span>Acessar Painel</span>
+            <ArrowRight size={15} />
           </button>
         </form>
 
-        <div className="mt-6 pt-6 border-t border-neutral-100 text-center">
-          <p className="text-xs text-neutral-500 mb-2 font-medium">Acesso rápido para demonstração:</p>
+        <div className="pt-4 border-t border-[#333537]/60 text-center">
           <button
             onClick={handleQuickDemoLogin}
-            type="button"
-            className="inline-flex items-center gap-1.5 text-xs font-black uppercase text-black bg-[#FFD900] hover:bg-[#E6C300] px-4 py-2 rounded-lg transition"
+            className="text-xs font-mono text-[#d2f100] hover:underline"
           >
-            <Sparkles size={14} /> Entrar com senha padrão (&ldquo;admin&rdquo;)
+            ⚡ Acesso Rápido com Senha Padrão (&quot;admin&quot;)
           </button>
         </div>
       </div>

@@ -4,7 +4,7 @@ import React from 'react';
 import Link from 'next/link';
 import ProductCard from '@/components/ProductCard';
 import { useStore } from '@/contexts/StoreContext';
-import { Flame, ChevronRight } from 'lucide-react';
+import { Flame, Zap } from 'lucide-react';
 
 export default function PromocoesPage() {
   const { products } = useStore();
@@ -13,27 +13,28 @@ export default function PromocoesPage() {
   );
 
   return (
-    <div className="bg-[#F4F5F7] py-8 sm:py-12">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6">
-        <nav className="flex items-center gap-2 text-xs font-bold text-neutral-500 mb-6">
-          <Link href="/" className="hover:text-black transition">Início</Link>
-          <ChevronRight size={13} />
-          <span className="text-black uppercase">Promoções</span>
+    <div className="py-8 sm:py-12">
+      <div className="max-w-7xl mx-auto px-4 lg:px-12">
+        <nav className="flex items-center gap-2 text-xs font-mono text-[#c6c9ac] uppercase mb-8">
+          <Link href="/" className="hover:text-[#d2f100] transition-colors">Início</Link>
+          <span>/</span>
+          <span className="text-[#d2f100]">Promoções</span>
         </nav>
 
-        <div className="mb-8">
-          <div className="inline-flex items-center gap-2 bg-[#FFD900] text-black px-3 py-0.5 rounded text-xs font-black uppercase mb-2">
-            <Flame size={13} className="fill-black" /> Ofertas Especiais
+        <div className="mb-10 pb-6 border-b border-[#333537]">
+          <div className="inline-flex items-center gap-2 bg-[#1e2021] border border-[#ffb4ab]/40 text-[#ffb4ab] px-3 py-1 text-xs font-mono font-bold uppercase mb-3">
+            <Flame size={14} className="fill-[#ffb4ab]" />
+            OFERTAS RELÂMPAGO
           </div>
-          <h1 className="text-2xl sm:text-4xl font-black uppercase tracking-tight text-black">
-            OFERTAS &amp; PROMOÇÕES
+          <h1 className="text-3xl sm:text-5xl font-black uppercase text-white font-headline-md leading-tight">
+            OFERTAS & PROMOÇÕES
           </h1>
-          <p className="text-xs sm:text-sm text-neutral-600 mt-1 max-w-2xl font-medium">
-            Garanta seu manto de time com preços promocionais exclusivos na Jopi Sport Shop!
+          <p className="text-xs sm:text-sm text-[#c6c9ac] mt-2 max-w-2xl font-mono">
+            Garanta seu manto oficial com descontos imperdíveis e 5% OFF extra no PIX!
           </p>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
           {(promoProducts.length > 0 ? promoProducts : products.slice(0, 8)).map((product) => (
             <ProductCard key={product.id} product={product} />
           ))}
