@@ -48,6 +48,7 @@ export default function AdminDashboardPage() {
     deleteCategory,
     resetToDefaultCategories,
     isAdmin, 
+    adminUser,
     logout, 
     storeConfig, 
     updateStoreConfig 
@@ -96,6 +97,12 @@ export default function AdminDashboardPage() {
   const [configInstagram, setConfigInstagram] = useState(storeConfig.instagram || '');
   const [configBanner, setConfigBanner] = useState(storeConfig.bannerText);
   const [configPixKey, setConfigPixKey] = useState(storeConfig.pixKey || '');
+  const [configAuthorizedEmails, setConfigAuthorizedEmails] = useState(
+    (storeConfig.authorizedAdminEmails && storeConfig.authorizedAdminEmails.length > 0
+      ? storeConfig.authorizedAdminEmails
+      : []
+    ).join(', ')
+  );
 
   if (!isAdmin) {
     return (
@@ -295,14 +302,20 @@ export default function AdminDashboardPage() {
 
   const handleSaveConfig = (e: React.FormEvent) => {
     e.preventDefault();
+    const parsedEmails = configAuthorizedEmails
+      .split(',')
+      .map((em) => em.trim())
+      .filter((em) => em.length > 0);
+
     updateStoreConfig({
       storeName: configStoreName,
       whatsappNumber: configWhatsapp,
       instagram: configInstagram,
       bannerText: configBanner,
       pixKey: configPixKey,
+      authorizedAdminEmails: parsedEmails,
     });
-    showNotification('Configurações da loja salvas com sucesso!');
+    showNotification('Configuracoes da loja salvas com sucesso!');
   };
 
   const handleExportJSON = () => {
@@ -339,7 +352,37 @@ export default function AdminDashboardPage() {
             </h1>
           </div>
 
-          <div className="flex items-center gap-2">
+          <div className="flex flex-wrap items-center gap-2 sm:gap-3">
+            {adminUser && (
+              <div className="flex items-center gap-2 bg-white border border-neutral-300 rounded-lg px-3 py-1.5 shadow-sm">
+                {adminUser.picture ? (
+                  // eslint-disable-next-line @next/next/no-img-element
+                  <img
+                    src={adminUser.picture}
+                    alt={adminUser.name}
+                    className="w-7 h-7 rounded-full object-cover border border-[#FFD900]"
+                  />
+                ) : (
+                  <div className="w-7 h-7 rounded-full bg-black text-[#FFD900] font-black text-xs flex items-center justify-center">
+                    {adminUser.name.slice(0, 1).toUpperCase()}
+                  </div>
+                )}
+                <div className="text-left leading-tight">
+                  <div className="flex items-center gap-1.5">
+                    <span className="text-xs font-black text-black">{adminUser.name}</span>
+                    {adminUser.loginMethod === 'google' && (
+                      <span className="bg-[#4285F4]/15 text-[#1a73e8] text-[9px] font-black uppercase px-1.5 py-0.5 rounded border border-[#4285F4]/30">
+                        Google
+                      </span>
+                    )}
+                  </div>
+                  <span className="text-[10px] text-neutral-500 font-mono block truncate max-w-[170px]">
+                    {adminUser.email}
+                  </span>
+                </div>
+              </div>
+            )}
+
             <Link
               href="/"
               className="px-4 py-2 rounded-lg border border-neutral-300 bg-white hover:bg-neutral-50 text-black text-xs font-black uppercase flex items-center gap-1.5 transition"
@@ -349,6 +392,7 @@ export default function AdminDashboardPage() {
             <button
               onClick={logout}
               className="px-4 py-2 rounded-lg bg-black text-[#FFD900] hover:bg-neutral-800 text-xs font-black uppercase flex items-center gap-1.5 transition"
+              title="Desconectar do painel"
             >
               <LogOut size={15} /> Sair
             </button>
@@ -1214,6 +1258,32 @@ export default function AdminDashboardPage() {
                     onChange={(e) => setConfigPixKey(e.target.value)}
                     className="w-full bg-[#F8F9FA] border border-neutral-300 rounded-lg px-3.5 py-2 text-xs text-black focus:outline-none focus:border-black"
                   />
+                </div>
+
+                {/* Segurança & Administradores */}
+                <div className="pt-4 border-t border-neutral-200 space-y-4">
+                  <div className="flex items-center gap-2">
+                    <span className="w-2 h-4 bg-[#FFD900] rounded-sm" />
+                    <h3 className="text-xs font-black uppercase text-black">
+                      Segurança &amp; Administradores Autorizados
+                    </h3>
+                  </div>
+
+                  <div>
+                    <label className="text-[11px] font-black uppercase text-neutral-700 block mb-1">
+                      E-mails de Administrador Autorizados:*
+                    </label>
+                    <input
+                      type="text"
+                      value={configAuthorizedEmails}
+                      onChange={(e) => setConfigAuthorizedEmails(e.target.value)}
+                      placeholder="admin@exemplo.com"
+                      className="w-full bg-[#F8F9FA] border border-neutral-300 rounded-lg px-3.5 py-2 text-xs font-mono font-bold text-black focus:outline-none focus:border-black"
+                    />
+                    <p className="text-[10px] text-neutral-500 mt-1">
+                      Apenas contas Google com estes e-mails terão acesso ao painel admin (separados por vírgula).
+                    </p>
+                  </div>
                 </div>
 
                 <div className="pt-2 flex justify-end">

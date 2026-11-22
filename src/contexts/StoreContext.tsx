@@ -1,9 +1,10 @@
 'use client';
 
 import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
-import { Product, CartItem, StoreConfig, Category } from '@/types';
+import { Product, CartItem, StoreConfig, Category, AdminUser } from '@/types';
 import { sampleProducts } from '@/data/sample-products';
 import { initialCategories } from '@/data/categories';
+import { signOutFirebase } from '@/lib/firebase';
 
 interface AddToCartParams {
   product: Product;
@@ -29,7 +30,9 @@ interface StoreContextType {
   storeConfig: StoreConfig;
   updateStoreConfig: (newConfig: Partial<StoreConfig>) => void;
   isAdmin: boolean;
+  adminUser: AdminUser | null;
   login: (password: string) => boolean;
+  loginWithGoogle: (user: AdminUser) => { success: boolean; error?: string };
   logout: () => void;
   searchQuery: string;
   setSearchQuery: React.Dispatch<React.SetStateAction<string>>;
@@ -52,9 +55,11 @@ const DEFAULT_CONFIG: StoreConfig = {
   bannerText: 'FRETE GRÁTIS A PARTIR DE 2 CAMISAS • COMPRE DIRETO NO WHATSAPP • PARCELE NO PIX OU CARTÃO',
   pixKey: 'pix@jopisportshop.com.br',
   addressNotice: 'Enviamos para todo o Brasil com código de rastreamento Correios',
+  authorizedAdminEmails: process.env.NEXT_PUBLIC_AUTHORIZED_ADMIN_EMAILS
+    ? process.env.NEXT_PUBLIC_AUTHORIZED_ADMIN_EMAILS.split(',').map(e => e.trim().toLowerCase()).filter(Boolean)
+    : [],
 };
 
-const ADMIN_PASSWORD = 'admin';
 
 export function StoreProvider({ children }: { children: React.ReactNode }) {
   const [products, setProducts] = useState<Product[]>(sampleProducts);
@@ -62,6 +67,7 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
   const [cart, setCart] = useState<CartItem[]>([]);
   const [storeConfig, setStoreConfig] = useState<StoreConfig>(DEFAULT_CONFIG);
   const [isAdmin, setIsAdmin] = useState(false);
+  const [adminUser, setAdminUser] = useState<AdminUser | null>(null);
   const [searchQuery, setSearchQuery] = useState('');
   const [isLoaded, setIsLoaded] = useState(false);
 
@@ -73,6 +79,7 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
       const savedConfig = localStorage.getItem('jopi_config');
       const savedCart = localStorage.getItem('jopi_cart');
       const savedAdmin = localStorage.getItem('jopi_admin_logged');
+      const savedAdminUser = localStorage.getItem('jopi_admin_user');
 
       if (savedProducts) {
         const parsed = JSON.parse(savedProducts);
@@ -99,7 +106,19 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
       }
 
       if (savedConfig) {
-        setStoreConfig({ ...DEFAULT_CONFIG, ...JSON.parse(savedConfig) });
+        const parsed = JSON.parse(savedConfig);
+        const envEmails = process.env.NEXT_PUBLIC_AUTHORIZED_ADMIN_EMAILS
+          ? process.env.NEXT_PUBLIC_AUTHORIZED_ADMIN_EMAILS.split(',').map(e => e.trim().toLowerCase()).filter(Boolean)
+          : [];
+        const mergedEmails = Array.from(new Set([
+          ...(parsed.authorizedAdminEmails || []),
+          ...envEmails,
+        ]));
+        setStoreConfig({
+          ...DEFAULT_CONFIG,
+          ...parsed,
+          authorizedAdminEmails: mergedEmails,
+        });
       }
 
       if (savedCart) {
@@ -108,6 +127,17 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
 
       if (savedAdmin === 'true') {
         setIsAdmin(true);
+        if (savedAdminUser) {
+          try {
+            setAdminUser(JSON.parse(savedAdminUser));
+          } catch {
+            setAdminUser({
+              email: 'admin@jopisportshop.com.br',
+              name: 'Administrador',
+              loginMethod: 'password',
+            });
+          }
+        }
       }
     } catch (err) {
       console.error('Error loading data from localStorage', err);
@@ -226,18 +256,53 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
     setStoreConfig(prev => ({ ...prev, ...newConfig }));
   }, []);
 
-  const login = useCallback((password: string) => {
-    if (password === ADMIN_PASSWORD || password === 'jopi2025' || password === 'admin123') {
-      setIsAdmin(true);
-      localStorage.setItem('jopi_admin_logged', 'true');
-      return true;
+  const loginWithGoogle = useCallback((user: AdminUser) => {
+    const userEmailLower = user.email.toLowerCase().trim();
+    const envEmails = (process.env.NEXT_PUBLIC_AUTHORIZED_ADMIN_EMAILS || '')
+      .split(',')
+      .map(e => e.trim().toLowerCase())
+      .filter(Boolean);
+    const configuredEmails = (storeConfig.authorizedAdminEmails || [])
+      .map(e => e.trim().toLowerCase())
+      .filter(Boolean);
+
+    const authorized = Array.from(new Set([...envEmails, ...configuredEmails]));
+
+    if (authorized.length > 0) {
+      const isAuthorized = authorized.some(authEmail => authEmail === userEmailLower);
+      if (!isAuthorized) {
+        return {
+          success: false,
+          error: `O e-mail "${user.email}" não está na lista de administradores autorizados.`,
+        };
+      }
     }
+
+    const completeUser: AdminUser = {
+      ...user,
+      loginMethod: 'google',
+      loggedInAt: new Date().toISOString(),
+    };
+
+    setIsAdmin(true);
+    setAdminUser(completeUser);
+    localStorage.setItem('jopi_admin_logged', 'true');
+    localStorage.setItem('jopi_admin_user', JSON.stringify(completeUser));
+
+    return { success: true };
+  }, [storeConfig.authorizedAdminEmails]);
+
+  const login = useCallback((_password: string) => {
+    // Modo de login por senha desativado por seguranca - utilize login Google
     return false;
   }, []);
 
   const logout = useCallback(() => {
     setIsAdmin(false);
+    setAdminUser(null);
     localStorage.removeItem('jopi_admin_logged');
+    localStorage.removeItem('jopi_admin_user');
+    signOutFirebase();
   }, []);
 
   const addProduct = useCallback(
@@ -314,7 +379,9 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
         storeConfig,
         updateStoreConfig,
         isAdmin,
+        adminUser,
         login,
+        loginWithGoogle,
         logout,
         searchQuery,
         setSearchQuery,

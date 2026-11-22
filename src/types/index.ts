@@ -29,7 +29,7 @@ export interface Category {
   name: string;
   slug: string;
   icon?: string;
-  imageUrl?: string; // Link da imagem/logo do campeonato ou bandeira do país
+  imageUrl?: string; // Link da imagem/logo do campeonato ou bandeira do pais
   type: 'championship' | 'national';
   country?: string;
   continent?: string;
@@ -47,6 +47,14 @@ export interface CartItem {
   unitPrice: number;
 }
 
+export interface AdminUser {
+  email: string;
+  name: string;
+  picture?: string;
+  loginMethod: 'google' | 'password';
+  loggedInAt?: string;
+}
+
 export interface StoreConfig {
   storeName: string;
   whatsappNumber: string;
@@ -55,4 +63,5 @@ export interface StoreConfig {
   logo?: string;
   pixKey?: string;
   addressNotice?: string;
+  authorizedAdminEmails?: string[];
 }
